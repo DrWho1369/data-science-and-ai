@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 7 - Convolutional Neural Networks (CNNs)</title>
+    <link rel="stylesheet" href="aml-styles.css">
+</head>
+<body>
+    <header>
+        <h1>Session 7 - Convolutional Neural Networks (CNNs)</h1>
+    </header>
+    
+    <main>
+        <a href="AML-homepage.html" class="back-button">← Back to Homepage</a>
+
+        <section id="objectives">
+            <h2>Key Learning Objectives</h2>
+            <ul>
+                <li>Understand what Convolutional Neural Networks (CNNs) are and their role in deep learning.</li>
+                <li>Explore the key operations of CNNs: Convolution, Non-linearity (ReLU), Pooling, and Classification.</li>
+                <li>Understand how convolutional layers extract features from images using filters/kernels.</li>
+                <li>Learn about different CNN architectures, including LeNet, AlexNet, and VGG16.</li>
+                <li>Explore concepts such as stride, padding, and pooling to reduce computation and improve generalization.</li>
+                <li>Understand how CNNs process images of different dimensions and learn hierarchical features.</li>
+                <li>Learn about recent CNN architectures (YOLOv8, MobileNet V4, ConvNeXt V2) and their applications.</li>
+            </ul>
+        </section>               
+        
+        <section id="flashcards">
+            <h2>Flashcards</h2>
+            <div class="flashcard-container">
+                <div class="flashcard" data-question="What are the four main components of CNNs?" data-answer="Convolution, Non-linearity (ReLU), Pooling, and Classification."></div>
+                <div class="flashcard" data-question="What does the convolution operation do in CNNs?" data-answer="Extracts features by sliding a filter (kernel) over an image and computing feature maps."></div>
+                <div class="flashcard" data-question="Why is ReLU used in CNNs?" data-answer="ReLU introduces non-linearity by setting negative values to zero, improving training efficiency."></div>
+                <div class="flashcard" data-question="What is the purpose of pooling in CNNs?" data-answer="Reduces spatial dimensions and computational complexity while retaining important features."></div>
+                <div class="flashcard" data-question="What is the difference between Max Pooling and Average Pooling?" data-answer="Max Pooling selects the highest value in a region, while Average Pooling computes the mean."></div>
+                <div class="flashcard" data-question="What is the role of padding in CNNs?" data-answer="Padding adds extra pixels around the image to preserve spatial dimensions after convolution."></div>
+                <div class="flashcard" data-question="What is stride in convolutional layers?" data-answer="Stride determines how many pixels the filter moves at each step; a larger stride reduces output size."></div>
+                <div class="flashcard" data-question="What is the main advantage of deep CNNs like VGG16?" data-answer="They learn hierarchical features, improving performance on complex image recognition tasks."></div>
+                <div class="flashcard" data-question="How do CNNs handle different image types?" data-answer="They process grayscale, RGB, and multispectral images by adjusting input channels."></div>
+                <div class="flashcard" data-question="What is YOLOv8 used for?" data-answer="Real-time object detection, segmentation, and classification tasks."></div>
+            </div>
+        </section>              
+        
+        <section id="notes">
+            <h2>Revision Notes</h2>
+            <article>
+                <h3>🔹 What are Convolutional Neural Networks (CNNs)?</h3>
+                <p>CNNs are a type of deep learning model designed for processing structured grid data, particularly images.</p>
+                <ul>
+                    <li><strong>Used for:</strong> Image recognition, object detection, facial recognition, and NLP tasks.</li>
+                    <li><strong>Inspired by:</strong> The human visual system, where neurons detect different features at different layers.</li>
+                </ul>
+        
+                <h3>🔹 Key Components of CNNs</h3>
+                <ul>
+                    <li><strong>Convolution:</strong> Extracts spatial features from images by applying filters (kernels).</li>
+                    <li><strong>ReLU (Rectified Linear Unit):</strong> Introduces non-linearity, preventing vanishing gradients.</li>
+                    <li><strong>Pooling:</strong> Reduces spatial dimensions while preserving important features.</li>
+                    <li><strong>Fully Connected Layer (FC):</strong> Flattens extracted features and classifies input data.</li>
+                </ul>
+        
+                <h3>🔹 Convolutional Layers</h3>
+                <ul>
+                    <li><strong>Filters/Kernels:</strong> Learn spatial hierarchies by detecting edges, textures, and objects.</li>
+                    <li><strong>Stride:</strong> Determines how far the filter moves; larger strides reduce output size.</li>
+                    <li><strong>Padding:</strong> Adds zeros around images to maintain original dimensions after convolution.</li>
+                </ul>
+        
+                <h3>🔹 Pooling Layers</h3>
+                <p>Pooling reduces the dimensionality of feature maps to improve efficiency and generalization.</p>
+                <ul>
+                    <li><strong>Max Pooling:</strong> Selects the highest value in a region (better for feature retention).</li>
+                    <li><strong>Average Pooling:</strong> Computes the mean of values in a region (less common).</li>
+                </ul>
+        
+                <h3>🔹 CNN Architectures</h3>
+                <ul>
+                    <li><strong>LeNet-5 (1990s):</strong> Early CNN for handwritten digit recognition.</li>
+                    <li><strong>AlexNet (2012):</strong> Introduced ReLU and dropout, winning ImageNet competition.</li>
+                    <li><strong>VGG16 (2014):</strong> Showed that deeper networks improve feature extraction.</li>
+                    <li><strong>YOLOv8 (2023):</strong> Real-time object detection for autonomous vehicles.</li>
+                </ul>
+            </article>
+        </section>
+               
+        
+        <section id="key-code">
+            <h2>Key Code / Functions</h2>
+        
+            <h3>1. Loading and Preprocessing the MNIST Dataset</h3>
+            <pre><code>
+        import tensorflow as tf
+        from tensorflow.keras.datasets import mnist
+        from tensorflow.keras.utils import to_categorical
+        
+        # Load dataset
+        (x_train, y_train), (x_test, y_test) = mnist.load_data()
+        
+        # Normalize images (scale pixel values between 0 and 1)
+        x_train, x_test = x_train / 255.0, x_test / 255.0
+        
+        # Convert labels to categorical format (one-hot encoding)
+        y_train, y_test = to_categorical(y_train), to_categorical(y_test)
+            </code></pre>
+            <p><strong>Explanation:</strong></p>
+            <ul>
+                <li>The MNIST dataset consists of 28x28 grayscale images of handwritten digits (0-9).</li>
+                <li><code>mnist.load_data()</code> loads training and testing data.</li>
+                <li>Images are normalized by dividing by 255 so that pixel values range from [0,1], improving model stability.</li>
+                <li>Labels are converted into categorical format (e.g., 3 → [0, 0, 0, 1, 0, 0, 0, 0, 0, 0]) for multi-class classification.</li>
+            </ul>
+        
+            <h3>2. Defining a Convolutional Neural Network (CNN)</h3>
+            <pre><code>
+        from tensorflow.keras.models import Sequential
+        from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
+        
+        # Define CNN architecture
+        model = Sequential([
+            Conv2D(32, (3,3), activation='relu', input_shape=(28,28,1)),  # 32 filters of 3x3
+            MaxPooling2D(pool_size=(2,2)),  # Downsampling
+            Conv2D(64, (3,3), activation='relu'),  # 64 filters of 3x3
+            MaxPooling2D(pool_size=(2,2)),
+            Flatten(),  # Converts feature maps into 1D
+            Dense(128, activation='relu'),  # Fully connected layer
+            Dense(10, activation='softmax')  # Output layer (10 classes)
+        ])
+            </code></pre>
+            <p><strong>Explanation:</strong></p>
+            <ul>
+                <li><code>Conv2D</code>: Applies convolutional filters to extract spatial features (edges, textures, etc.).</li>
+                <li><code>MaxPooling2D</code>: Reduces image dimensions while preserving important features (downsampling).</li>
+                <li><code>Flatten</code>: Converts the 2D feature map into a 1D vector for fully connected layers.</li>
+                <li><code>Dense</code>: Fully connected layers for classification.</li>
+                <li><code>Softmax activation</code>: Converts output into class probabilities.</li>
+            </ul>
+        
+            <h3>3. Compiling and Training the CNN</h3>
+            <pre><code>
+        model.compile(optimizer='adam',
+                      loss='categorical_crossentropy',
+                      metrics=['accuracy'])
+        
+        # Train the model
+        model.fit(x_train, y_train, epochs=10, batch_size=32, validation_data=(x_test, y_test))
+            </code></pre>
+            <p><strong>Explanation:</strong></p>
+            <ul>
+                <li><code>adam</code>: Adaptive optimizer that adjusts learning rates dynamically.</li>
+                <li><code>categorical_crossentropy</code>: Loss function for multi-class classification.</li>
+                <li><code>model.fit</code>: Trains the CNN with the dataset.</li>
+                <li>10 epochs are used (the model trains over the dataset 10 times).</li>
+                <li>Batch size of 32 means that 32 samples are processed before updating weights.</li>
+            </ul>
+        
+            <h3>4. Evaluating the Model</h3>
+            <pre><code>
+        test_loss, test_acc = model.evaluate(x_test, y_test)
+        print(f"Test Accuracy: {test_acc:.4f}")
+            </code></pre>
+            <p><strong>Explanation:</strong></p>
+            <ul>
+                <li><code>model.evaluate</code>: Measures accuracy on test data.</li>
+                <li>Prints the final accuracy after training.</li>
+            </ul>
+        
+            <h3>5. Making Predictions</h3>
+            <pre><code>
+        import numpy as np
+        
+        # Make a prediction on a single image
+        image = np.expand_dims(x_test[0], axis=0)  # Add batch dimension
+        predictions = model.predict(image)
+        predicted_label = np.argmax(predictions)
+        
+        print(f"Predicted Class: {predicted_label}")
+            </code></pre>
+            <p><strong>Explanation:</strong></p>
+            <ul>
+                <li><code>np.expand_dims</code>: Converts a single image into batch format.</li>
+                <li><code>model.predict</code>: Generates probability scores for each class.</li>
+                <li><code>np.argmax</code>: Returns the class with the highest probability.</li>
+            </ul>
+        </section> 
+        
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Thomas Baker - MSc Data Science & AI Revision</p>
+    </footer>
+    
+    <script defer src="aml-flashcards.js"></script>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 1 - Big Data and Data Analytics</title>
+    <link rel="stylesheet" href="aml-styles.css">
+</head>
+<body>
+    <header>
+        <h1>Session 1 - Introduction</h1>
+    </header>
+    
+    <main>
+        <a href="AML-homepage.html" class="back-button">← Back to Homepage</a>
+
+        <section id="objectives">
+            <h2>Key Learning Objectives</h2>
+            <ul>
+                <li>Understand the scope and goals of Applied Machine Learning.</li>
+                <li>Explore the concept of Industry 4.0 and its connection to AI and ML.</li>
+                <li>Learn about key Machine Learning experts and their contributions.</li>
+                <li>Understand Predictive Modeling and the Machine Learning workflow.</li>
+                <li>Familiarize yourself with the UCI Machine Learning Repository and common datasets.</li>
+                <li>Gain an introduction to Python’s SciPy ecosystem and Scikit-learn.</li>
+                <li>Explore Google Colab as a cloud-based ML development tool.</li>
+            </ul>
+        </section>
+        
+        <section id="flashcards">
+            <h2>Flashcards</h2>
+            <div class="flashcard-container">
+                <div class="flashcard" data-question="What is the goal of Applied Machine Learning?" data-answer="To apply ML techniques to solve real-world problems using data-driven models."></div>
+                <div class="flashcard" data-question="What is Industry 4.0?" data-answer="The fourth industrial revolution, integrating AI, IoT, and big data into automation and production."></div>
+                <div class="flashcard" data-question="Who are some key ML experts?" data-answer="Geoffrey Hinton (Deep Learning), Yann LeCun (CNNs), Andrew Ng (Google Brain, Coursera), Ian Goodfellow (GANs)."></div>
+                <div class="flashcard" data-question="What is Predictive Modeling?" data-answer="A branch of ML focused on using historical data to make future predictions."></div>
+                <div class="flashcard" data-question="What are the key steps in the Machine Learning Workflow?" data-answer="1) Define Problem, 2) Analyze Data, 3) Prepare Data, 4) Evaluate Algorithms, 5) Improve Results, 6) Present Results."></div>
+                <div class="flashcard" data-question="What is the UCI Machine Learning Repository?" data-answer="A widely-used online repository of benchmark datasets for ML research."></div>
+                <div class="flashcard" data-question="What is SciPy?" data-answer="A scientific computing library in Python that provides tools for optimization, signal processing, and linear algebra."></div>
+                <div class="flashcard" data-question="What is Scikit-learn?" data-answer="A machine learning library built on SciPy, offering tools for classification, regression, clustering, and evaluation."></div>
+                <div class="flashcard" data-question="What are the advantages of Google Colab?" data-answer="No installation required, free cloud access to GPUs/TPUs, integrates with Google Drive."></div>
+            </div>
+        </section>
+        
+        <section id="notes">
+            <h2>Revision Notes</h2>
+            <article>
+                <h3>🔹 Introduction to Applied Machine Learning</h3>
+                <p>Applied Machine Learning (AML) focuses on implementing ML techniques in real-world scenarios. The module covers predictive modeling, data workflows, and Python-based ML libraries.</p>
+        
+                <h3>🔹 Industry 4.0 and AI</h3>
+                <p>Industry 4.0 integrates **Artificial Intelligence (AI), Internet of Things (IoT), and Big Data** into manufacturing and automation, enabling **autonomous systems, smart factories, and predictive analytics**.</p>
+        
+                <h3>🔹 Key Machine Learning Experts</h3>
+                <ul>
+                    <li><strong>Geoffrey Hinton</strong> - Deep Learning, Backpropagation.</li>
+                    <li><strong>Yann LeCun</strong> - Convolutional Neural Networks (CNNs).</li>
+                    <li><strong>Andrew Ng</strong> - Google Brain, Coursera, Deep Learning.</li>
+                    <li><strong>Ian Goodfellow</strong> - Generative Adversarial Networks (GANs).</li>
+                </ul>
+        
+                <h3>🔹 Predictive Modeling Workflow</h3>
+                <p>The **Machine Learning Workflow** consists of the following steps:</p>
+                <ol>
+                    <li><strong>Define the Problem:</strong> Understand project goals.</li>
+                    <li><strong>Analyze Data:</strong> Use descriptive statistics and visualization.</li>
+                    <li><strong>Prepare Data:</strong> Apply feature engineering and transformations.</li>
+                    <li><strong>Evaluate Algorithms:</strong> Test multiple models.</li>
+                    <li><strong>Improve Results:</strong> Use hyperparameter tuning and ensembling.</li>
+                    <li><strong>Present Results:</strong> Interpret and communicate findings.</li>
+                </ol>
+        
+                <h3>🔹 Python Ecosystem for ML</h3>
+                <ul>
+                    <li><strong>NumPy</strong> - Efficient array operations.</li>
+                    <li><strong>Pandas</strong> - Data manipulation and analysis.</li>
+                    <li><strong>Matplotlib & Seaborn</strong> - Data visualization.</li>
+                    <li><strong>SciPy</strong> - Optimization, integration, signal processing.</li>
+                    <li><strong>Scikit-learn</strong> - ML models (classification, regression, clustering).</li>
+                    <li><strong>Keras & TensorFlow</strong> - Deep learning frameworks.</li>
+                </ul>
+        
+                <h3>🔹 Google Colab for Machine Learning</h3>
+                <p>Google Colab is a cloud-based Jupyter notebook environment for running Python code. It offers **free access to GPUs and TPUs**, making it ideal for ML and Deep Learning projects.</p>
+            </article>
+        </section>
+        
+        <section id="key-code">
+            <h2>Key Code / Functions</h2>
+        
+            <h3>1. Installing Essential ML Libraries</h3>
+            <pre><code>
+        # Install the core Python libraries needed for Machine Learning
+        pip install numpy pandas matplotlib seaborn scikit-learn tensorflow keras
+            </code></pre>
+            <p><strong>Explanation:</strong> This command installs popular Python libraries used in Machine Learning:</p>
+            <ul>
+                <li><strong>NumPy</strong> - Handles numerical operations efficiently.</li>
+                <li><strong>Pandas</strong> - Used for data manipulation and analysis.</li>
+                <li><strong>Matplotlib & Seaborn</strong> - Libraries for data visualization.</li>
+                <li><strong>Scikit-learn</strong> - Provides tools for machine learning algorithms.</li>
+                <li><strong>TensorFlow & Keras</strong> - Libraries for Deep Learning models.</li>
+            </ul>
+        
+            <h3>2. Importing Essential ML Libraries</h3>
+            <pre><code>
+        import numpy as np  # For numerical computations
+        import pandas as pd  # For data handling
+        import matplotlib.pyplot as plt  # For plotting
+        import seaborn as sns  # For statistical visualization
+        
+        # Import scikit-learn functions
+        from sklearn.model_selection import train_test_split  # Splitting data into training and testing
+        from sklearn.preprocessing import StandardScaler  # Standardizing data
+        from sklearn.linear_model import LogisticRegression  # ML algorithm for classification
+            </code></pre>
+            <p><strong>Explanation:</strong> This imports essential Python libraries needed for ML workflows.</p>
+        
+            <h3>3. Loading a Dataset (UCI Machine Learning Repository)</h3>
+            <pre><code>
+        # Load the Pima Indians Diabetes dataset from the UCI ML repository
+        url = "https://raw.githubusercontent.com/jbrownlee/Datasets/master/pima-indians-diabetes.data.csv"
+        df = pd.read_csv(url, header=None)  # Read CSV into a Pandas DataFrame
+        
+        # Display the first 5 rows of the dataset
+        print(df.head())
+            </code></pre>
+            <p><strong>Explanation:</strong></p>
+            <ul>
+                <li>This script loads a dataset directly from the **UCI Machine Learning Repository**.</li>
+                <li>`pd.read_csv(url, header=None)` loads the CSV file into a **Pandas DataFrame**.</li>
+                <li>`df.head()` displays the first **5 rows** of the dataset to inspect its structure.</li>
+            </ul>
+        
+            <h3>4. Splitting Data into Train and Test Sets</h3>
+            <pre><code>
+        # Separate input features (X) and target labels (y)
+        X = df.iloc[:, :-1]  # Select all columns except the last one (features)
+        y = df.iloc[:, -1]   # Select the last column (target variable)
+        
+        # Split data into 80% training and 20% testing
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        
+        # Display the shape of training and testing sets
+        print("Training data shape:", X_train.shape)
+        print("Testing data shape:", X_test.shape)
+            </code></pre>
+            <p><strong>Explanation:</strong></p>
+            <ul>
+                <li><strong>`train_test_split`</strong> randomly splits the dataset into **training (80%)** and **testing (20%)** subsets.</li>
+                <li><strong>`random_state=42`</strong> ensures reproducibility (same split every time).</li>
+                <li>The **target variable (`y`)** is separated from the **input features (`X`)**.</li>
+                <li>`X_train.shape` and `X_test.shape` display the size of each set.</li>
+            </ul>
+        
+            <h3>5. Standardizing Features (Scaling the Data)</h3>
+            <pre><code>
+        # Initialize the standard scaler
+        scaler = StandardScaler()
+        
+        # Fit the scaler on the training data and transform both training and test sets
+        X_train = scaler.fit_transform(X_train)
+        X_test = scaler.transform(X_test)
+        
+        # Print the first 5 rows of the scaled training data
+        print(X_train[:5])
+            </code></pre>
+            <p><strong>Explanation:</strong></p>
+            <ul>
+                <li>Machine Learning models **work best when features are on a similar scale**.</li>
+                <li><strong>`StandardScaler()`</strong> standardizes the dataset by **removing the mean and scaling to unit variance**.</li>
+                <li>`scaler.fit_transform(X_train)` **fits the scaler on the training data** and transforms it.</li>
+                <li>`scaler.transform(X_test)` **applies the same transformation** to the test set.</li>
+            </ul>
+        
+            <h3>6. Training a Logistic Regression Model</h3>
+            <pre><code>
+        # Initialize a Logistic Regression model
+        model = LogisticRegression()
+        
+        # Train the model using the training data
+        model.fit(X_train, y_train)
+        
+        # Evaluate model performance
+        accuracy = model.score(X_test, y_test)
+        print("Model Accuracy:", accuracy)
+            </code></pre>
+            <p><strong>Explanation:</strong></p>
+            <ul>
+                <li><strong>Logistic Regression</strong> is a classification algorithm used when the **target variable is binary**.</li>
+                <li>`model.fit(X_train, y_train)` **trains the model** on the scaled training dataset.</li>
+                <li>`model.score(X_test, y_test)` evaluates the model's accuracy on the test set.</li>
+                <li>The **accuracy score** tells us how well the model performs on unseen data.</li>
+            </ul>
+        </section>
+                
+        
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Thomas Baker - MSc Data Science & AI Revision</p>
+    </footer>
+    
+    <script defer src="aml-flashcards.js"></script>
+</body>
+</html>

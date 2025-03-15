@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 3 - Tree-Based Machine Learning Algorithms</title>
+    <link rel="stylesheet" href="aml-styles.css">
+</head>
+<body>
+    <header>
+        <h1>Session 3 - Tree-Based Machine Learning Algorithms</h1>
+    </header>
+    
+    <main>
+        <a href="AML-homepage.html" class="back-button">← Back to Homepage</a>
+
+        <section id="objectives">
+            <h2>Key Learning Objectives</h2>
+            <ul>
+                <li>Understand the concept of Decision Trees (DT) and how they model classification problems.</li>
+                <li>Learn about the key types of Decision Trees: ID3, C4.5, CART, and C5.0.</li>
+                <li>Explore the concepts of Information Gain, Gini Index, and Entropy for node splitting.</li>
+                <li>Understand pruning techniques to avoid overfitting in Decision Trees.</li>
+                <li>Learn about Random Forests and how they improve Decision Trees using bagging.</li>
+                <li>Understand Extra Trees (Extremely Randomized Trees) and how they differ from Random Forests.</li>
+                <li>Explore the advantages, disadvantages, and practical applications of tree-based models.</li>
+            </ul>
+        </section>
+        
+        
+        
+        <section id="flashcards">
+            <h2>Flashcards</h2>
+            <div class="flashcard-container">
+                <div class="flashcard" data-question="What is a Decision Tree?" data-answer="A tree-like model used for classification and regression, where decisions are made based on feature splits."></div>
+                <div class="flashcard" data-question="What is Information Gain in Decision Trees?" data-answer="A measure of how well a given attribute splits the training data, calculated using entropy reduction."></div>
+                <div class="flashcard" data-question="What are common Decision Tree algorithms?" data-answer="ID3 (Entropy), CART (Gini Index), C4.5, and C5.0."></div>
+                <div class="flashcard" data-question="What is the purpose of pruning in Decision Trees?" data-answer="To remove unnecessary splits and reduce overfitting, improving generalization."></div>
+                <div class="flashcard" data-question="What is the main drawback of Decision Trees?" data-answer="They are prone to overfitting, especially with deep trees and small datasets."></div>
+                <div class="flashcard" data-question="How does Random Forest improve Decision Trees?" data-answer="By combining multiple Decision Trees trained on bootstrapped datasets, reducing overfitting."></div>
+                <div class="flashcard" data-question="What is Bagging?" data-answer="Bootstrap Aggregation (Bagging) is an ensemble technique where multiple models are trained on different subsets of the data."></div>
+                <div class="flashcard" data-question="How do Extra Trees differ from Random Forests?" data-answer="Extra Trees use completely random feature splits, reducing variance but increasing bias."></div>
+                <div class="flashcard" data-question="What is the difference between Gini Index and Entropy?" data-answer="Gini Index measures impurity using squared probabilities, while Entropy uses log probabilities."></div>
+                <div class="flashcard" data-question="What is Out-of-Bag (OOB) error in Random Forests?" data-answer="An internal validation technique that estimates model accuracy using samples not included in training."></div>
+            </div>
+        </section>
+        
+        
+        <section id="notes">
+            <h2>Revision Notes</h2>
+            <article>
+                <h3>🔹 What is a Decision Tree?</h3>
+                <p>A Decision Tree (DT) is a predictive model that uses a series of if-else conditions to classify data into categories. The structure consists of:</p>
+                <ul>
+                    <li><strong>Root Node:</strong> The starting point of the tree.</li>
+                    <li><strong>Decision Nodes:</strong> Points where the dataset is split based on a feature.</li>
+                    <li><strong>Leaf Nodes:</strong> Final output classification or prediction.</li>
+                </ul>
+        
+                <h3>🔹 Information Gain, Entropy & Gini Index</h3>
+                <ul>
+                    <li><strong>Entropy:</strong> Measures disorder/impurity. Lower entropy = better splits.</li>
+                    <li><strong>Information Gain (IG):</strong> Reduction in entropy after splitting on an attribute.</li>
+                    <li><strong>Gini Index:</strong> Measures node purity. Lower Gini = better split.</li>
+                </ul>
+        
+                <h3>🔹 Pruning in Decision Trees</h3>
+                <p>Pruning helps prevent overfitting by removing unnecessary branches in the tree:</p>
+                <ul>
+                    <li><strong>Pre-Pruning:</strong> Stops tree growth early using a threshold (e.g., minimum split size).</li>
+                    <li><strong>Post-Pruning:</strong> Grows the tree fully, then removes weak branches.</li>
+                </ul>
+        
+                <h3>🔹 Random Forests (RF)</h3>
+                <p>Random Forests are an ensemble method that improves Decision Trees:</p>
+                <ul>
+                    <li>Trains multiple Decision Trees on different bootstrapped subsets.</li>
+                    <li>Reduces overfitting by averaging multiple models (majority vote for classification).</li>
+                </ul>
+        
+                <h3>🔹 Extra Trees (Extremely Randomized Trees)</h3>
+                <ul>
+                    <li>Similar to Random Forest but uses **random feature splits** instead of best splits.</li>
+                    <li>Less prone to overfitting than RF, but can have lower accuracy.</li>
+                </ul>
+            </article>
+        </section>
+        
+        
+        <section id="key-code">
+            <h2>Key Code & Functions</h2>
+        
+            <h3>1. Decision Tree Classifier</h3>
+            <p>Decision Trees are used for classification tasks where a model predicts the label of an instance by recursively splitting the dataset based on feature values.</p>
+            <pre><code>
+        from sklearn.tree import DecisionTreeClassifier
+        
+        # Create a Decision Tree Classifier model
+        dt_model = DecisionTreeClassifier(criterion='gini', max_depth=3, random_state=42)
+        
+        # Train the model on training data
+        dt_model.fit(X_train, y_train)
+        
+        # Make predictions
+        y_pred = dt_model.predict(X_test)
+            </code></pre>
+            <p><strong>Explanation:</strong></p>
+            <ul>
+                <li><strong>criterion='gini'</strong>: Uses the Gini Index to measure impurity at each split. Alternatively, 'entropy' can be used.</li>
+                <li><strong>max_depth=3</strong>: Limits the depth of the tree to prevent overfitting.</li>
+                <li><strong>random_state=42</strong>: Ensures reproducibility by fixing the randomness.</li>
+            </ul>
+        
+            <h3>2. Random Forest Classifier</h3>
+            <p>Random Forest is an ensemble method that builds multiple Decision Trees and combines their predictions to improve accuracy and reduce overfitting.</p>
+            <pre><code>
+        from sklearn.ensemble import RandomForestClassifier
+        
+        # Create a Random Forest Classifier model
+        rf_model = RandomForestClassifier(n_estimators=100, max_depth=5, random_state=42)
+        
+        # Train the model
+        rf_model.fit(X_train, y_train)
+        
+        # Make predictions
+        y_pred_rf = rf_model.predict(X_test)
+            </code></pre>
+            <p><strong>Explanation:</strong></p>
+            <ul>
+                <li><strong>n_estimators=100</strong>: Specifies the number of trees in the forest. A higher value leads to better stability but increases computation time.</li>
+                <li><strong>max_depth=5</strong>: Restricts the depth of each tree to avoid overfitting.</li>
+            </ul>
+        
+            <h3>3. Extra Trees Classifier</h3>
+            <p>The Extra Trees Classifier is similar to Random Forest but selects split points randomly instead of using the best split based on criteria like Gini or Entropy.</p>
+            <pre><code>
+        from sklearn.ensemble import ExtraTreesClassifier
+        
+        # Create an Extra Trees Classifier
+        et_model = ExtraTreesClassifier(n_estimators=100, max_depth=5, random_state=42)
+        
+        # Train the model
+        et_model.fit(X_train, y_train)
+        
+        # Make predictions
+        y_pred_et = et_model.predict(X_test)
+            </code></pre>
+            <p><strong>Explanation:</strong></p>
+            <ul>
+                <li><strong>Random split selection</strong>: Unlike Decision Trees and Random Forest, Extra Trees choose split points randomly for even greater diversity.</li>
+                <li><strong>Less overfitting</strong>: This randomness can prevent overfitting while maintaining accuracy.</li>
+            </ul>
+        
+            <h3>4. Calculating Gini Index</h3>
+            <p>Gini Index is a measure of impurity used in Decision Trees to decide the best attribute for splitting data.</p>
+            <pre><code>
+        def gini_index(groups, classes):
+            n_instances = sum([len(group) for group in groups])
+            gini = 0.0
+            for group in groups:
+                size = len(group)
+                if size == 0:
+                    continue
+                score = 0.0
+                for class_val in classes:
+                    p = [row[-1] for row in group].count(class_val) / size
+                    score += p ** 2
+                gini += (1 - score) * (size / n_instances)
+            return gini
+            </code></pre>
+            <p><strong>Explanation:</strong></p>
+            <ul>
+                <li><strong>Gini Index</strong>: Measures the impurity of a node, where lower values indicate purer splits.</li>
+                <li><strong>Weighted sum</strong>: Computes the weighted impurity of all child nodes to decide the best split.</li>
+            </ul>
+        
+            <h3>5. Calculating Entropy & Information Gain</h3>
+            <p>Entropy measures the level of randomness in the data, while Information Gain helps decide which feature to split on.</p>
+            <pre><code>
+        from math import log2
+        
+        # Compute entropy
+        def entropy(class_labels):
+            unique_labels = set(class_labels)
+            entropy_value = 0
+            for label in unique_labels:
+                p_label = class_labels.count(label) / len(class_labels)
+                entropy_value -= p_label * log2(p_label)
+            return entropy_value
+        
+        # Compute information gain
+        def information_gain(parent_entropy, left_child, right_child):
+            left_entropy = entropy(left_child)
+            right_entropy = entropy(right_child)
+            weight_left = len(left_child) / (len(left_child) + len(right_child))
+            weight_right = len(right_child) / (len(left_child) + len(right_child))
+            return parent_entropy - (weight_left * left_entropy + weight_right * right_entropy)
+            </code></pre>
+            <p><strong>Explanation:</strong></p>
+            <ul>
+                <li><strong>Entropy</strong>: Measures randomness in a dataset. Lower entropy indicates a more homogeneous group.</li>
+                <li><strong>Information Gain</strong>: Quantifies the improvement in entropy when splitting a dataset on a specific feature.</li>
+            </ul>
+        </section>
+        
+        
+        
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Thomas Baker - MSc Data Science & AI Revision</p>
+    </footer>
+    
+    <script defer src="aml-flashcards.js"></script>
+</body>
+</html>

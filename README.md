@@ -1,43 +1,46 @@
-# Data Science & AI Revision Hub
+# MSc Data Science & AI Revision Hub
 
-Welcome to my **Data Science & AI Revision Hub**! This website is designed to host structured **revision notes and interactive flashcards** for all modules in my MSc in Data Science & AI.
+Welcome to my **MSc Data Science & AI Revision Hub**! This website is designed as a personal knowledge base where I document my learning journey across various modules in my Master's program. Each module has its own structured revision notes, interactive exercises, and key takeaways.
 
-## 📚 **Modules Covered**
-- **Data Analytics with R**
-  - Session 1: Big Data and Data Analytics
-  - Session 2: Basic Statistics
-  - Session 3: Linear Regression
-  - *(More sessions coming soon!)*
+## 🚀 Features
+- **Organized Module Pages** – Each module has a dedicated homepage with detailed study materials.
+- **Sleek UI Design** – A modern, visually appealing layout with interactive elements.
+- **Typewriter Intro Animation** – A dynamic greeting animation for a personal touch.
+- **Dark Theme** – Optimized for comfortable reading.
+- **Back to Home Button** – Easy navigation across subpages.
 
-## 🚀 **Features**
-- **Structured Notes**: Easy-to-read summaries of key concepts.
-- **Interactive Flashcards**: Click to test your knowledge.
-- **Modern UI**: Clean design with smooth animations.
-- **Mobile Friendly**: Optimized for desktop & mobile.
-
-## 🌐 **How to Use**
-1. Browse the **sessions** for each module.
-2. Read through the **notes** for a quick refresher.
-3. Use the **flashcards** for active recall.
-4. Check back for updates as I add more sessions!
-
-## 🛠 **Installation & Development**
-If you’d like to contribute or modify the content:
-```bash
-# Clone the repository
-git clone https://github.com/yourusername/data-science-revision.git
-
-# Open the project folder
-cd data-science-revision
-
-# Run a local web server (Python 3)
-python -m http.server
+## 📂 Project Structure
 ```
-Then, open `http://localhost:8000` in your browser to view the site.
+/ (Root)
+│── index.html           # Main homepage for all revision materials
+│── assets/              # Folder for images, icons, and stylesheets
+│── modules/             # Folder containing module-specific subpages
+│── projects/            # Folder for independent projects
+│── README.md            # This file
+│── profile.jpg          # My profile picture
+```
 
-## 🔗 **Live Website**
-You can access this website via **GitHub Pages** at:
-➡️ [yourgithubusername.github.io/data-science-revision](https://yourgithubusername.github.io/data-science-revision)
+## 🖼️ Thumbnail
+The repository includes a custom **website thumbnail**, designed to match the futuristic data science theme.
+
+## 🏗️ How to Use
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/revision-hub.git
+   ```
+2. **Open `index.html` in a browser**
+3. Navigate through module pages and enjoy structured study materials.
+
+## 🔗 Live Demo
+If hosted on **GitHub Pages**, access it at:
+```
+https://yourusername.github.io/revision-hub/
+```
+
+## 📜 License
+This project is open-source and available under the MIT License.
 
 ---
+
+**Created by Thomas Dibdin** – MSc Data Science & AI Student
 Made with ❤️ for **MSc in Data Science & AI** revision.

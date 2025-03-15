@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 2 - Data Preperation</title>
+    <link rel="stylesheet" href="aml-styles.css">
+</head>
+<body>
+    <header>
+        <h1>Session 2 - Data Preperation</h1>
+    </header>
+    
+    <main>
+        <a href="AML-homepage.html" class="back-button">← Back to Homepage</a>
+
+        <section id="objectives">
+            <h2>Key Learning Objectives</h2>
+            <ul>
+                <li>Understand why data preparation is crucial in Machine Learning.</li>
+                <li>Learn about different types of predictive modeling (decision, ranking, estimate).</li>
+                <li>Explore common data quality issues and how they impact ML models.</li>
+                <li>Understand major data pre-processing tasks, including handling missing values.</li>
+                <li>Learn about Feature Selection (FS), Dimensionality Reduction (DR), and Feature Extraction (FE).</li>
+                <li>Explore various re-sampling techniques, including Train/Test Splitting, k-Fold CV, and Leave-One-Out CV.</li>
+            </ul>
+        </section>
+        
+        
+        <section id="flashcards">
+            <h2>Flashcards</h2>
+            <div class="flashcard-container">
+                <div class="flashcard" data-question="What are the three types of predictive modeling?" data-answer="Decision, Ranking, Estimate"></div>
+                <div class="flashcard" data-question="Why is data quality important in ML?" data-answer="Poor data quality can lead to biased models, incorrect predictions, and unreliable insights."></div>
+                <div class="flashcard" data-question="What are common data quality issues?" data-answer="Outliers, missing values, redundancy, incorrect distribution."></div>
+                <div class="flashcard" data-question="What are the three main types of feature selection?" data-answer="Filter (statistical relevance), Wrapper (model-based), Embedded (built-in to algorithm)."></div>
+                <div class="flashcard" data-question="What is k-Fold Cross Validation?" data-answer="A technique that splits the dataset into k parts, training on k-1 and testing on the remaining fold."></div>
+                <div class="flashcard" data-question="What is Leave-One-Out Cross Validation (LOOCV)?" data-answer="A variant of k-fold CV where each instance is used as a test set once."></div>
+                <div class="flashcard" data-question="What are common data pre-processing techniques?" data-answer="Normalization, Standardization, Handling missing values, Data transformation."></div>
+                <div class="flashcard" data-question="What is the goal of Dimensionality Reduction?" data-answer="To reduce the number of features while preserving the most important information."></div>
+                <div class="flashcard" data-question="What is the curse of dimensionality?" data-answer="As the number of features grows, data becomes sparse, making ML models less effective."></div>
+                <div class="flashcard" data-question="What is the key difference between feature selection and feature extraction?" data-answer="Feature selection keeps only the most relevant features, while feature extraction creates new features from raw data."></div>
+            </div>
+        </section>
+        
+        <section id="notes">
+            <h2>Revision Notes</h2>
+            <article>
+                <h3>Predictive Modeling & Its Types</h3>
+                <p>Predictive modeling aims to create a mathematical model that predicts an outcome based on input data. There are three main types:</p>
+                <ul>
+                    <li><strong>Decision Prediction:</strong> Assigns a categorical label (e.g., spam detection, medical diagnosis).</li>
+                    <li><strong>Ranking Prediction:</strong> Orders items based on relevance (e.g., search engine ranking, recommendation systems).</li>
+                    <li><strong>Estimate Prediction:</strong> Predicts a continuous value (e.g., house price estimation, stock price forecasting).</li>
+                </ul>
+        
+                <h3>Data Quality & Preprocessing</h3>
+                <p>Most ML models require high-quality data for optimal performance. Common data quality issues include:</p>
+                <ul>
+                    <li><strong>Outliers:</strong> Extreme values that can distort model predictions.</li>
+                    <li><strong>Missing Values:</strong> Missing data points that can affect statistical calculations.</li>
+                    <li><strong>Data Redundancy:</strong> Duplicate or irrelevant data that increases complexity without adding value.</li>
+                    <li><strong>Data Scaling Issues:</strong> Some ML models require normalization or standardization.</li>
+                </ul>
+        
+                <h3>Feature Selection, Dimensionality Reduction & Feature Extraction</h3>
+                <ul>
+                    <li><strong>Feature Selection (FS):</strong> Removes irrelevant or redundant features while keeping useful ones.</li>
+                    <li><strong>Dimensionality Reduction (DR):</strong> Transforms data into a lower-dimensional space (e.g., PCA, autoencoders).</li>
+                    <li><strong>Feature Extraction (FE):</strong> Creates new features from existing data while preserving important information.</li>
+                </ul>
+        
+                <h3>Re-Sampling Techniques</h3>
+                <ul>
+                    <li><strong>Train-Test Split:</strong> Divides data into a training set and a testing set (e.g., 80%-20% split).</li>
+                    <li><strong>k-Fold Cross Validation:</strong> Splits data into k subsets and rotates the test set k times.</li>
+                    <li><strong>Leave-One-Out Cross Validation (LOOCV):</strong> Uses every instance except one for training, then tests on the left-out instance.</li>
+                </ul>
+            </article>
+        </section>
+        
+        <section id="key-code">
+            <h2>Key Code / Functions</h2>
+        
+            <h3>1. Handling Missing Values in Pandas</h3>
+            <pre><code>
+        import pandas as pd
+        
+        # Creating a sample dataset with missing values
+        data = {'A': [1, 2, None, 4], 'B': [None, 2, 3, 4]}
+        df = pd.DataFrame(data)
+        
+        # Checking for missing values
+        print(df.isnull().sum())
+        
+        # Filling missing values with the column mean
+        df.fillna(df.mean(), inplace=True)
+            </code></pre>
+            <p><strong>Explanation:</strong></p>
+            <ul>
+                <li><code>df.isnull().sum()</code>: Counts the number of missing values in each column.</li>
+                <li><code>df.fillna(df.mean(), inplace=True)</code>: Replaces missing values with the mean of each column.</li>
+                <li>This is important because missing values can lead to errors in ML models, and imputation techniques ensure complete datasets.</li>
+            </ul>
+        
+            <h3>2. Feature Scaling (Normalization & Standardization)</h3>
+            <pre><code>
+        from sklearn.preprocessing import StandardScaler, MinMaxScaler
+        
+        # Sample dataset
+        X = [[1, 2], [2, 3], [3, 4], [4, 5]]
+        
+        # Standardization (Mean = 0, Std Dev = 1)
+        scaler = StandardScaler()
+        X_std = scaler.fit_transform(X)
+        
+        # Normalization (Scales values between 0 and 1)
+        min_max_scaler = MinMaxScaler()
+        X_norm = min_max_scaler.fit_transform(X)
+            </code></pre>
+            <p><strong>Explanation:</strong></p>
+            <ul>
+                <li><strong>Standardization:</strong> Centers data around mean 0 and scales to unit variance (useful for SVM, logistic regression).</li>
+                <li><strong>Normalization:</strong> Scales all values between 0 and 1 (useful for k-NN, neural networks).</li>
+                <li>Different ML models require data on different scales for optimal performance.</li>
+            </ul>
+        
+            <h3>3. Train-Test Splitting & k-Fold Cross Validation</h3>
+            <pre><code>
+        from sklearn.model_selection import train_test_split, KFold
+        
+        # Sample dataset
+        X = [[1, 2], [2, 3], [3, 4], [4, 5]]
+        y = [0, 1, 1, 0]
+        
+        # Train-Test Split (80-20)
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        
+        # k-Fold Cross Validation (k=5)
+        kf = KFold(n_splits=5, shuffle=True, random_state=42)
+        for train_index, test_index in kf.split(X):
+            print("TRAIN:", train_index, "TEST:", test_index)
+            </code></pre>
+            <p><strong>Explanation:</strong></p>
+            <ul>
+                <li><strong>Train-Test Split:</strong> Divides data into a training set (80%) and test set (20%).</li>
+                <li><strong>k-Fold Cross Validation:</strong> Divides data into <code>k</code> subsets and rotates the test set <code>k</code> times to improve model evaluation.</li>
+                <li><strong>Why use CV?</strong> Reduces overfitting and provides a more generalizable performance estimate.</li>
+            </ul>
+        </section>
+        
+        
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Thomas Baker - MSc Data Science & AI Revision</p>
+    </footer>
+    
+    <script defer src="aml-flashcards.js"></script>
+</body>
+</html>

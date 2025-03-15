@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 8 - Feature Learning & Autoencoders</title>
+    <link rel="stylesheet" href="aml-styles.css">
+</head>
+<body>
+    <header>
+        <h1>Session 8 - Feature Learning & Autoencoders</h1>
+    </header>
+    
+    <main>
+        <a href="AML-homepage.html" class="back-button">← Back to Homepage</a>
+
+        <section id="objectives">
+            <h2>Key Learning Objectives</h2>
+            <ul>
+                <li>Understand the concept of Feature Learning and its importance in machine learning models.</li>
+                <li>Explore Representation Learning and how it helps models automatically learn useful data representations.</li>
+                <li>Learn about Autoencoders and how they compress and reconstruct data.</li>
+                <li>Understand the differences between different types of Autoencoders: Stacked, Sparse, Denoising, and Variational.</li>
+                <li>Explore applications of Autoencoders in feature extraction, anomaly detection, and dimensionality reduction.</li>
+                <li>Learn how Variational Autoencoders (VAEs) generate new data similar to training examples.</li>
+            </ul>
+        </section>                      
+        
+        <section id="flashcards">
+            <h2>Flashcards</h2>
+            <div class="flashcard-container">
+                <div class="flashcard" data-question="What is Representation Learning?" data-answer="A method where models automatically learn useful data representations without manual feature engineering."></div>
+                <div class="flashcard" data-question="What is an Autoencoder?" data-answer="A type of neural network that learns to compress and reconstruct input data."></div>
+                <div class="flashcard" data-question="What is the purpose of the Encoder in an Autoencoder?" data-answer="Compresses input data into a lower-dimensional representation (latent space)."></div>
+                <div class="flashcard" data-question="What is the purpose of the Decoder in an Autoencoder?" data-answer="Reconstructs the input data from the compressed latent representation."></div>
+                <div class="flashcard" data-question="What is a Stacked Autoencoder?" data-answer="A deep Autoencoder with multiple layers that progressively learn complex features."></div>
+                <div class="flashcard" data-question="What is a Sparse Autoencoder?" data-answer="An Autoencoder with a sparsity constraint, forcing only a few neurons to be activated."></div>
+                <div class="flashcard" data-question="What is a Denoising Autoencoder?" data-answer="An Autoencoder trained to remove noise from corrupted input data."></div>
+                <div class="flashcard" data-question="What is a Variational Autoencoder (VAE)?" data-answer="A generative model that learns a probability distribution over the input data."></div>
+                <div class="flashcard" data-question="Why are Autoencoders considered unsupervised learning models?" data-answer="They do not require labeled data and learn by reconstructing inputs."></div>
+                <div class="flashcard" data-question="What is the loss function used in VAEs?" data-answer="KL Divergence + Reconstruction Loss (e.g., MSE or Binary Cross-Entropy)."></div>
+            </div>
+        </section>
+                     
+        
+        <section id="notes">
+            <h2>Revision Notes</h2>
+            <article>
+                <h3>🔹 Feature & Representation Learning</h3>
+                <p>Feature learning enables models to automatically extract useful patterns from data instead of relying on manually designed features. It is crucial in deep learning applications such as image recognition and speech processing.</p>
+        
+                <h3>🔹 Autoencoders</h3>
+                <p>Autoencoders are a type of neural network used for unsupervised learning. They consist of:</p>
+                <ul>
+                    <li><strong>Encoder:</strong> Maps the input data to a lower-dimensional latent representation.</li>
+                    <li><strong>Decoder:</strong> Reconstructs the input from the latent representation.</li>
+                </ul>
+        
+                <h3>🔹 Types of Autoencoders</h3>
+                <ul>
+                    <li><strong>Stacked Autoencoder:</strong> A deep Autoencoder with multiple layers that extract hierarchical features.</li>
+                    <li><strong>Sparse Autoencoder:</strong> Applies a sparsity constraint, forcing only a few neurons to be activated.</li>
+                    <li><strong>Denoising Autoencoder:</strong> Learns to reconstruct clean data from noisy inputs.</li>
+                    <li><strong>Variational Autoencoder (VAE):</strong> Learns to generate new data by mapping inputs to a probability distribution.</li>
+                </ul>
+        
+                <h3>🔹 Applications of Autoencoders</h3>
+                <ul>
+                    <li>Dimensionality reduction (similar to PCA but non-linear).</li>
+                    <li>Anomaly detection by reconstructing normal patterns.</li>
+                    <li>Data compression by learning compact representations.</li>
+                    <li>Image and speech enhancement using denoising autoencoders.</li>
+                    <li>Generating synthetic data using VAEs.</li>
+                </ul>
+            </article>
+        </section>
+        
+        
+        <section id="key-code">
+            <h2>Key Code & Functions</h2>
+        
+            <h3>1. Loading and Preprocessing the MNIST Dataset</h3>
+            <pre><code>
+        import tensorflow as tf
+        from tensorflow.keras.datasets import mnist
+        
+        # Load dataset
+        (x_train, _), (x_test, _) = mnist.load_data()
+        
+        # Normalize images (scale pixel values between 0 and 1)
+        x_train, x_test = x_train / 255.0, x_test / 255.0
+        
+        # Flatten images into 1D vectors
+        x_train = x_train.reshape(-1, 784)
+        x_test = x_test.reshape(-1, 784)
+            </code></pre>
+            <p><strong>Explanation:</strong></p>
+            <ul>
+                <li><strong>MNIST dataset:</strong> A collection of 28x28 grayscale handwritten digit images.</li>
+                <li><strong>Normalization:</strong> Scales pixel values between 0 and 1 for faster and stable training.</li>
+                <li><strong>Flattening:</strong> Converts each image into a 1D vector (28x28 → 784 pixels).</li>
+            </ul>
+        
+            <h3>2. Building a Simple Autoencoder</h3>
+            <pre><code>
+        from tensorflow.keras.models import Model
+        from tensorflow.keras.layers import Input, Dense
+        
+        # Define the Encoder
+        input_layer = Input(shape=(784,))
+        encoded = Dense(128, activation='relu')(input_layer)
+        encoded = Dense(64, activation='relu')(encoded)
+        encoded = Dense(32, activation='relu')(encoded)  # Bottleneck layer
+        
+        # Define the Decoder
+        decoded = Dense(64, activation='relu')(encoded)
+        decoded = Dense(128, activation='relu')(decoded)
+        decoded = Dense(784, activation='sigmoid')(decoded)
+        
+        # Define Autoencoder model
+        autoencoder = Model(input_layer, decoded)
+        autoencoder.compile(optimizer='adam', loss='mse')
+            </code></pre>
+            <p><strong>Explanation:</strong></p>
+            <ul>
+                <li><strong>Encoder:</strong> Compresses input images into a smaller latent space representation.</li>
+                <li><strong>Latent space:</strong> The bottleneck layer (size 32) stores compact feature representations.</li>
+                <li><strong>Decoder:</strong> Reconstructs input images from the compressed latent representation.</li>
+                <li><strong>Activation functions:</strong> 
+                    <ul>
+                        <li><strong>ReLU:</strong> Used in hidden layers for non-linearity.</li>
+                        <li><strong>Sigmoid:</strong> Used in the output layer to normalize pixel values between 0 and 1.</li>
+                    </ul>
+                </li>
+                <li><strong>Loss Function:</strong> Mean Squared Error (MSE) measures reconstruction quality.</li>
+            </ul>
+        
+            <h3>3. Training the Autoencoder</h3>
+            <pre><code>
+        autoencoder.fit(x_train, x_train, epochs=50, batch_size=256, validation_data=(x_test, x_test))
+            </code></pre>
+            <p><strong>Explanation:</strong></p>
+            <ul>
+                <li><strong>Self-supervised learning:</strong> The model learns by reconstructing input images.</li>
+                <li><strong>Epochs:</strong> The model trains for 50 iterations over the entire dataset.</li>
+                <li><strong>Batch size:</strong> Uses batches of 256 samples to update weights efficiently.</li>
+                <li><strong>Validation:</strong> Monitors reconstruction performance on test data.</li>
+            </ul>
+        
+            <h3>4. Implementing a Denoising Autoencoder</h3>
+            <pre><code>
+        import numpy as np
+        
+        # Add random noise to images
+        noise_factor = 0.5
+        x_train_noisy = x_train + noise_factor * np.random.normal(size=x_train.shape)
+        x_test_noisy = x_test + noise_factor * np.random.normal(size=x_test.shape)
+        
+        # Clip values to stay within 0-1 range
+        x_train_noisy = np.clip(x_train_noisy, 0., 1.)
+        x_test_noisy = np.clip(x_test_noisy, 0., 1.)
+        
+        # Train the autoencoder with noisy data
+        autoencoder.fit(x_train_noisy, x_train, epochs=10, batch_size=256, validation_data=(x_test_noisy, x_test))
+            </code></pre>
+            <p><strong>Explanation:</strong></p>
+            <ul>
+                <li><strong>Denoising:</strong> The model learns to remove noise and reconstruct clean images.</li>
+                <li><strong>Noise factor:</strong> A value of 0.5 means 50% of the pixel values are perturbed.</li>
+                <li><strong>Clipping:</strong> Ensures pixel values stay between 0 and 1 after adding noise.</li>
+                <li><strong>Training strategy:</strong> The autoencoder is fed noisy inputs but learns to reconstruct the original images.</li>
+            </ul>
+        
+            <h3>5. Implementing a Variational Autoencoder (VAE)</h3>
+            <pre><code>
+        from tensorflow.keras.layers import Lambda
+        
+        # Sampling function for the latent space
+        def sampling(args):
+            z_mean, z_log_var = args
+            epsilon = tf.keras.backend.random_normal(shape=(tf.keras.backend.shape(z_mean)[0], 2), mean=0, stddev=1)
+            return z_mean + tf.keras.backend.exp(z_log_var / 2) * epsilon
+        
+        # Define latent space
+        z_mean = Dense(2)(encoded)
+        z_log_var = Dense(2)(encoded)
+        z = Lambda(sampling, output_shape=(2,))([z_mean, z_log_var])
+            </code></pre>
+            <p><strong>Explanation:</strong></p>
+            <ul>
+                <li><strong>Latent space sampling:</strong> Unlike traditional autoencoders, VAEs model data as a probability distribution.</li>
+                <li><strong>Reparameterization trick:</strong> Ensures smooth interpolation between latent representations.</li>
+                <li><strong>KL divergence loss:</strong> Encourages the latent space to resemble a Gaussian distribution.</li>
+            </ul>
+        
+            <h3>6. Evaluating the Autoencoder</h3>
+            <pre><code>
+        test_loss = autoencoder.evaluate(x_test, x_test)
+        print(f"Test Loss: {test_loss:.4f}")
+            </code></pre>
+            <p><strong>Explanation:</strong></p>
+            <ul>
+                <li><strong>Evaluation:</strong> Measures how well the autoencoder reconstructs test images.</li>
+                <li><strong>Loss value:</strong> A lower loss means better reconstruction quality.</li>
+            </ul>
+        </section>
+        
+        
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Thomas Baker - MSc Data Science & AI Revision</p>
+    </footer>
+    
+    <script defer src="aml-flashcards.js"></script>
+</body>
+</html>
