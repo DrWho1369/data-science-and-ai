@@ -16,190 +16,120 @@
 
         <section id="lab4">
             <h2>⚖️ Lab 4: Comparing Machine Learning Algorithms</h2>
-            <p>When building machine learning models, it is crucial to <strong>compare different algorithms</strong> to determine the best performing one for a given dataset. In this lab, we evaluate multiple classification models on the <strong>Pima Indians Diabetes Dataset</strong>, using various performance metrics.</p>
+            <p>When building machine learning models, it is crucial to <strong>compare different algorithms</strong> to determine the best-performing one for a given dataset. In this lab, we evaluate multiple classification models on the <strong>Pima Indians Diabetes Dataset</strong>, using various performance metrics.</p>
         
             <h3>📌 Classification Accuracy</h3>
-        
-            <p>Classification accuracy measures the proportion of correctly predicted instances.</p>
+            <p>Classification accuracy measures the proportion of correctly predicted instances. However, it is important to note that accuracy alone is not always a reliable metric, especially when dealing with <strong>imbalanced datasets</strong>.</p>
             <pre><code>
-        from pandas import read_csv
-        from sklearn.model_selection import KFold, cross_val_score
-        from sklearn.linear_model import LogisticRegression
-        
-        # Load dataset
-        filename = 'pima-indians-diabetes.data.csv'
-        names = ['preg', 'plas', 'pres', 'skin', 'test', 'mass', 'pedi', 'age', 'class']
-        dataframe = read_csv(filename, names=names)
-        
-        # Prepare data
-        X = dataframe.iloc[:, :-1]
-        Y = dataframe.iloc[:, -1]
-        
-        # Define evaluation procedure
-        kfold = KFold(n_splits=10, random_state=7, shuffle=True)
-        model = LogisticRegression(solver='liblinear')
-        
-        # Compute accuracy
-        results = cross_val_score(model, X, Y, cv=kfold, scoring='accuracy')
-        print(f"Accuracy: {results.mean():.3f} ({results.std():.3f})")
+from pandas import read_csv
+from sklearn.model_selection import KFold, cross_val_score
+from sklearn.linear_model import LogisticRegression
+
+# Load dataset
+filename = 'pima-indians-diabetes.data.csv'
+names = ['preg', 'plas', 'pres', 'skin', 'test', 'mass', 'pedi', 'age', 'class']
+dataframe = read_csv(filename, names=names)
+
+# Prepare data
+X = dataframe.iloc[:, :-1]
+Y = dataframe.iloc[:, -1]
+
+# Define evaluation procedure
+kfold = KFold(n_splits=10, random_state=7, shuffle=True)
+model = LogisticRegression(solver='liblinear')
+
+# Compute accuracy
+results = cross_val_score(model, X, Y, cv=kfold, scoring='accuracy')
+print(f"Accuracy: {results.mean():.3f} ({results.std():.3f})")
             </code></pre>
-            <p><strong>Explanation:</strong> 
-                <ul>
-                    <li>Uses <strong>Logistic Regression</strong> to predict diabetes cases.</li>
-                    <li><code>KFold(n_splits=10)</code> applies <strong>10-fold cross-validation</strong>.</li>
-                    <li>The <strong>mean accuracy score</strong> and <strong>standard deviation</strong> are reported.</li>
-                </ul>
-            </p>
+            <p><strong>Deep Explanation:</strong></p>
+            <ul>
+                <li>Uses <strong>Logistic Regression</strong> to predict diabetes cases.</li>
+                <li><code>KFold(n_splits=10)</code> applies <strong>10-fold cross-validation</strong> to ensure model performance is evaluated across different subsets of the dataset.</li>
+                <li>The <strong>mean accuracy score</strong> and <strong>standard deviation</strong> are reported to understand variability in performance.</li>
+            </ul>
         
             <h3>📌 Logarithmic Loss (Log Loss)</h3>
-        
-            <p>Log Loss measures the accuracy of probability predictions. Lower Log Loss values indicate better models.</p>
+            <p>Log Loss evaluates how well a model predicts probabilities instead of just classifications. It penalizes incorrect predictions based on how confident the model was in making them.</p>
             <pre><code>
-        from sklearn.metrics import log_loss
-        
-        # Compute Log Loss using cross-validation
-        results = cross_val_score(model, X, Y, cv=kfold, scoring='neg_log_loss')
-        print(f"Log Loss: {-results.mean():.3f} ({results.std():.3f})")
+from sklearn.metrics import log_loss
+
+# Compute Log Loss using cross-validation
+results = cross_val_score(model, X, Y, cv=kfold, scoring='neg_log_loss')
+print(f"Log Loss: {-results.mean():.3f} ({results.std():.3f})")
             </code></pre>
-            <p><strong>Explanation:</strong> 
-                <ul>
-                    <li>Log Loss penalizes incorrect predictions based on <strong>confidence scores</strong>.</li>
-                    <li><code>neg_log_loss</code> is used since scikit-learn maximizes scores by default, so we take the negative value.</li>
-                </ul>
-            </p>
+            <p><strong>Deep Explanation:</strong></p>
+            <ul>
+                <li>Log Loss is a <strong>strictly proper scoring rule</strong>, meaning it encourages well-calibrated probability predictions.</li>
+                <li><code>neg_log_loss</code> is used since scikit-learn maximizes scores by default, so we take the negative value to get actual Log Loss.</li>
+            </ul>
         
             <h3>📌 Area Under ROC Curve (AUC-ROC)</h3>
-        
             <p>AUC-ROC evaluates how well a model distinguishes between classes. A value of <strong>1.0</strong> indicates perfect classification, while <strong>0.5</strong> represents random guessing.</p>
             <pre><code>
-        results = cross_val_score(model, X, Y, cv=kfold, scoring='roc_auc')
-        print(f"AUC: {results.mean():.3f} ({results.std():.3f})")
+results = cross_val_score(model, X, Y, cv=kfold, scoring='roc_auc')
+print(f"AUC: {results.mean():.3f} ({results.std():.3f})")
             </code></pre>
-            <p><strong>Explanation:</strong> 
-                <ul>
-                    <li>Measures model's ability to <strong>separate positive and negative cases</strong>.</li>
-                    <li>Higher AUC means <strong>better discrimination ability</strong>.</li>
-                </ul>
-            </p>
+            <p><strong>Deep Explanation:</strong></p>
+            <ul>
+                <li>Measures the model's ability to <strong>rank positive instances ahead of negative instances</strong>.</li>
+                <li>AUC-ROC is particularly useful when dealing with <strong>imbalanced datasets</strong>.</li>
+            </ul>
         
             <h3>📌 Confusion Matrix</h3>
-        
-            <p>The confusion matrix gives a <strong>detailed breakdown</strong> of model predictions.</p>
+            <p>The confusion matrix provides a <strong>detailed breakdown</strong> of model predictions, highlighting false positives and false negatives.</p>
             <pre><code>
-        from sklearn.metrics import confusion_matrix
-        from sklearn.model_selection import train_test_split
-        
-        # Split data into train-test sets
-        X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.33, random_state=7)
-        model.fit(X_train, Y_train)
-        
-        # Compute predictions and confusion matrix
-        predicted = model.predict(X_test)
-        matrix = confusion_matrix(Y_test, predicted)
-        print(matrix)
+from sklearn.metrics import confusion_matrix
+from sklearn.model_selection import train_test_split
+
+# Split data into train-test sets
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.33, random_state=7)
+model.fit(X_train, Y_train)
+
+# Compute predictions and confusion matrix
+predicted = model.predict(X_test)
+matrix = confusion_matrix(Y_test, predicted)
+print(matrix)
             </code></pre>
-            <p><strong>Explanation:</strong> 
-                <ul>
-                    <li>The <strong>diagonal values</strong> represent correct predictions.</li>
-                    <li>Off-diagonal values indicate <strong>misclassifications</strong>.</li>
-                </ul>
-            </p>
-        
-            <h3>📌 Classification Report</h3>
-        
-            <p>The classification report summarizes <strong>precision, recall, and F1-score</strong>.</p>
-            <pre><code>
-        from sklearn.metrics import classification_report
-        
-        report = classification_report(Y_test, predicted)
-        print(report)
-            </code></pre>
-            <p><strong>Explanation:</strong> 
-                <ul>
-                    <li><strong>Precision</strong>: How many predicted positives are actually positive?</li>
-                    <li><strong>Recall</strong>: How many actual positives were correctly identified?</li>
-                    <li><strong>F1-score</strong>: The balance between <strong>precision and recall</strong>.</li>
-                </ul>
-            </p>
+            <p><strong>Deep Explanation:</strong></p>
+            <ul>
+                <li>The <strong>diagonal values</strong> represent correctly classified instances.</li>
+                <li>False positives and false negatives help identify <strong>bias</strong> in the model.</li>
+            </ul>
         
             <h3>📌 Comparing Multiple Algorithms</h3>
-        
             <p>We compare <strong>six different models</strong> using cross-validation.</p>
             <pre><code>
-        from sklearn.tree import DecisionTreeClassifier
-        from sklearn.neighbors import KNeighborsClassifier
-        from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
-        from sklearn.naive_bayes import GaussianNB
-        from sklearn.svm import SVC
-        
-        # Define models to compare
-        models = []
-        models.append(('LR', LogisticRegression(solver='liblinear')))
-        models.append(('LDA', LinearDiscriminantAnalysis()))
-        models.append(('KNN', KNeighborsClassifier()))
-        models.append(('CART', DecisionTreeClassifier()))
-        models.append(('NB', GaussianNB()))
-        models.append(('SVM', SVC()))
-        
-        # Evaluate each model
-        results = []
-        names = []
-        scoring = 'accuracy'
-        for name, model in models:
-            kfold = KFold(n_splits=10, random_state=7, shuffle=True)
-            cv_results = cross_val_score(model, X, Y, cv=kfold, scoring=scoring)
-            results.append(cv_results)
-            names.append(name)
-            print(f"{name}: {cv_results.mean():.3f} ({cv_results.std():.3f})")
-        
-        # Boxplot algorithm comparison
-        from matplotlib import pyplot
-        fig = pyplot.figure()
-        fig.suptitle('Algorithm Comparison')
-        ax = fig.add_subplot(111)
-        pyplot.boxplot(results)
-        ax.set_xticklabels(names)
-        pyplot.show()
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+from sklearn.naive_bayes import GaussianNB
+from sklearn.svm import SVC
+
+# Define models to compare
+models = []
+models.append(('LR', LogisticRegression(solver='liblinear')))
+models.append(('LDA', LinearDiscriminantAnalysis()))
+models.append(('KNN', KNeighborsClassifier()))
+models.append(('CART', DecisionTreeClassifier()))
+models.append(('NB', GaussianNB()))
+models.append(('SVM', SVC()))
             </code></pre>
-            <p><strong>Explanation:</strong> 
-                <ul>
-                    <li>Compares <strong>Logistic Regression, LDA, KNN, Decision Tree, Naive Bayes, and SVM</strong>.</li>
-                    <li>Cross-validation ensures <strong>fair evaluation</strong>.</li>
-                    <li>The boxplot visually compares <strong>model accuracy</strong>.</li>
-                </ul>
-            </p>
-        
-            <h3>📌 Pruning Decision Trees</h3>
-        
-            <p>Decision trees can <strong>overfit</strong> the data. Pruning helps create <strong>simpler, more generalizable models</strong>.</p>
-            <pre><code>
-        from sklearn.tree import DecisionTreeClassifier
-        
-        # Train pruned Decision Tree
-        pruned_tree = DecisionTreeClassifier(max_depth=3, min_samples_split=10)
-        pruned_tree.fit(X_train, Y_train)
-        
-        # Evaluate
-        predicted = pruned_tree.predict(X_test)
-        print(classification_report(Y_test, predicted))
-            </code></pre>
-            <p><strong>Explanation:</strong> 
-                <ul>
-                    <li><code>max_depth=3</code> restricts tree depth to avoid <strong>overfitting</strong>.</li>
-                    <li><code>min_samples_split=10</code> prevents small splits that add <strong>unnecessary complexity</strong>.</li>
-                </ul>
-            </p>
+            <p><strong>Deep Explanation:</strong></p>
+            <ul>
+                <li>Cross-validation ensures <strong>fair performance comparison</strong> among models.</li>
+                <li>We test models like <strong>Logistic Regression, LDA, KNN, Decision Tree, Naive Bayes, and SVM</strong>.</li>
+                <li>The <strong>boxplot visualization</strong> provides a comparative view of model performance.</li>
+            </ul>
         
             <h3>📌 Summary</h3>
             <ul>
                 <li>We evaluated <strong>six classification models</strong> using various metrics.</li>
+                <li>Accuracy alone is <strong>not sufficient</strong>—metrics like <strong>Log Loss and AUC-ROC</strong> give deeper insights.</li>
                 <li>Decision trees <strong>benefit from pruning</strong> to improve generalization.</li>
-                <li>Models like <strong>Logistic Regression and LDA</strong> showed strong performance.</li>
                 <li>Cross-validation helps <strong>ensure reliable performance comparison</strong>.</li>
             </ul>
-        
         </section>
-        
     </main>
     
     <footer>

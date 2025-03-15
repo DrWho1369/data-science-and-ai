@@ -15,14 +15,10 @@
         <a href="AML-homepage.html" class="back-button">← Back to Homepage</a>
         <section id="lab9">
             <h2>⏳ Lab 9: Long Short-Term Memory (LSTM) Networks</h2>
-            <p>In this lab, we explore <strong>LSTM networks</strong>, a type of <strong>Recurrent Neural Network (RNN)</strong> designed for handling <strong>sequential data</strong>. We will cover two applications:</p>
-            <ul>
-                <li>📈 <strong>Time-Series Forecasting:</strong> Predicting the number of airline passengers.</li>
-                <li>📩 <strong>Text Classification:</strong> Detecting spam messages using LSTM.</li>
-            </ul>
+            <p>LSTMs are a type of <strong>Recurrent Neural Network (RNN)</strong> that solve the <strong>vanishing gradient problem</strong> by maintaining memory over long sequences. They are ideal for tasks involving <strong>sequential dependencies</strong>, such as time-series forecasting and natural language processing.</p>
         
             <h3>📌 1. Time-Series Forecasting with LSTM</h3>
-            <p>We predict the number of <strong>international airline passengers</strong> using an LSTM model.</p>
+            <p>This section focuses on using an <strong>LSTM model</strong> to predict future airline passenger numbers based on past trends.</p>
         
             <h4>🔹 Loading and Visualizing the Dataset</h4>
             <pre><code>
@@ -41,8 +37,9 @@
             </code></pre>
             <p><strong>Explanation:</strong>
                 <ul>
-                    <li>Uses <strong>pandas</strong> to load the dataset, ignoring the date column.</li>
-                    <li>Visualizes <strong>trends over time</strong> using <strong>matplotlib</strong>.</li>
+                    <li>Uses <strong>pandas</strong> to load only the passenger count column from the dataset.</li>
+                    <li><code>matplotlib</code> is used to visualize <strong>trends in passenger data</strong> over time.</li>
+                    <li>Time-series data is characterized by <strong>seasonal patterns and trends</strong>, which an LSTM can capture.</li>
                 </ul>
             </p>
         
@@ -58,8 +55,8 @@
             </code></pre>
             <p><strong>Explanation:</strong>
                 <ul>
-                    <li>LSTMs are <strong>sensitive to scale</strong>, so we normalize values between <strong>0 and 1</strong>.</li>
-                    <li>This ensures <strong>faster convergence</strong> and avoids gradient issues.</li>
+                    <li>LSTMs are <strong>sensitive to large numerical values</strong>, so we normalize data to a <strong>0-1 range</strong>.</li>
+                    <li>Scaling ensures <strong>faster convergence</strong> and reduces the risk of gradient issues during training.</li>
                 </ul>
             </p>
         
@@ -79,8 +76,8 @@
             </code></pre>
             <p><strong>Explanation:</strong>
                 <ul>
-                    <li>Reshapes the dataset into <strong>LSTM-compatible format</strong>.</li>
-                    <li>Each sample represents <strong>one time step</strong> with <strong>one feature</strong>.</li>
+                    <li>LSTMs require input in the shape <strong>(samples, time steps, features)</strong>.</li>
+                    <li>Each sample represents <strong>one time step</strong> with <strong>one feature (passenger count)</strong>.</li>
                 </ul>
             </p>
         
@@ -101,41 +98,14 @@
             </code></pre>
             <p><strong>Explanation:</strong>
                 <ul>
-                    <li>Creates an LSTM model with <strong>4 memory cells</strong>.</li>
-                    <li>Uses <strong>mean squared error</strong> as the loss function.</li>
-                    <li>Trains the model for <strong>100 epochs</strong> using a batch size of <strong>1</strong>.</li>
-                </ul>
-            </p>
-        
-            <h4>🔹 Evaluating Model Performance</h4>
-            <pre><code>
-        from sklearn.metrics import mean_squared_error
-        import math
-        
-        # Generate predictions
-        trainPredict = model.predict(trainX)
-        testPredict = model.predict(testX)
-        
-        # Convert predictions back to original scale
-        trainPredict = scaler.inverse_transform(trainPredict)
-        testPredict = scaler.inverse_transform(testPredict)
-        
-        # Compute RMSE
-        trainScore = math.sqrt(mean_squared_error(trainY, trainPredict))
-        testScore = math.sqrt(mean_squared_error(testY, testPredict))
-        
-        print(f"Train RMSE: {trainScore:.2f}")
-        print(f"Test RMSE: {testScore:.2f}")
-            </code></pre>
-            <p><strong>Explanation:</strong>
-                <ul>
-                    <li>Computes <strong>Root Mean Squared Error (RMSE)</strong> to measure prediction accuracy.</li>
-                    <li>Lower RMSE means better performance.</li>
+                    <li>Uses <strong>4 LSTM units</strong> to learn sequential dependencies in the data.</li>
+                    <li>The <strong>output layer</strong> contains <strong>1 neuron</strong>, which predicts the next passenger count.</li>
+                    <li><code>mean_squared_error</code> is used as the loss function because this is a <strong>regression task</strong>.</li>
                 </ul>
             </p>
         
             <h3>📌 2. Spam Classification with LSTM</h3>
-            <p>We train an LSTM model to classify <strong>SMS messages</strong> as <strong>spam or not spam</strong>.</p>
+            <p>We use an LSTM model to classify <strong>SMS messages</strong> as <strong>spam or not spam</strong>.</p>
         
             <h4>🔹 Loading and Preprocessing the Dataset</h4>
             <pre><code>
@@ -160,7 +130,7 @@
             <p><strong>Explanation:</strong>
                 <ul>
                     <li>Loads <strong>SMS spam dataset</strong> and removes unnecessary columns.</li>
-                    <li>Encodes labels: <strong>ham (0), spam (1)</strong>.</li>
+                    <li>Encodes labels: <strong>ham (0), spam (1)</strong>, converting categorical labels into numerical format.</li>
                     <li>Splits data into <strong>training (85%) and testing (15%) sets</strong>.</li>
                 </ul>
             </p>
@@ -209,8 +179,9 @@
             </code></pre>
             <p><strong>Explanation:</strong>
                 <ul>
-                    <li>Trains an LSTM <strong>binary classifier</strong> using spam messages.</li>
-                    <li>Uses <strong>Dropout</strong> to prevent overfitting.</li>
+                    <li>Trains an LSTM <strong>binary classifier</strong> for spam detection.</li>
+                    <li>Uses <strong>Dropout (0.5)</strong> to reduce overfitting.</li>
+                    <li>Uses <strong>Sigmoid activation</strong> in the output layer for binary classification.</li>
                 </ul>
             </p>
         
@@ -218,9 +189,11 @@
             <ul>
                 <li>Built an <strong>LSTM model for time-series forecasting</strong>.</li>
                 <li>Developed an <strong>LSTM spam classification model</strong>.</li>
+                <li>Applied <strong>data normalization, tokenization, and padding</strong> for sequence modeling.</li>
             </ul>
         
         </section>
+        
         
         
     </main>
