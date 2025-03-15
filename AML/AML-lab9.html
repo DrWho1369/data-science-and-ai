@@ -15,10 +15,10 @@
         <a href="AML-homepage.html" class="back-button">← Back to Homepage</a>
         <section id="lab9">
             <h2>⏳ Lab 9: Long Short-Term Memory (LSTM) Networks</h2>
-            <p><strong>Long Short-Term Memory (LSTM)</strong> networks are a type of <strong>Recurrent Neural Network (RNN)</strong> designed to handle **sequential data** while addressing the **vanishing gradient problem**. Unlike standard RNNs, LSTMs use **memory cells and gated mechanisms** to retain long-term dependencies, making them ideal for **time-series forecasting, speech recognition, and natural language processing**.</p>
+            <p><strong>Long Short-Term Memory (LSTM)</strong> networks are a type of <strong>Recurrent Neural Network (RNN)</strong> designed to handle <strong>sequential data</strong> while addressing the <strong>vanishing gradient problem</strong>. Unlike standard RNNs, LSTMs use <strong>memory cells and gated mechanisms</strong> to retain long-term dependencies, making them ideal for <strong>time-series forecasting, speech recognition, and natural language processing</strong>.</p>
         
             <h3>📌 1. Time-Series Forecasting with LSTM</h3>
-            <p>We will train an LSTM model to predict **future airline passenger numbers** based on past trends.</p>
+            <p>We will train an LSTM model to predict <strong>future airline passenger numbers</strong> based on past trends.</p>
         
             <h4>🔹 Loading and Visualizing the Dataset</h4>
             <pre><code>
@@ -39,7 +39,7 @@
             <ul>
                 <li>This dataset represents <strong>monthly airline passenger counts</strong> over time.</li>
                 <li><strong>Time-series forecasting</strong> aims to predict future values by learning patterns from past data.</li>
-                <li>Seasonality, trends, and irregularities can significantly affect predictions, making **LSTMs useful for capturing dependencies.**</li>
+                <li>Seasonality, trends, and irregularities can significantly affect predictions, making <strong>LSTMs useful for capturing dependencies.</strong></li>
             </ul>
         
             <h4>🔹 Data Normalization</h4>
@@ -54,8 +54,8 @@
             </code></pre>
             <p><strong>Deep Explanation:</strong></p>
             <ul>
-                <li><strong>Feature scaling</strong> is crucial for neural networks, ensuring numerical values remain in a **consistent range**.</li>
-                <li>LSTMs are sensitive to **scale differences**, and normalizing values between **0 and 1** speeds up convergence.</li>
+                <li><strong>Feature scaling</strong> is crucial for neural networks, ensuring numerical values remain in a <strong>consistent range</strong>.</li>
+                <li>LSTMs are sensitive to <strong>scale differences</strong>, and normalizing values between <strong>0 and 1</strong> speeds up convergence.</li>
             </ul>
         
             <h4>🔹 Reshaping Data for LSTM</h4>
@@ -72,8 +72,8 @@
             </code></pre>
             <p><strong>Deep Explanation:</strong></p>
             <ul>
-                <li>LSTMs require input in the form **(samples, time steps, features)**.</li>
-                <li>Each **sample represents a sequence of past observations**, while the model predicts the next value.</li>
+                <li>LSTMs require input in the form <strong>(samples, time steps, features)</strong>.</li>
+                <li>Each <strong>sample represents a sequence of past observations</strong>, while the model predicts the next value.</li>
             </ul>
         
             <h4>🔹 Defining and Training an LSTM Model</h4>
@@ -93,13 +93,13 @@
             </code></pre>
             <p><strong>Deep Explanation:</strong></p>
             <ul>
-                <li>The LSTM layer consists of **50 memory cells** that capture **temporal dependencies** in the data.</li>
-                <li><code>Dense(1)</code> serves as the output layer, predicting a **single numerical value** (passenger count).</li>
-                <li><strong>Mean squared error (MSE)</strong> is used as the loss function for **regression tasks**.</li>
+                <li>The LSTM layer consists of <strong>50 memory cells</strong> that capture <strong>temporal dependencies</strong> in the data.</li>
+                <li><code>Dense(1)</code> serves as the output layer, predicting a <strong>single numerical value</strong> (passenger count).</li>
+                <li><strong>Mean squared error (MSE)</strong> is used as the loss function for <strong>regression tasks</strong>.</li>
             </ul>
         
             <h3>📌 2. Spam Classification with LSTM</h3>
-            <p>We will now use an **LSTM-based text classifier** to detect spam messages.</p>
+            <p>We will now use an <strong>LSTM-based text classifier</strong> to detect spam messages.</p>
         
             <h4>🔹 Text Preprocessing & Tokenization</h4>
             <pre><code>
@@ -117,8 +117,8 @@
             </code></pre>
             <p><strong>Deep Explanation:</strong></p>
             <ul>
-                <li>Converts text messages into **numerical sequences** using word-to-index mapping.</li>
-                <li>Pads sequences to **ensure uniform input size**, as LSTMs require **fixed-length inputs**.</li>
+                <li>Converts text messages into <strong>numerical sequences</strong> using word-to-index mapping.</li>
+                <li>Pads sequences to <strong>ensure uniform input size</strong>, as LSTMs require <strong>fixed-length inputs</strong>.</li>
             </ul>
         
             <h4>🔹 Defining and Training the Spam Detection Model</h4>
@@ -139,9 +139,9 @@
             </code></pre>
             <p><strong>Deep Explanation:</strong></p>
             <ul>
-                <li>Uses **word embeddings** to capture the semantic meaning of words.</li>
-                <li>The **LSTM layer processes sequential dependencies** in the text.</li>
-                <li>**Dropout (0.5)** prevents overfitting, and **sigmoid activation** outputs a probability score for spam detection.</li>
+                <li>Uses <strong>word embeddings</strong> to capture the semantic meaning of words.</li>
+                <li>The <strong>LSTM layer processes sequential dependencies</strong> in the text.</li>
+                <li><strong>Dropout (0.5)</strong> prevents overfitting, and <strong>sigmoid activation</strong> outputs a probability score for spam detection.</li>
             </ul>
         </section>
     </main>

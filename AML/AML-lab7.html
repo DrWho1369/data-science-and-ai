@@ -58,8 +58,8 @@ x_test = x_test.astype('float32') / 255.
             </code></pre>
             <p><strong>Deep Explanation:</strong></p>
             <ul>
-                <li><strong>Reshaping:</strong> CNNs require an explicit **channel dimension** (1 for grayscale, 3 for RGB).</li>
-                <li><strong>Normalization:</strong> Scaling values between **0 and 1** improves training efficiency and stability.</li>
+                <li><strong>Reshaping:</strong> CNNs require an explicit <strong>channel dimension</strong> (1 for grayscale, 3 for RGB).</li>
+                <li><strong>Normalization:</strong> Scaling values between <strong>0 and 1</strong> improves training efficiency and stability.</li>
             </ul>
         
             <h3>📌 Defining the CNN Model</h3>
@@ -103,7 +103,7 @@ history = model.fit(x_train, y_train, batch_size=128, epochs=12, validation_data
             <p><strong>Deep Explanation:</strong></p>
             <ul>
                 <li><strong>Adam optimizer:</strong> Adaptive learning rate for efficient optimization.</li>
-                <li><strong>Categorical cross-entropy:</strong> Used because we have **multi-class classification (digits 0-9).**</li>
+                <li><strong>Categorical cross-entropy:</strong> Used because we have <strong>multi-class classification (digits 0-9).</strong></li>
                 <li><strong>Epochs:</strong> The dataset passes through the model 12 times.</li>
             </ul>
         

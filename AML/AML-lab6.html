@@ -16,24 +16,24 @@
 
         <section id="lab6">
             <h2>🤖 Lab 6: Deep Learning with Keras</h2>
-            <p>Deep learning is a subset of machine learning that mimics the human brain by using **neural networks**. In this lab, we will implement a **Multi-Layer Perceptron (MLP)** using **Keras** with **TensorFlow** as the backend. We will cover:</p>
+            <p>Deep learning is a subset of machine learning that mimics the human brain by using <strong>neural networks</strong>. In this lab, we will implement a <strong>Multi-Layer Perceptron (MLP)</strong> using <strong>Keras</strong> with <strong>TensorFlow</strong> as the backend. We will cover:</p>
             <ul>
-                <li>Defining an MLP model using **Sequential API and Functional API**.</li>
-                <li>Compiling the model by selecting an **optimizer and loss function**.</li>
-                <li>Training the model and monitoring its **performance over time**.</li>
-                <li>Evaluating the model and understanding **generalization and overfitting**.</li>
+                <li>Defining an MLP model using <strong>Sequential API and Functional API</strong>.</li>
+                <li>Compiling the model by selecting an <strong>optimizer and loss function</strong>.</li>
+                <li>Training the model and monitoring its <strong>performance over time</strong>.</li>
+                <li>Evaluating the model and understanding <strong>generalization and overfitting</strong>.</li>
             </ul>
         
             <h3>📌 Why Keras?</h3>
-            <p><strong>Keras</strong> is a high-level neural network API that simplifies deep learning development while utilizing powerful backend engines like **TensorFlow**. Benefits of Keras:</p>
+            <p><strong>Keras</strong> is a high-level neural network API that simplifies deep learning development while utilizing powerful backend engines like <strong>TensorFlow</strong>. Benefits of Keras:</p>
             <ul>
-                <li>**User-Friendly** – Simplifies neural network implementation.</li>
-                <li>**Fast Prototyping** – Quick model development and experimentation.</li>
-                <li>**Built-in Support** – Pre-trained models and advanced layers are readily available.</li>
+                <li><strong>User-Friendly</strong> – Simplifies neural network implementation.</li>
+                <li><strong>Fast Prototyping</strong> – Quick model development and experimentation.</li>
+                <li><strong>Built-in Support</strong> – Pre-trained models and advanced layers are readily available.</li>
             </ul>
         
             <h3>📌 Defining an MLP Model with Keras</h3>
-            <p>The **Sequential API** allows us to build deep learning models **layer by layer**.</p>
+            <p>The <strong>Sequential API</strong> allows us to build deep learning models <strong>layer by layer</strong>.</p>
             <pre><code>
 from keras.models import Sequential
 from keras.layers import Dense
@@ -50,18 +50,18 @@ model.add(Dense(1, activation='sigmoid'))  # Output layer
             </code></pre>
             <p><strong>Deep Explanation:</strong></p>
             <ul>
-                <li><strong>Hidden Layers:</strong> The model consists of <strong>two hidden layers</strong> with **ReLU activation**.</li>
-                <li><strong>Input Dimension:</strong> <code>input_dim=8</code> means the model takes **8 input features** from the dataset.</li>
+                <li><strong>Hidden Layers:</strong> The model consists of <strong>two hidden layers</strong> with <strong>ReLU activation</strong>.</li>
+                <li><strong>Input Dimension:</strong> <code>input_dim=8</code> means the model takes <strong>8 input features</strong> from the dataset.</li>
                 <li><strong>Activation Functions:</strong>
                     <ul>
-                        <li><strong>ReLU (Rectified Linear Unit):</strong> Used in hidden layers to introduce **non-linearity**, helping the model learn complex patterns.</li>
-                        <li><strong>Sigmoid:</strong> Used in the output layer since this is a **binary classification** problem (0 or 1).</li>
+                        <li><strong>ReLU (Rectified Linear Unit):</strong> Used in hidden layers to introduce <strong>non-linearity</strong>, helping the model learn complex patterns.</li>
+                        <li><strong>Sigmoid:</strong> Used in the output layer since this is a <strong>binary classification</strong> problem (0 or 1).</li>
                     </ul>
                 </li>
             </ul>
         
             <h3>📌 Alternative: Functional API</h3>
-            <p>The Functional API is more flexible and allows **complex model architectures** such as shared layers and multiple inputs/outputs.</p>
+            <p>The Functional API is more flexible and allows <strong>complex model architectures</strong> such as shared layers and multiple inputs/outputs.</p>
             <pre><code>
 from keras import Input, Model
 
@@ -74,53 +74,53 @@ model = Model(inputs=input_layer, outputs=output_layer)
             </code></pre>
             <p><strong>Deep Explanation:</strong></p>
             <ul>
-                <li>Allows for **custom architectures**, useful for complex models such as **residual networks**.</li>
-                <li>Each layer **connects explicitly**, giving more control over the network structure.</li>
+                <li>Allows for <strong>custom architectures</strong>, useful for complex models such as <strong>residual networks</strong>.</li>
+                <li>Each layer <strong>connects explicitly</strong>, giving more control over the network structure.</li>
             </ul>
         
             <h3>📌 Model Compilation</h3>
-            <p>Before training, we must **compile the model**, selecting the **loss function**, **optimizer**, and **evaluation metric**.</p>
+            <p>Before training, we must <strong>compile the model</strong>, selecting the <strong>loss function</strong>, <strong>optimizer</strong>, and <strong>evaluation metric</strong>.</p>
             <pre><code>
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
             </code></pre>
             <p><strong>Deep Explanation:</strong></p>
             <ul>
-                <li><strong>Loss Function:</strong> <code>binary_crossentropy</code> is used for **binary classification problems**.</li>
+                <li><strong>Loss Function:</strong> <code>binary_crossentropy</code> is used for <strong>binary classification problems</strong>.</li>
                 <li><strong>Optimizer:</strong> <code>adam</code> (Adaptive Moment Estimation) dynamically adjusts the learning rate for better convergence.</li>
                 <li><strong>Evaluation Metric:</strong> <code>accuracy</code> tracks how often predictions match actual values.</li>
             </ul>
         
             <h3>📌 Training the Model</h3>
-            <p>The **fit() function** trains the model for a specified number of **epochs**.</p>
+            <p>The <strong>fit() function</strong> trains the model for a specified number of <strong>epochs</strong>.</p>
             <pre><code>
 model.fit(X, Y, epochs=150, batch_size=10)
             </code></pre>
             <p><strong>Deep Explanation:</strong></p>
             <ul>
-                <li>The model **trains for 150 epochs**, meaning it passes through the dataset 150 times.</li>
-                <li>A **batch size of 10** means weights are updated after every 10 samples.</li>
-                <li>Smaller batch sizes lead to **smoother convergence**, while larger batches speed up training but might cause instability.</li>
+                <li>The model <strong>trains for 150 epochs</strong>, meaning it passes through the dataset 150 times.</li>
+                <li>A <strong>batch size of 10</strong> means weights are updated after every 10 samples.</li>
+                <li>Smaller batch sizes lead to <strong>smoother convergence</strong>, while larger batches speed up training but might cause instability.</li>
             </ul>
         
             <h3>📌 Model Evaluation</h3>
-            <p>After training, we evaluate the model on **unseen data** to check its generalization ability.</p>
+            <p>After training, we evaluate the model on <strong>unseen data</strong> to check its generalization ability.</p>
             <pre><code>
 scores = model.evaluate(X, Y)
 print(f"Accuracy: {scores[1]*100:.2f}%")
             </code></pre>
             <p><strong>Deep Explanation:</strong></p>
             <ul>
-                <li>Evaluates the model’s performance on **test data**.</li>
-                <li>Accuracy score shows **how well the model performs**.</li>
-                <li>Using the **same training data for evaluation** leads to overfitting—separate test sets should be used.</li>
+                <li>Evaluates the model’s performance on <strong>test data</strong>.</li>
+                <li>Accuracy score shows <strong>how well the model performs</strong>.</li>
+                <li>Using the <strong>same training data for evaluation</strong> leads to overfitting—separate test sets should be used.</li>
             </ul>
         
             <h3>📌 Summary</h3>
             <ul>
-                <li>Built an <strong>MLP model</strong> using **Keras Sequential and Functional API**.</li>
-                <li>Compiled the model using **loss functions, optimizers, and metrics**.</li>
-                <li>Trained the model for **multiple epochs** with **batch processing**.</li>
-                <li>Evaluated model performance using **accuracy as a metric**.</li>
+                <li>Built an <strong>MLP model</strong> using <strong>Keras Sequential and Functional API</strong>.</li>
+                <li>Compiled the model using <strong>loss functions, optimizers, and metrics</strong>.</li>
+                <li>Trained the model for <strong>multiple epochs</strong> with <strong>batch processing</strong>.</li>
+                <li>Evaluated model performance using <strong>accuracy as a metric</strong>.</li>
             </ul>
         </section>
     </main>
