@@ -1,17 +1,20 @@
 document.addEventListener("DOMContentLoaded", function () {
     const flashcards = document.querySelectorAll(".flashcard");
-    
+
     flashcards.forEach(card => {
-        card.textContent = card.getAttribute("data-question");
-        let isQuestion = true;
-        
+        const question = card.getAttribute("data-question");
+        const answer = card.getAttribute("data-answer");
+
+        card.innerHTML = `
+            <div class="flashcard-inner">
+                <div class="flashcard-front">${question}</div>
+                <div class="flashcard-back">${answer}</div>
+            </div>
+        `;
+
         card.addEventListener("click", function () {
-            if (isQuestion) {
-                card.textContent = card.getAttribute("data-answer");
-            } else {
-                card.textContent = card.getAttribute("data-question");
-            }
-            isQuestion = !isQuestion;
+            card.classList.toggle("flipped");
         });
     });
 });
+
