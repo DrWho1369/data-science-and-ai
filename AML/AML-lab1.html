@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AML Lab 1 - Loading ML Data</title>
+    <link rel="stylesheet" href="aml-styles.css">
+</head>
+<body>
+    <header>
+        <h1>AML Lab 1 - Loading ML Data</h1>
+    </header>
+    
+    <main>
+        <a href="AML-homepage.html" class="back-button">← Back to Homepage</a>
+
+        <section id="lab1">
+            <h2>🛠️ Lab 1: Loading Machine Learning Data</h2>
+            <p>In this lab, we explore multiple ways to load data in Python, focusing on CSV files. The dataset used is the <strong>Pima Indians Diabetes Dataset</strong>, which contains medical data related to diabetes prediction.</p>
+        
+            <h3>📌 The Pima Indians Diabetes Dataset</h3>
+            <p>This dataset contains <strong>768 observations</strong> and <strong>9 attributes</strong>, where the last column represents whether a patient developed diabetes (1) or not (0). The features include:</p>
+            <ul>
+                <li>Pregnancies: Number of times pregnant</li>
+                <li>Plasma glucose: Plasma glucose concentration (2-hour test)</li>
+                <li>Blood Pressure: Diastolic blood pressure (mm Hg)</li>
+                <li>Skin Thickness: Triceps skin fold thickness (mm)</li>
+                <li>Insulin: 2-Hour serum insulin (mu U/ml)</li>
+                <li>BMI: Body mass index</li>
+                <li>Diabetes Pedigree: Diabetes pedigree function</li>
+                <li>Age: Patient age in years</li>
+                <li>Class: Outcome (1 = diabetes, 0 = no diabetes)</li>
+            </ul>
+        
+            <h3>📌 Method 1: Loading CSV Using Python’s Standard Library</h3>
+            <pre><code>
+        import csv
+        import numpy as np
+        
+        filename = 'pima-indians-diabetes.data.csv'
+        raw_data = open(filename, 'rt')  # Open file in read mode
+        reader = csv.reader(raw_data, delimiter=',', quoting=csv.QUOTE_NONE)  
+        data = np.array(list(reader)).astype('float')  # Convert to NumPy array
+        print("Dataset shape:", data.shape)
+            </code></pre>
+            <p><strong>Explanation:</strong></p>
+            <ul>
+                <li><strong>csv.reader</strong> reads the CSV file and loads it into a list.</li>
+                <li><strong>delimiter=','</strong> specifies that values are separated by commas.</li>
+                <li><strong>quoting=csv.QUOTE_NONE</strong> prevents automatic type conversion.</li>
+                <li><strong>np.array()</strong> converts the list into a NumPy array.</li>
+                <li><strong>.astype('float')</strong> ensures all data is treated as numerical values.</li>
+            </ul>
+        
+            <h3>📌 Method 2: Loading CSV Using NumPy</h3>
+            <pre><code>
+        from numpy import loadtxt
+        
+        filename = 'pima-indians-diabetes.data.csv'
+        data = loadtxt(filename, delimiter=",")
+        print("Dataset shape:", data.shape)
+            </code></pre>
+            <p><strong>Explanation:</strong></p>
+            <ul>
+                <li><strong>loadtxt()</strong> directly reads numeric data from a file into a NumPy array.</li>
+                <li><strong>delimiter=","</strong> tells NumPy how data is separated.</li>
+                <li>This method is simpler but <strong>only works if all data is numeric</strong> (no missing values or text columns).</li>
+            </ul>
+        
+            <h3>📌 Method 3: Loading CSV Using NumPy from a URL</h3>
+            <pre><code>
+        from numpy import loadtxt
+        from urllib.request import urlopen
+        
+        url = 'http://titan.dcs.bbk.ac.uk/~eveera01/aml/pima-indians-diabetes.data.csv'
+        raw_data = urlopen(url)
+        dataset = loadtxt(raw_data, delimiter=",")
+        print("Dataset shape:", dataset.shape)
+            </code></pre>
+            <p><strong>Explanation:</strong></p>
+            <ul>
+                <li><strong>urlopen(url)</strong> downloads the dataset from a remote server.</li>
+                <li><strong>loadtxt()</strong> loads the CSV file into an array.</li>
+                <li>Ensure that the dataset is publicly accessible online for this to work.</li>
+            </ul>
+        
+            <h3>📌 Method 4: Loading CSV Using Pandas</h3>
+            <pre><code>
+        import pandas as pd
+        
+        filename = 'pima-indians-diabetes.data.csv'
+        names = ['preg', 'plas', 'pres', 'skin', 'test', 'mass', 'pedi', 'age', 'class']
+        data = pd.read_csv(filename, names=names)
+        print(data.shape)
+            </code></pre>
+            <p><strong>Explanation:</strong></p>
+            <ul>
+                <li><strong>pd.read_csv()</strong> is the most flexible and commonly used method.</li>
+                <li>We define <strong>column names</strong> manually since the dataset has no header row.</li>
+                <li>This returns a <strong>Pandas DataFrame</strong>, making it easier to analyze.</li>
+            </ul>
+        
+            <h3>📌 Descriptive Statistics & Dataset Exploration</h3>
+            
+            <h4>🔹 Viewing the First Few Rows</h4>
+            <pre><code>
+        print(data.head(20))  # Displays the first 20 rows
+            </code></pre>
+            <p><strong>Explanation:</strong> Quickly inspect how data is structured.</p>
+        
+            <h4>🔹 Checking Dataset Dimensions</h4>
+            <pre><code>
+        print(data.shape)  # Returns (rows, columns)
+            </code></pre>
+            <p><strong>Explanation:</strong> Helps understand how much data we are working with.</p>
+        
+            <h4>🔹 Checking Data Types</h4>
+            <pre><code>
+        print(data.dtypes)  # Shows types of each column
+            </code></pre>
+            <p><strong>Explanation:</strong> Ensures all values are numeric before applying ML algorithms.</p>
+        
+            <h4>🔹 Generating Summary Statistics</h4>
+            <pre><code>
+        print(data.describe())  # Generates count, mean, std, min, and max
+            </code></pre>
+            <p><strong>Explanation:</strong> Useful for detecting <strong>outliers and missing values</strong>.</p>
+        
+            <h4>🔹 Checking Class Distribution</h4>
+            <pre><code>
+        print(data.groupby('class').size())  # Counts how many 0s and 1s in the dataset
+            </code></pre>
+            <p><strong>Explanation:</strong> Helps check <strong>class imbalance</strong> (important for classification models).</p>
+        
+            <h4>🔹 Checking Feature Correlations</h4>
+            <pre><code>
+        print(data.corr(method='pearson'))  # Computes pairwise correlations
+            </code></pre>
+            <p><strong>Explanation:</strong> Identifies <strong>highly correlated features</strong>, which may cause redundancy in ML models.</p>
+        
+            <h3>📌 Key Takeaways</h3>
+            <ul>
+                <li>There are multiple ways to load CSV data: <strong>csv.reader, NumPy, and Pandas</strong>.</li>
+                <li>Pandas is the most flexible as it allows for <strong>data cleaning and visualization</strong>.</li>
+                <li>Exploring the dataset before training ML models helps identify <strong>missing values, outliers, and correlations</strong>.</li>
+                <li>The <strong>Pima Indians Diabetes Dataset</strong> is imbalanced (more 0s than 1s), which may require resampling techniques.</li>
+            </ul>
+        
+        </section>
+        
+                
+        
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Thomas Baker - MSc Data Science & AI Revision</p>
+    </footer>
+    
+    <script defer src="aml-flashcards.js"></script>
+</body>
+</html>

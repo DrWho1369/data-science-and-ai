@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AML Lab 7 - Convolutional Neural Networks (CNN) with Keras</title>
+    <link rel="stylesheet" href="aml-styles.css">
+</head>
+<body>
+    <header>
+        <h1>AML Lab 7 - Convolutional Neural Networks (CNN) with Keras</h1>
+    </header>
+    
+    <main>
+        <a href="AML-homepage.html" class="back-button">← Back to Homepage</a>
+        <section id="lab7">
+            <h2>🖼️ Lab 7: Convolutional Neural Networks (CNN) with Keras</h2>
+            <p>Convolutional Neural Networks (CNNs) are <strong>deep learning models</strong> designed specifically for <strong>image classification tasks</strong>. This lab focuses on implementing a CNN in <strong>Keras</strong> to classify handwritten digits using the <strong>MNIST dataset</strong>.</p>
+        
+            <h3>📌 Loading and Visualizing the MNIST Dataset</h3>
+            <p>We start by loading the dataset and displaying sample images.</p>
+            <pre><code>
+        import keras
+        from keras.datasets import mnist
+        import matplotlib.pyplot as plt
+        
+        # Load dataset
+        (x_train, y_train), (x_test, y_test) = keras.datasets.mnist.load_data()
+        
+        # Display first 4 images
+        plt.subplot(221)
+        plt.imshow(x_train[0], cmap=plt.get_cmap('gray'))
+        plt.subplot(222)
+        plt.imshow(x_train[1], cmap=plt.get_cmap('gray'))
+        plt.subplot(223)
+        plt.imshow(x_train[2], cmap=plt.get_cmap('gray'))
+        plt.subplot(224)
+        plt.imshow(x_train[3], cmap=plt.get_cmap('gray'))
+        plt.show()
+            </code></pre>
+            <p><strong>Explanation:</strong>
+                <ul>
+                    <li>Uses <code>keras.datasets.mnist</code> to <strong>load the MNIST dataset</strong>.</li>
+                    <li>Displays <strong>4 sample images</strong> in grayscale to check the data.</li>
+                </ul>
+            </p>
+        
+            <h3>📌 Preprocessing: Reshaping & Normalization</h3>
+            <p>We reshape the dataset into a format suitable for CNNs and normalize pixel values.</p>
+            <pre><code>
+        img_rows, img_cols = 28, 28
+        input_shape = (img_rows, img_cols, 1)
+        
+        # Reshape dataset to include a single channel
+        x_train = x_train.reshape(x_train.shape[0], img_rows, img_cols, 1)
+        x_test = x_test.reshape(x_test.shape[0], img_rows, img_cols, 1)
+        
+        # Normalize pixel values from 0-255 to 0-1
+        x_train = x_train.astype('float32') / 255.
+        x_test = x_test.astype('float32') / 255.
+            </code></pre>
+            <p><strong>Explanation:</strong>
+                <ul>
+                    <li>Reshapes data to <strong>(samples, 28, 28, 1)</strong> to indicate grayscale images.</li>
+                    <li>Normalizes pixel values by dividing by <strong>255</strong>, ensuring values are <strong>between 0 and 1</strong>.</li>
+                </ul>
+            </p>
+        
+            <h3>📌 One-Hot Encoding the Labels</h3>
+            <p>One-hot encoding converts categorical labels into binary vectors.</p>
+            <pre><code>
+        num_classes = 10
+        y_train = keras.utils.to_categorical(y_train, num_classes)
+        y_test = keras.utils.to_categorical(y_test, num_classes)
+            </code></pre>
+            <p><strong>Explanation:</strong>
+                <ul>
+                    <li>Converts digit labels <strong>(0-9)</strong> into one-hot encoded vectors.</li>
+                    <li>Prepares labels for the <strong>softmax activation function</strong> in the output layer.</li>
+                </ul>
+            </p>
+        
+            <h3>📌 Defining the CNN Model</h3>
+            <p>The CNN model consists of <strong>Convolutional, Pooling, and Fully Connected layers</strong>.</p>
+            <pre><code>
+        from keras.models import Sequential
+        from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
+        
+        # Define CNN architecture
+        model = Sequential()
+        model.add(Conv2D(32, kernel_size=(5, 5), activation='relu', input_shape=input_shape, padding='same'))
+        model.add(MaxPooling2D(pool_size=(2, 2)))
+        
+        model.add(Conv2D(64, kernel_size=(5, 5), activation='relu', padding='same'))
+        model.add(MaxPooling2D(pool_size=(2, 2)))
+        
+        model.add(Dropout(0.25))  # Reduce overfitting
+        model.add(Flatten())  # Convert 2D feature maps to a 1D vector
+        model.add(Dense(1000, activation='relu'))
+        model.add(Dropout(0.5))  # Further prevent overfitting
+        model.add(Dense(num_classes, activation='softmax'))
+        
+        # Print model summary
+        model.summary()
+            </code></pre>
+            <p><strong>Explanation:</strong>
+                <ul>
+                    <li><strong>Conv2D layers</strong>: Extract features using <strong>32 and 64 filters of size (5x5)</strong>.</li>
+                    <li><strong>MaxPooling2D layers</strong>: Reduce feature map size by <strong>downsampling with a (2x2) window</strong>.</li>
+                    <li><strong>Flatten</strong>: Converts <strong>2D feature maps into a 1D vector</strong> for fully connected layers.</li>
+                    <li><strong>Dropout</strong>: Prevents overfitting by randomly deactivating neurons during training.</li>
+                    <li><strong>Softmax output</strong>: Converts the network’s output into <strong>probabilities for 10 classes</strong>.</li>
+                </ul>
+            </p>
+        
+            <h3>📌 Compiling and Training the Model</h3>
+            <p>The CNN is compiled with <strong>categorical cross-entropy</strong> and trained for <strong>12 epochs</strong>.</p>
+            <pre><code>
+        model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+        
+        # Train model
+        history = model.fit(x_train, y_train, batch_size=128, epochs=12, validation_data=(x_test, y_test), verbose=1)
+            </code></pre>
+            <p><strong>Explanation:</strong>
+                <ul>
+                    <li>Uses <strong>Adam optimizer</strong> for adaptive learning rate adjustment.</li>
+                    <li>Applies <strong>categorical cross-entropy</strong> since we have <strong>multi-class classification</strong>.</li>
+                    <li>Trains for <strong>12 epochs</strong> with a batch size of <strong>128</strong>.</li>
+                </ul>
+            </p>
+        
+            <h3>📌 Evaluating Model Performance</h3>
+            <p>We evaluate the CNN on the <strong>test set</strong>.</p>
+            <pre><code>
+        score = model.evaluate(x_test, y_test, verbose=0)
+        print(f"Test loss: {score[0]}")
+        print(f"Test accuracy: {score[1]*100:.2f}%")
+            </code></pre>
+            <p><strong>Explanation:</strong>
+                <ul>
+                    <li>Computes the <strong>final accuracy and loss</strong> of the trained model.</li>
+                </ul>
+            </p>
+        
+            <h3>📌 Visualizing Training History</h3>
+            <p>We plot accuracy and loss curves to analyze training performance.</p>
+            <pre><code>
+        import matplotlib.pyplot as plt
+        
+        # Accuracy plot
+        plt.plot(history.history['accuracy'])
+        plt.plot(history.history['val_accuracy'])
+        plt.xlabel('Epoch')
+        plt.ylabel('Accuracy')
+        plt.title('Model - Accuracy')
+        plt.legend(['Training', 'Validation'], loc='lower right')
+        plt.show()
+        
+        # Loss plot
+        plt.plot(history.history['loss'])
+        plt.plot(history.history['val_loss'])
+        plt.xlabel('Epoch')
+        plt.ylabel('Loss')
+        plt.title('Model - Loss')
+        plt.legend(['Training', 'Validation'], loc='upper right')
+        plt.show()
+            </code></pre>
+            <p><strong>Explanation:</strong>
+                <ul>
+                    <li>Shows how accuracy and loss <strong>change over epochs</strong>.</li>
+                    <li>Helps diagnose <strong>overfitting or underfitting</strong>.</li>
+                </ul>
+            </p>
+        
+            <h3>📌 Summary</h3>
+            <ul>
+                <li>Built a <strong>CNN model</strong> to classify handwritten digits using <strong>MNIST</strong>.</li>
+                <li>Applied <strong>Convolution, Pooling, Dropout, and Fully Connected layers</strong>.</li>
+                <li>Trained and evaluated the model, achieving <strong>high accuracy</strong>.</li>
+                <li>Visualized <strong>training performance</strong> using accuracy and loss plots.</li>
+            </ul>
+        
+        </section>
+        
+        
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Thomas Baker - MSc Data Science & AI Revision</p>
+    </footer>
+    
+    <script defer src="aml-flashcards.js"></script>
+</body>
+</html>

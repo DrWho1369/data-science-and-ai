@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AML Lab 5 - Automating and Saving Models </title>
+    <link rel="stylesheet" href="aml-styles.css">
+</head>
+<body>
+    <header>
+        <h1>AML Lab 5 - Automating and Saving Models </h1>
+    </header>
+    
+    <main>
+        <a href="AML-homepage.html" class="back-button">← Back to Homepage</a>
+
+        <section id="lab5">
+            <h2>⚙️ Lab 5: Automating and Saving Models</h2>
+            <p>Machine learning workflows often involve <strong>multiple steps</strong>, including data preparation, model training, evaluation, and deployment. This lab focuses on automating these steps using <strong>Pipelines</strong>, preventing <strong>data leakage</strong>, and <strong>saving trained models</strong> for future use.</p>
+        
+            <h3>📌 Using Pipelines in Scikit-Learn</h3>
+            <p>Pipelines help <strong>combine preprocessing and model training</strong> into a single workflow, ensuring that data transformations only happen on the <strong>training set</strong> during cross-validation.</p>
+            <pre><code>
+        from pandas import read_csv
+        from sklearn.model_selection import KFold, cross_val_score
+        from sklearn.preprocessing import StandardScaler
+        from sklearn.pipeline import Pipeline
+        from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+        
+        # Load dataset
+        filename = 'pima-indians-diabetes.data.csv'
+        names = ['preg', 'plas', 'pres', 'skin', 'test', 'mass', 'pedi', 'age', 'class']
+        data = read_csv(filename, names=names)
+        
+        X = data.iloc[:, :-1]
+        Y = data.iloc[:, -1]
+        
+        # Define pipeline steps
+        steps = [('standardize', StandardScaler()), ('lda', LinearDiscriminantAnalysis())]
+        model = Pipeline(steps)
+        
+        # Evaluate pipeline with cross-validation
+        kfold = KFold(n_splits=10, random_state=7, shuffle=True)
+        results = cross_val_score(model, X, Y, cv=kfold)
+        
+        print(f"Mean Accuracy: {results.mean():.3f}")
+            </code></pre>
+            <p><strong>Explanation:</strong>
+                <ul>
+                    <li>Pipelines <strong>ensure transformations</strong> like standardization occur <strong>only</strong> on the training data.</li>
+                    <li><code>Pipeline(steps)</code> chains multiple steps, making the workflow <strong>simpler and reusable</strong>.</li>
+                    <li><code>cross_val_score</code> evaluates the pipeline using <strong>10-fold cross-validation</strong>, ensuring reliability.</li>
+                </ul>
+            </p>
+        
+            <h3>📌 Extracting Model Coefficients</h3>
+            <p>After training, we can <strong>extract</strong> key model parameters like <strong>LDA coefficients</strong>.</p>
+            <pre><code>
+        model.fit(X, Y)
+        lda_model = model.named_steps['lda']
+        
+        print("LDA Coefficients:")
+        print(lda_model.coef_)
+            </code></pre>
+            <p><strong>Explanation:</strong>
+                <ul>
+                    <li>After fitting, we access the trained <strong>LDA model</strong> using <code>model.named_steps['lda']</code>.</li>
+                    <li>Coefficients indicate <strong>how much each feature contributes</strong> to the decision boundary.</li>
+                </ul>
+            </p>
+        
+            <h3>📌 Feature Engineering with FeatureUnion</h3>
+            <p>FeatureUnion allows us to <strong>combine multiple feature selection techniques</strong>.</p>
+            <pre><code>
+        from sklearn.pipeline import FeatureUnion
+        from sklearn.decomposition import PCA
+        from sklearn.feature_selection import SelectKBest
+        
+        # Define feature extraction methods
+        features = [('pca', PCA(n_components=3)), ('select_best', SelectKBest(k=6))]
+        feature_union = FeatureUnion(features)
+        
+        # Create pipeline
+        pipeline_steps = [('feature_union', feature_union), ('logistic', LogisticRegression())]
+        model = Pipeline(pipeline_steps)
+        
+        # Evaluate
+        results = cross_val_score(model, X, Y, cv=kfold)
+        print(f"Mean Accuracy: {results.mean():.3f}")
+            </code></pre>
+            <p><strong>Explanation:</strong>
+                <ul>
+                    <li><code>FeatureUnion</code> allows combining <strong>PCA and SelectKBest</strong> for feature selection.</li>
+                    <li>The <strong>resulting dataset</strong> is passed to a <strong>Logistic Regression model</strong>.</li>
+                </ul>
+            </p>
+        
+            <h3>📌 Ensemble Methods</h3>
+            <h4>Bagging (Bootstrap Aggregating)</h4>
+            <pre><code>
+        from sklearn.ensemble import BaggingClassifier
+        from sklearn.tree import DecisionTreeClassifier
+        
+        # Define model
+        cart = DecisionTreeClassifier()
+        bagging_model = BaggingClassifier(estimator=cart, n_estimators=100, random_state=7)
+        
+        # Evaluate
+        results = cross_val_score(bagging_model, X, Y, cv=kfold)
+        print(f"Bagging Accuracy: {results.mean():.3f}")
+            </code></pre>
+            <p><strong>Explanation:</strong>
+                <ul>
+                    <li>Bagging trains <strong>multiple Decision Trees</strong> on different <strong>bootstrapped samples</strong>.</li>
+                    <li>Final prediction is the <strong>average</strong> (regression) or <strong>majority vote</strong> (classification).</li>
+                </ul>
+            </p>
+        
+            <h4>Random Forest</h4>
+            <pre><code>
+        from sklearn.ensemble import RandomForestClassifier
+        
+        rf_model = RandomForestClassifier(n_estimators=100, max_features=3, random_state=7)
+        results = cross_val_score(rf_model, X, Y, cv=kfold)
+        
+        print(f"Random Forest Accuracy: {results.mean():.3f}")
+            </code></pre>
+            <p><strong>Explanation:</strong>
+                <ul>
+                    <li>Unlike Bagging, Random Forest <strong>randomly selects features</strong> for splitting.</li>
+                    <li>Reduces correlation between trees, improving <strong>generalization</strong>.</li>
+                </ul>
+            </p>
+        
+            <h3>📌 Hyperparameter Tuning</h3>
+            <p>Grid Search is used to <strong>find the best model parameters</strong>.</p>
+            <pre><code>
+        from sklearn.model_selection import GridSearchCV
+        from sklearn.linear_model import Ridge
+        
+        # Define parameter grid
+        alphas = [1, 0.1, 0.01, 0.001, 0.0001, 0]
+        param_grid = {'alpha': alphas}
+        
+        grid = GridSearchCV(Ridge(), param_grid)
+        grid.fit(X, Y)
+        
+        print(f"Best Alpha: {grid.best_estimator_.alpha}")
+            </code></pre>
+            <p><strong>Explanation:</strong>
+                <ul>
+                    <li>Searches different <code>alpha</code> values for <strong>Ridge Regression</strong>.</li>
+                    <li>Finds the best parameter that <strong>minimizes error</strong>.</li>
+                </ul>
+            </p>
+        
+            <h3>📌 Saving and Loading Models</h3>
+            <p>We can save and reload models using <strong>Pickle</strong> and <strong>Joblib</strong>.</p>
+        
+            <h4>Saving a Model with Pickle</h4>
+            <pre><code>
+        import pickle
+        
+        # Save model
+        with open('final_model.pkl', 'wb') as f:
+            pickle.dump(model, f)
+        
+        # Load model
+        with open('final_model.pkl', 'rb') as f:
+            loaded_model = pickle.load(f)
+        
+        print(loaded_model.predict(X[:5]))  # Predict using loaded model
+            </code></pre>
+        
+            <h4>Saving a Model with Joblib</h4>
+            <pre><code>
+        from joblib import dump, load
+        
+        # Save
+        dump(model, 'final_model.joblib')
+        
+        # Load
+        loaded_model = load('final_model.joblib')
+        print(loaded_model.predict(X[:5]))
+            </code></pre>
+            <p><strong>Explanation:</strong>
+                <ul>
+                    <li><code>pickle</code> and <code>joblib</code> save models to disk for <strong>future use</strong>.</li>
+                    <li>Allows <strong>fast predictions</strong> without retraining the model.</li>
+                </ul>
+            </p>
+        
+            <h3>📌 Summary</h3>
+            <ul>
+                <li><strong>Pipelines</strong> streamline ML workflows and <strong>prevent data leakage</strong>.</li>
+                <li><strong>FeatureUnion</strong> combines multiple feature engineering techniques.</li>
+                <li><strong>Bagging and Random Forests</strong> improve model performance using ensembles.</li>
+                <li><strong>Hyperparameter tuning</strong> finds the best model configuration.</li>
+                <li><strong>Saving models</strong> allows easy reuse without retraining.</li>
+            </ul>
+        
+        </section>
+        
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Thomas Baker - MSc Data Science & AI Revision</p>
+    </footer>
+    
+    <script defer src="aml-flashcards.js"></script>
+</body>
+</html>

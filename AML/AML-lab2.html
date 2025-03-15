@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AML Lab 2 - Data Preparation</title>
+    <link rel="stylesheet" href="aml-styles.css">
+</head>
+<body>
+    <header>
+        <h1>AML Lab 2 - Data Preparation</h1>
+    </header>
+    
+    <main>
+        <a href="AML-homepage.html" class="back-button">← Back to Homepage</a>
+
+        <section id="lab2">
+            <h2>🛠️ Lab 2: Data Preparation</h2>
+            <p>Properly preparing data is a crucial step in Machine Learning. This lab explores data visualization, scaling, and transformations to improve model performance. We will use the <strong>Pima Indians Diabetes Dataset</strong> again.</p>
+        
+            <h3>📌 Univariate Data Visualization</h3>
+        
+            <h4>🔹 Histograms</h4>
+            <p>Histograms provide a quick way to understand the distribution of data by grouping values into bins.</p>
+            <pre><code>
+        from matplotlib import pyplot
+        from pandas import read_csv
+        
+        filename = 'pima-indians-diabetes.data.csv'
+        names = ['preg', 'plas', 'pres', 'skin', 'test', 'mass', 'pedi', 'age', 'class']
+        data = read_csv(filename, names=names)
+        
+        data.hist(figsize=(10,8))
+        pyplot.show()
+            </code></pre>
+            <p><strong>Explanation:</strong> 
+                <ul>
+                    <li>Each histogram represents the frequency distribution of an attribute.</li>
+                    <li>Helps identify <strong>skewness, outliers, and normality</strong> in data.</li>
+                    <li><code>figsize=(10,8)</code> sets the figure size for better visualization.</li>
+                </ul>
+            </p>
+        
+            <h4>🔹 Density Plots</h4>
+            <p>Density plots provide a <strong>smooth curve</strong> over a histogram to better visualize data distribution.</p>
+            <pre><code>
+        data.plot(kind='density', subplots=True, layout=(3,3), sharex=False, figsize=(12,10))
+        pyplot.show()
+            </code></pre>
+            <p><strong>Explanation:</strong>
+                <ul>
+                    <li>Shows the <strong>distribution shape</strong> of each attribute.</li>
+                    <li>Useful for detecting skewness and multimodal distributions.</li>
+                </ul>
+            </p>
+        
+            <h4>🔹 Box and Whisker Plots</h4>
+            <p>Boxplots help identify outliers and show the spread of the data.</p>
+            <pre><code>
+        data.plot(kind='box', subplots=True, layout=(3,3), sharex=False, sharey=False, figsize=(12,10))
+        pyplot.show()
+            </code></pre>
+            <p><strong>Explanation:</strong> 
+                <ul>
+                    <li>The box represents the <strong>interquartile range (IQR)</strong> (middle 50% of data).</li>
+                    <li>The <strong>whiskers</strong> show data spread, and dots outside are <strong>outliers</strong>.</li>
+                    <li>Attributes like <strong>age and test</strong> may be skewed towards smaller values.</li>
+                </ul>
+            </p>
+        
+            <h3>📌 Multivariate Data Visualization</h3>
+        
+            <h4>🔹 Correlation Matrix Plot</h4>
+            <p>Shows relationships between numerical variables.</p>
+            <pre><code>
+        from matplotlib import pyplot
+        import numpy as np
+        
+        correlations = data.corr()
+        fig = pyplot.figure(figsize=(8,8))
+        ax = fig.add_subplot(111)
+        cax = ax.matshow(correlations, vmin=-1, vmax=1)
+        fig.colorbar(cax)
+        
+        ticks = np.arange(0,9,1)
+        ax.set_xticks(ticks)
+        ax.set_yticks(ticks)
+        ax.set_xticklabels(names)
+        ax.set_yticklabels(names)
+        
+        pyplot.show()
+            </code></pre>
+            <p><strong>Explanation:</strong>
+                <ul>
+                    <li>Measures how strongly variables are related (-1 to 1).</li>
+                    <li>Useful for detecting <strong>redundant features that should be removed</strong>.</li>
+                </ul>
+            </p>
+        
+            <h4>🔹 Scatterplot Matrix</h4>
+            <p>Displays pairwise relationships between attributes.</p>
+            <pre><code>
+        from pandas.plotting import scatter_matrix
+        
+        scatter_matrix(data, figsize=(10,10))
+        pyplot.show()
+            </code></pre>
+            <p><strong>Explanation:</strong>
+                <ul>
+                    <li>Identifies linear/non-linear relationships between variables.</li>
+                    <li>Diagonal elements display histograms instead of scatter plots.</li>
+                </ul>
+            </p>
+        
+            <h3>📌 Data Scaling & Normalization</h3>
+        
+            <h4>🔹 Min-Max Scaling</h4>
+            <p>Rescales values between <strong>0 and 1</strong>, useful for distance-based models like <strong>KNN</strong>.</p>
+            <pre><code>
+        from sklearn.preprocessing import MinMaxScaler
+        
+        scaler = MinMaxScaler(feature_range=(0, 1))
+        rescaledX = scaler.fit_transform(data.iloc[:, :-1])
+        
+        print(rescaledX[:5])  # Print first 5 rows
+            </code></pre>
+            <p><strong>Explanation:</strong> 
+                <ul>
+                    <li>Ensures all features are within <strong>the same range</strong>.</li>
+                    <li>Improves <strong>gradient descent</strong> convergence in models like Neural Networks.</li>
+                </ul>
+            </p>
+        
+            <h4>🔹 Standardization</h4>
+            <p>Transforms attributes to have <strong>mean = 0</strong> and <strong>std dev = 1</strong>.</p>
+            <pre><code>
+        from sklearn.preprocessing import StandardScaler
+        
+        scaler = StandardScaler()
+        standardizedX = scaler.fit_transform(data.iloc[:, :-1])
+        
+        print(standardizedX[:5])
+            </code></pre>
+            <p><strong>Explanation:</strong>
+                <ul>
+                    <li>Standardization is better for models like <strong>Logistic Regression & SVMs</strong>.</li>
+                    <li>Ensures each feature contributes <strong>equally to predictions</strong>.</li>
+                </ul>
+            </p>
+        
+            <h4>🔹 Normalization</h4>
+            <p>Scales <strong>rows</strong> (not columns) so that each sample has a unit norm.</p>
+            <pre><code>
+        from sklearn.preprocessing import Normalizer
+        
+        scaler = Normalizer()
+        normalizedX = scaler.fit_transform(data.iloc[:, :-1])
+        
+        print(normalizedX[:5])
+            </code></pre>
+            <p><strong>Explanation:</strong>
+                <ul>
+                    <li>Useful for <strong>sparse data</strong> and distance-based models.</li>
+                    <li>Ensures each observation contributes <strong>equally to model training</strong>.</li>
+                </ul>
+            </p>
+        
+            <h4>🔹 Binarization</h4>
+            <p>Converts numeric values into <strong>0s and 1s</strong> based on a threshold.</p>
+            <pre><code>
+        from sklearn.preprocessing import Binarizer
+        
+        binarizer = Binarizer(threshold=0.0)
+        binaryX = binarizer.fit_transform(data.iloc[:, :-1])
+        
+        print(binaryX[:5])
+            </code></pre>
+            <p><strong>Explanation:</strong> 
+                <ul>
+                    <li>Often used for <strong>feature engineering</strong> (e.g., high blood pressure = 1, normal = 0).</li>
+                </ul>
+            </p>
+        
+            <h3>📌 Comparing Decision Tree Performance on Raw vs. Normalized Data</h3>
+            <pre><code>
+        from sklearn.model_selection import cross_val_score, KFold
+        from sklearn.tree import DecisionTreeClassifier
+        
+        model = DecisionTreeClassifier()
+        kfold = KFold(n_splits=10, random_state=7, shuffle=True)
+        
+        raw_scores = cross_val_score(model, data.iloc[:, :-1], data.iloc[:, -1], cv=kfold)
+        normalized_scores = cross_val_score(model, normalizedX, data.iloc[:, -1], cv=kfold)
+        
+        print(f"Raw Data Accuracy: {raw_scores.mean():.3f}")
+        print(f"Normalized Data Accuracy: {normalized_scores.mean():.3f}")
+            </code></pre>
+            <p><strong>Explanation:</strong> 
+                <ul>
+                    <li>Runs <strong>cross-validation</strong> to evaluate performance.</li>
+                    <li>Checks if <strong>normalization improves Decision Tree accuracy</strong>.</li>
+                </ul>
+            </p>
+        
+        </section>
+        
+        
+                
+        
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Thomas Baker - MSc Data Science & AI Revision</p>
+    </footer>
+    
+    <script defer src="aml-flashcards.js"></script>
+</body>
+</html>

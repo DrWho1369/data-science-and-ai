@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AML Lab 9 - Long Short-Term Memory (LSTM) for Sequence Prediction & Classification</title>
+    <link rel="stylesheet" href="aml-styles.css">
+</head>
+<body>
+    <header>
+        <h1>AML Lab 9 - Long Short-Term Memory (LSTM) for Sequence Prediction & Classification</h1>
+    </header>
+    
+    <main>
+        <a href="AML-homepage.html" class="back-button">← Back to Homepage</a>
+        <section id="lab9">
+            <h2>⏳ Lab 9: Long Short-Term Memory (LSTM) Networks</h2>
+            <p>In this lab, we explore <strong>LSTM networks</strong>, a type of <strong>Recurrent Neural Network (RNN)</strong> designed for handling <strong>sequential data</strong>. We will cover two applications:</p>
+            <ul>
+                <li>📈 <strong>Time-Series Forecasting:</strong> Predicting the number of airline passengers.</li>
+                <li>📩 <strong>Text Classification:</strong> Detecting spam messages using LSTM.</li>
+            </ul>
+        
+            <h3>📌 1. Time-Series Forecasting with LSTM</h3>
+            <p>We predict the number of <strong>international airline passengers</strong> using an LSTM model.</p>
+        
+            <h4>🔹 Loading and Visualizing the Dataset</h4>
+            <pre><code>
+        from pandas import read_csv
+        import matplotlib.pyplot as plt
+        
+        # Load dataset (excluding date column)
+        dataset = read_csv('international-airline-passengers.csv', usecols=[1], engine='python', skipfooter=3)
+        
+        # Plot dataset
+        plt.plot(dataset)
+        plt.title("International Airline Passengers Over Time")
+        plt.xlabel("Months")
+        plt.ylabel("Passengers (in thousands)")
+        plt.show()
+            </code></pre>
+            <p><strong>Explanation:</strong>
+                <ul>
+                    <li>Uses <strong>pandas</strong> to load the dataset, ignoring the date column.</li>
+                    <li>Visualizes <strong>trends over time</strong> using <strong>matplotlib</strong>.</li>
+                </ul>
+            </p>
+        
+            <h4>🔹 Data Normalization</h4>
+            <pre><code>
+        from sklearn.preprocessing import MinMaxScaler
+        
+        # Scale data between 0 and 1
+        scaler = MinMaxScaler(feature_range=(0, 1))
+        dataset = scaler.fit_transform(dataset)
+        
+        print(dataset[:10])  # View first 10 normalized values
+            </code></pre>
+            <p><strong>Explanation:</strong>
+                <ul>
+                    <li>LSTMs are <strong>sensitive to scale</strong>, so we normalize values between <strong>0 and 1</strong>.</li>
+                    <li>This ensures <strong>faster convergence</strong> and avoids gradient issues.</li>
+                </ul>
+            </p>
+        
+            <h4>🔹 Reshaping Data for LSTM</h4>
+            <pre><code>
+        import numpy as np
+        from sklearn.model_selection import train_test_split
+        
+        # Split dataset into train and test sets (80/20 split)
+        trainX, testX = train_test_split(dataset, test_size=0.2, shuffle=False)
+        
+        # Reshape to LSTM input format: [samples, time steps, features]
+        trainX = np.reshape(trainX, (trainX.shape[0], trainX.shape[1], 1))
+        testX = np.reshape(testX, (testX.shape[0], testX.shape[1], 1))
+        
+        print(trainX.shape)  # Expected: (samples, time_steps, features)
+            </code></pre>
+            <p><strong>Explanation:</strong>
+                <ul>
+                    <li>Reshapes the dataset into <strong>LSTM-compatible format</strong>.</li>
+                    <li>Each sample represents <strong>one time step</strong> with <strong>one feature</strong>.</li>
+                </ul>
+            </p>
+        
+            <h4>🔹 Defining and Training an LSTM Model</h4>
+            <pre><code>
+        from keras.models import Sequential
+        from keras.layers import LSTM, Dense
+        
+        # Build LSTM model
+        model = Sequential()
+        model.add(LSTM(4, input_shape=(1, 1)))  # 4 memory cells
+        model.add(Dense(1))  # Output layer
+        
+        model.compile(loss='mean_squared_error', optimizer='adam')
+        
+        # Train model
+        model.fit(trainX, trainY, epochs=100, batch_size=1, verbose=2)
+            </code></pre>
+            <p><strong>Explanation:</strong>
+                <ul>
+                    <li>Creates an LSTM model with <strong>4 memory cells</strong>.</li>
+                    <li>Uses <strong>mean squared error</strong> as the loss function.</li>
+                    <li>Trains the model for <strong>100 epochs</strong> using a batch size of <strong>1</strong>.</li>
+                </ul>
+            </p>
+        
+            <h4>🔹 Evaluating Model Performance</h4>
+            <pre><code>
+        from sklearn.metrics import mean_squared_error
+        import math
+        
+        # Generate predictions
+        trainPredict = model.predict(trainX)
+        testPredict = model.predict(testX)
+        
+        # Convert predictions back to original scale
+        trainPredict = scaler.inverse_transform(trainPredict)
+        testPredict = scaler.inverse_transform(testPredict)
+        
+        # Compute RMSE
+        trainScore = math.sqrt(mean_squared_error(trainY, trainPredict))
+        testScore = math.sqrt(mean_squared_error(testY, testPredict))
+        
+        print(f"Train RMSE: {trainScore:.2f}")
+        print(f"Test RMSE: {testScore:.2f}")
+            </code></pre>
+            <p><strong>Explanation:</strong>
+                <ul>
+                    <li>Computes <strong>Root Mean Squared Error (RMSE)</strong> to measure prediction accuracy.</li>
+                    <li>Lower RMSE means better performance.</li>
+                </ul>
+            </p>
+        
+            <h3>📌 2. Spam Classification with LSTM</h3>
+            <p>We train an LSTM model to classify <strong>SMS messages</strong> as <strong>spam or not spam</strong>.</p>
+        
+            <h4>🔹 Loading and Preprocessing the Dataset</h4>
+            <pre><code>
+        import pandas as pd
+        from sklearn.preprocessing import LabelEncoder
+        
+        # Load dataset
+        df = pd.read_csv('spam.csv', delimiter=',', encoding='latin-1')
+        
+        # Keep only relevant columns
+        df = df[['v1', 'v2']]
+        
+        # Encode labels (ham=0, spam=1)
+        le = LabelEncoder()
+        df['v1'] = le.fit_transform(df['v1'])
+        
+        # Split into train/test
+        X_train, X_test, Y_train, Y_test = train_test_split(df['v2'], df['v1'], test_size=0.15)
+        
+        print(df.head())
+            </code></pre>
+            <p><strong>Explanation:</strong>
+                <ul>
+                    <li>Loads <strong>SMS spam dataset</strong> and removes unnecessary columns.</li>
+                    <li>Encodes labels: <strong>ham (0), spam (1)</strong>.</li>
+                    <li>Splits data into <strong>training (85%) and testing (15%) sets</strong>.</li>
+                </ul>
+            </p>
+        
+            <h4>🔹 Tokenizing and Padding the Text Data</h4>
+            <pre><code>
+        from tensorflow.keras.preprocessing.text import Tokenizer
+        from tensorflow.keras.preprocessing.sequence import pad_sequences
+        
+        # Tokenize text
+        tokenizer = Tokenizer(num_words=1000)
+        tokenizer.fit_on_texts(X_train)
+        sequences = tokenizer.texts_to_sequences(X_train)
+        
+        # Pad sequences
+        max_len = 150
+        X_train_seq = pad_sequences(sequences, maxlen=max_len)
+        
+        print(X_train_seq.shape)  # Expected: (num_samples, 150)
+            </code></pre>
+            <p><strong>Explanation:</strong>
+                <ul>
+                    <li>Converts text messages into <strong>numerical sequences</strong>.</li>
+                    <li>Pads sequences to <strong>ensure uniform length (150 words per message).</strong></li>
+                </ul>
+            </p>
+        
+            <h4>🔹 Defining and Training the LSTM Model</h4>
+            <pre><code>
+        from keras.layers import Embedding, Dropout, Activation, Input
+        from keras.models import Model
+        
+        # Define LSTM model
+        inputs = Input(shape=[max_len])
+        layer = Embedding(1000, 50, input_length=max_len)(inputs)
+        layer = LSTM(64)(layer)
+        layer = Dense(256, activation='relu')(layer)
+        layer = Dropout(0.5)(layer)
+        layer = Dense(1, activation='sigmoid')(layer)
+        
+        model = Model(inputs, layer)
+        model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+        
+        # Train model
+        model.fit(X_train_seq, Y_train, batch_size=128, epochs=5, validation_split=0.2)
+            </code></pre>
+            <p><strong>Explanation:</strong>
+                <ul>
+                    <li>Trains an LSTM <strong>binary classifier</strong> using spam messages.</li>
+                    <li>Uses <strong>Dropout</strong> to prevent overfitting.</li>
+                </ul>
+            </p>
+        
+            <h3>📌 Summary</h3>
+            <ul>
+                <li>Built an <strong>LSTM model for time-series forecasting</strong>.</li>
+                <li>Developed an <strong>LSTM spam classification model</strong>.</li>
+            </ul>
+        
+        </section>
+        
+        
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Thomas Baker - MSc Data Science & AI Revision</p>
+    </footer>
+    
+    <script defer src="aml-flashcards.js"></script>
+</body>
+</html>

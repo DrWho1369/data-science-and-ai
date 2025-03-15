@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AML Lab 8 - Autoencoders with Keras</title>
+    <link rel="stylesheet" href="aml-styles.css">
+</head>
+<body>
+    <header>
+        <h1>AML Lab 8 - Autoencoders with Keras</h1>
+    </header>
+    
+    <main>
+        <a href="AML-homepage.html" class="back-button">← Back to Homepage</a>
+
+        <section id="lab8">
+            <h2>🧠 Lab 8: Autoencoders with Keras</h2>
+            <p>Autoencoders are <strong>neural networks</strong> designed for <strong>unsupervised learning</strong>, where the goal is to compress input data into a <strong>latent-space representation</strong> and then reconstruct it. They are widely used for <strong>feature learning, data compression, denoising, and anomaly detection</strong>.</p>
+        
+            <h3>📌 Loading and Preprocessing the MNIST Dataset</h3>
+            <p>We use the <strong>MNIST handwritten digits dataset</strong> for training our autoencoder.</p>
+            <pre><code>
+        import tensorflow as tf
+        from tensorflow.keras.datasets import mnist
+        import numpy as np
+        
+        # Load dataset
+        (x_train, y_train), (x_test, y_test) = mnist.load_data()
+        
+        # Normalize pixel values to [0,1] range
+        x_train = x_train.astype('float32') / 255.0
+        x_test = x_test.astype('float32') / 255.0
+        
+        # Reshape to a flat 1D vector (28x28 = 784)
+        x_train = x_train.reshape((len(x_train), np.prod(x_train.shape[1:])))
+        x_test = x_test.reshape((len(x_test), np.prod(x_test.shape[1:])))
+        
+        print(x_train.shape)  # (60000, 784)
+        print(x_test.shape)   # (10000, 784)
+            </code></pre>
+            <p><strong>Explanation:</strong>
+                <ul>
+                    <li>Loads the <strong>MNIST dataset</strong> and normalizes pixel values to a <strong>0-1 range</strong>.</li>
+                    <li>Flattens each <strong>28x28 image</strong> into a <strong>1D vector of 784 values</strong>.</li>
+                </ul>
+            </p>
+        
+            <h3>📌 Defining the Autoencoder Model</h3>
+            <p>The autoencoder consists of an <strong>encoder</strong> that compresses the input into a <strong>latent representation</strong> and a <strong>decoder</strong> that reconstructs the input.</p>
+            <pre><code>
+        from tensorflow.keras.models import Model
+        from tensorflow.keras.layers import Dense, Input
+        
+        # Define autoencoder function
+        def auto_encoder_model(hidden_size=128, code_size=32):
+            input_size = 784  # Matches reshaped vector (1x784)
+            
+            # Input and encoding layers
+            input_img = Input(shape=(input_size,))
+            hidden_1 = Dense(hidden_size, activation='relu')(input_img)
+            code = Dense(code_size, activation='relu')(hidden_1)
+        
+            # Decoding layers
+            hidden_2 = Dense(hidden_size, activation='relu')(code)
+            output_img = Dense(input_size, activation='sigmoid')(hidden_2)
+        
+            # Define models
+            autoencoder = Model(input_img, output_img)
+            encoded = Model(input_img, code)
+        
+            return autoencoder, encoded
+        
+        # Create and compile model
+        autoencoder, _ = auto_encoder_model()
+        autoencoder.compile(optimizer='adam', loss='binary_crossentropy')
+        
+        # Display model summary
+        autoencoder.summary()
+            </code></pre>
+            <p><strong>Explanation:</strong>
+                <ul>
+                    <li>Uses <strong>fully connected layers</strong> to encode and decode images.</li>
+                    <li>Uses <strong>ReLU activation</strong> for hidden layers and <strong>Sigmoid activation</strong> for the output layer.</li>
+                    <li>Binary cross-entropy loss is used because pixel values are in the <strong>0-1 range</strong>.</li>
+                </ul>
+            </p>
+        
+            <h3>📌 Training the Autoencoder</h3>
+            <p>Since autoencoders aim to reconstruct input data, the training labels are the same as the inputs.</p>
+            <pre><code>
+        # Train the model
+        autoencoder.fit(x_train, x_train, epochs=3, batch_size=256, validation_data=(x_test, x_test))
+            </code></pre>
+            <p><strong>Explanation:</strong>
+                <ul>
+                    <li>Trains the model for <strong>3 epochs</strong> with a <strong>batch size of 256</strong>.</li>
+                    <li>Uses <strong>validation data</strong> to check model performance on unseen data.</li>
+                </ul>
+            </p>
+        
+            <h3>📌 Visualizing Autoencoder Output</h3>
+            <p>We compare original and reconstructed images.</p>
+            <pre><code>
+        import matplotlib.pyplot as plt
+        
+        # Function to plot image comparison
+        def plot_image_comparison(base_images, comparison_images, n=5, dims=(28,28)):
+            plt.figure(figsize=(10, 4))
+            for i in range(n):
+                ax = plt.subplot(2, n, i + 1)
+                plt.imshow(base_images[i].reshape(*dims), cmap='gray')
+                plt.axis('off')
+                if i == n // 2:
+                    ax.set_title('Original')
+        
+                ax = plt.subplot(2, n, i + 1 + n)
+                plt.imshow(comparison_images[i].reshape(*dims), cmap='gray')
+                plt.axis('off')
+                if i == n // 2:
+                    ax.set_title('Reconstructed')
+        
+            plt.show()
+        
+        # Generate reconstructed images
+        reconstructed_images = autoencoder.predict(x_test)
+        
+        # Display
+        plot_image_comparison(x_test, reconstructed_images)
+            </code></pre>
+            <p><strong>Explanation:</strong>
+                <ul>
+                    <li>Shows <strong>5 original images</strong> in the top row and <strong>5 reconstructed images</strong> below.</li>
+                    <li>Checks <strong>how well the autoencoder reconstructs input data</strong>.</li>
+                </ul>
+            </p>
+        
+            <h3>📌 Implementing a Denoising Autoencoder</h3>
+            <p>We introduce noise into the dataset and train the autoencoder to remove it.</p>
+            <pre><code>
+        # Function to add noise
+        def noise_data(x_train, x_test, noise_factor=0.4):
+            x_train_noisy = np.clip(x_train + noise_factor * np.random.normal(size=x_train.shape), 0., 1.)
+            x_test_noisy = np.clip(x_test + noise_factor * np.random.normal(size=x_test.shape), 0., 1.)
+            return x_train_noisy, x_test_noisy
+        
+        # Generate noisy data
+        x_train_noisy, x_test_noisy = noise_data(x_train, x_test, 0.4)
+        
+        # Train denoising autoencoder
+        autoencoder.fit(x_train_noisy, x_train, epochs=3, batch_size=256, validation_data=(x_test_noisy, x_test))
+        
+        # Show results
+        plot_image_comparison(x_test_noisy, autoencoder.predict(x_test_noisy))
+            </code></pre>
+            <p><strong>Explanation:</strong>
+                <ul>
+                    <li>Adds <strong>Gaussian noise</strong> to the dataset.</li>
+                    <li>Trains the autoencoder to <strong>remove noise</strong> from input images.</li>
+                </ul>
+            </p>
+        
+            <h3>📌 Sparse Autoencoder</h3>
+            <p>We add an <strong>L1 activity regularizer</strong> to encourage sparsity in the latent representation.</p>
+            <pre><code>
+        from tensorflow.keras.regularizers import l1
+        
+        # Modify autoencoder model
+        def sparse_auto_encoder_model(hidden_size=128, code_size=32, reg_val=10e-6):
+            input_img = Input(shape=(784,))
+            hidden_1 = Dense(hidden_size, activation='relu')(input_img)
+            code = Dense(code_size, activation='relu', activity_regularizer=l1(reg_val))(hidden_1)
+            hidden_2 = Dense(hidden_size, activation='relu')(code)
+            output_img = Dense(784, activation='sigmoid')(hidden_2)
+        
+            autoencoder = Model(input_img, output_img)
+            return autoencoder
+        
+        # Create and train sparse autoencoder
+        sparse_autoencoder = sparse_auto_encoder_model()
+        sparse_autoencoder.compile(optimizer='adam', loss='binary_crossentropy')
+        sparse_autoencoder.fit(x_train, x_train, epochs=3, batch_size=256, validation_data=(x_test, x_test))
+            </code></pre>
+            <p><strong>Explanation:</strong>
+                <ul>
+                    <li><strong>Encourages sparsity</strong> in the latent representation.</li>
+                    <li>Limits the number of <strong>active neurons</strong> in the encoding layer.</li>
+                </ul>
+            </p>
+        
+            <h3>📌 Summary</h3>
+            <ul>
+                <li>Built a <strong>basic autoencoder</strong> and trained it on <strong>MNIST</strong>.</li>
+                <li>Implemented <strong>denoising autoencoders</strong> to remove noise from images.</li>
+                <li>Added <strong>sparsity constraints</strong> to enforce a more structured representation.</li>
+            </ul>
+        
+        </section>
+        
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Thomas Baker - MSc Data Science & AI Revision</p>
+    </footer>
+    
+    <script defer src="aml-flashcards.js"></script>
+</body>
+</html>

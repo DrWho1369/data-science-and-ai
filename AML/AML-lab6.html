@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AML Lab 6 - Deep Learning with Keras</title>
+    <link rel="stylesheet" href="aml-styles.css">
+</head>
+<body>
+    <header>
+        <h1>AML Lab 6 - Deep Learning with Keras</h1>
+    </header>
+    
+    <main>
+        <a href="AML-homepage.html" class="back-button">← Back to Homepage</a>
+
+        <section id="lab6">
+            <h2>🤖 Lab 6: Deep Learning with Keras</h2>
+            <p>This lab introduces <strong>Multi-Layer Perceptron (MLP) models</strong> using <strong>Keras</strong> with <strong>TensorFlow</strong> as the backend. We will cover defining, compiling, training, and evaluating deep learning models.</p>
+        
+            <h3>📌 Why Keras?</h3>
+            <p>Keras is a <strong>high-level neural network API</strong> that allows easy model building while using powerful backend engines like TensorFlow. It is widely used for research and production due to its <strong>flexibility, ease of use, and strong industry adoption</strong>.</p>
+        
+            <h3>📌 Defining an MLP Model with Keras</h3>
+            <p>The <strong>Sequential API</strong> allows us to define deep learning models in a layer-by-layer manner.</p>
+            <pre><code>
+        from keras.models import Sequential
+        from keras.layers import Dense
+        import numpy
+        
+        # Set random seed for reproducibility
+        numpy.random.seed(7)
+        
+        # Define a simple feedforward MLP model
+        model = Sequential()
+        model.add(Dense(12, input_dim=8, activation='relu'))  # First hidden layer
+        model.add(Dense(8, activation='relu'))  # Second hidden layer
+        model.add(Dense(1, activation='sigmoid'))  # Output layer
+            </code></pre>
+            <p><strong>Explanation:</strong>
+                <ul>
+                    <li>The model is defined using <strong>three layers</strong>.</li>
+                    <li><code>input_dim=8</code> corresponds to the <strong>number of input features</strong>.</li>
+                    <li>Uses <strong>ReLU</strong> activation for hidden layers and <strong>Sigmoid</strong> for the output.</li>
+                </ul>
+            </p>
+        
+            <h3>📌 Alternative: Functional API</h3>
+            <p>The Functional API allows more flexibility, supporting <strong>multiple inputs/outputs and complex architectures</strong>.</p>
+            <pre><code>
+        from keras import Input, Model
+        
+        input_layer = Input(shape=(8,))
+        hidden_layer1 = Dense(12, activation='relu')(input_layer)
+        hidden_layer2 = Dense(8, activation='relu')(hidden_layer1)
+        output_layer = Dense(1, activation='sigmoid')(hidden_layer2)
+        
+        model = Model(inputs=input_layer, outputs=output_layer)
+            </code></pre>
+            <p><strong>Explanation:</strong>
+                <ul>
+                    <li>Uses <code>Input()</code> to define the <strong>input layer explicitly</strong>.</li>
+                    <li>Each layer <strong>connects independently</strong>, allowing for <strong>more complex architectures</strong>.</li>
+                </ul>
+            </p>
+        
+            <h3>📌 Model Compilation</h3>
+            <p>Before training, we <strong>compile the model</strong>, specifying the loss function, optimizer, and evaluation metric.</p>
+            <pre><code>
+        model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+            </code></pre>
+            <p><strong>Explanation:</strong>
+                <ul>
+                    <li><code>binary_crossentropy</code>: Used for <strong>binary classification problems</strong>.</li>
+                    <li><code>adam</code>: An <strong>adaptive gradient descent optimization algorithm</strong>.</li>
+                    <li><code>accuracy</code>: Used to <strong>track model performance</strong> during training.</li>
+                </ul>
+            </p>
+        
+            <h3>📌 Training the Model</h3>
+            <p>We use the <strong>fit()</strong> function to train the model for 150 epochs.</p>
+            <pre><code>
+        model.fit(X, Y, epochs=150, batch_size=10)
+            </code></pre>
+            <p><strong>Explanation:</strong>
+                <ul>
+                    <li>Trains for <strong>150 iterations (epochs)</strong> over the dataset.</li>
+                    <li>Uses a <strong>batch size of 10</strong> (updates weights after every 10 samples).</li>
+                </ul>
+            </p>
+        
+            <h3>📌 Model Evaluation</h3>
+            <p>Evaluating model performance on <strong>unseen data</strong>.</p>
+            <pre><code>
+        scores = model.evaluate(X, Y)
+        print(f"Accuracy: {scores[1]*100:.2f}%")
+            </code></pre>
+            <p><strong>Explanation:</strong>
+                <ul>
+                    <li>Measures <strong>accuracy on the training data</strong> (not test data!).</li>
+                    <li>Better evaluation is done using <strong>a separate validation set or cross-validation</strong>.</li>
+                </ul>
+            </p>
+        
+            <h3>📌 Data Splitting for Better Evaluation</h3>
+            <p>Instead of evaluating on training data, we split into <strong>training and validation sets</strong>.</p>
+        
+            <h4>Automatic Validation Set</h4>
+            <pre><code>
+        model.fit(X, Y, validation_split=0.33, epochs=150, batch_size=10)
+            </code></pre>
+            <p><strong>Explanation:</strong>  
+                - <strong>33% of training data</strong> is held out for <strong>validation</strong> automatically.  
+            </p>
+        
+            <h4>Manual Train-Test Split</h4>
+            <pre><code>
+        from sklearn.model_selection import train_test_split
+        
+        X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.33, random_state=7)
+        model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=150, batch_size=10)
+            </code></pre>
+            <p><strong>Explanation:</strong>  
+                - Uses <strong>scikit-learn</strong> to create a <strong>manual train-test split</strong>.  
+            </p>
+        
+            <h3>📌 K-Fold Cross Validation for Deep Learning</h3>
+            <p>Cross-validation is often <strong>not used</strong> in deep learning due to computational cost, but it can improve generalization.</p>
+            <pre><code>
+        from sklearn.model_selection import StratifiedKFold
+        
+        kfold = StratifiedKFold(n_splits=10, shuffle=True, random_state=7)
+        cvscores = []
+        
+        for train, test in kfold.split(X, Y):
+            model = Sequential()
+            model.add(Dense(12, input_dim=8, activation='relu'))
+            model.add(Dense(8, activation='relu'))
+            model.add(Dense(1, activation='sigmoid'))
+            model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+            
+            model.fit(X[train], Y[train], epochs=150, batch_size=10, verbose=0)
+            scores = model.evaluate(X[test], Y[test], verbose=0)
+            print(f"Fold Accuracy: {scores[1]*100:.2f}%")
+            cvscores.append(scores[1] * 100)
+        
+        print(f"Final Accuracy: {numpy.mean(cvscores):.2f}% (+/- {numpy.std(cvscores):.2f}%)")
+            </code></pre>
+            <p><strong>Explanation:</strong>
+                <ul>
+                    <li>Performs <strong>10-fold cross-validation</strong>, training <strong>10 separate models</strong>.</li>
+                    <li>Computes <strong>mean accuracy</strong> across all folds.</li>
+                </ul>
+            </p>
+        
+            <h3>📌 Saving and Loading a Model</h3>
+            <p>To avoid retraining, we can save and load models using <strong>Pickle</strong> or <strong>Joblib</strong>.</p>
+            <pre><code>
+        from keras.models import load_model
+        
+        # Save model
+        model.save('final_model.h5')
+        
+        # Load model
+        loaded_model = load_model('final_model.h5')
+            </code></pre>
+            <p><strong>Explanation:</strong>
+                <ul>
+                    <li>Models are saved in <strong>HDF5 format (.h5)</strong>.</li>
+                    <li>Can be loaded later without retraining.</li>
+                </ul>
+            </p>
+        
+            <h3>📌 Summary</h3>
+            <ul>
+                <li>Built an <strong>MLP model</strong> using <strong>Keras Sequential and Functional API</strong>.</li>
+                <li>Implemented <strong>cross-validation and validation sets</strong>.</li>
+                <li>Applied <strong>saving/loading models</strong> for future use.</li>
+            </ul>
+        
+        </section>
+        
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Thomas Baker - MSc Data Science & AI Revision</p>
+    </footer>
+    
+    <script defer src="aml-flashcards.js"></script>
+</body>
+</html>
