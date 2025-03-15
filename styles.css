@@ -158,6 +158,25 @@ code {
     background: linear-gradient(to right, #570d80, #ffcc00);
 }
 
+.jump-button {
+    display: inline-block;
+    background-color: #570d80;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+.jump-button:hover {
+    background-color: #6f0f99;
+}
+
+
 
 footer {
     text-align: center;
