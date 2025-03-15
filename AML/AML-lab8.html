@@ -16,10 +16,10 @@
 
         <section id="lab8">
             <h2>🧠 Lab 8: Autoencoders with Keras</h2>
-            <p>Autoencoders are a type of <strong>neural network</strong> used in <strong>unsupervised learning</strong>. They are designed to <strong>learn efficient representations of data</strong> by compressing the input into a <strong>latent representation</strong> and then reconstructing it. Autoencoders are widely used for <strong>feature learning, dimensionality reduction, denoising, and anomaly detection</strong>.</p>
+            <p><strong>Autoencoders</strong> are a type of <strong>neural network</strong> used for **unsupervised learning**. They aim to learn **efficient data representations** by compressing input data into a **latent space** and then reconstructing it. They are widely used for **feature learning, dimensionality reduction, denoising, and anomaly detection**.</p>
         
             <h3>📌 Loading and Preprocessing the MNIST Dataset</h3>
-            <p>We use the <strong>MNIST dataset</strong>, which consists of <strong>handwritten digits (0-9)</strong>, to train our autoencoder. The dataset contains <strong>grayscale images</strong> of size <strong>28x28 pixels</strong>.</p>
+            <p>We will use the **MNIST dataset**, a collection of **handwritten digits (0-9)**, to train our autoencoder. The dataset consists of **grayscale images of size 28x28 pixels**.</p>
             <pre><code>
 import tensorflow as tf
 from tensorflow.keras.datasets import mnist
@@ -28,27 +28,23 @@ import numpy as np
 # Load dataset
 (x_train, y_train), (x_test, y_test) = mnist.load_data()
 
-# Normalize pixel values to the [0,1] range
+# Normalize pixel values to the range [0,1]
 x_train = x_train.astype('float32') / 255.0
 x_test = x_test.astype('float32') / 255.0
 
 # Flatten images to 1D vectors (28x28 = 784 pixels)
 x_train = x_train.reshape((len(x_train), np.prod(x_train.shape[1:])))
 x_test = x_test.reshape((len(x_test), np.prod(x_test.shape[1:])))
-
-print(x_train.shape)  # Expected: (60000, 784)
-print(x_test.shape)   # Expected: (10000, 784)
             </code></pre>
-            <p><strong>Deep Explanation:</strong>
-                <ul>
-                    <li>The MNIST dataset contains <strong>60,000 training images</strong> and <strong>10,000 test images</strong>.</li>
-                    <li>Each image is <strong>28x28 pixels</strong>, but we <strong>flatten</strong> it into a <strong>784-dimensional vector</strong> (1D array) for input to a neural network.</li>
-                    <li>We <strong>normalize</strong> pixel values to a <strong>0-1 range</strong> to improve model training stability.</li>
-                </ul>
-            </p>
+            <p><strong>Deep Explanation:</strong></p>
+            <ul>
+                <li>Each MNIST image is **28x28 pixels**, but we **flatten it into a 784-dimensional vector** to feed into a fully connected neural network.</li>
+                <li>We **normalize pixel values** to range **0-1** to stabilize training.</li>
+                <li>Since autoencoders use **self-supervised learning**, we train the model using the **same input and output data**.</li>
+            </ul>
         
             <h3>📌 Building the Autoencoder Model</h3>
-            <p>The <strong>encoder</strong> compresses the input into a <strong>low-dimensional representation</strong>, and the <strong>decoder</strong> reconstructs it back to the original format.</p>
+            <p>The **encoder** compresses the input into a **low-dimensional representation**, while the **decoder** reconstructs the original input.</p>
             <pre><code>
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Dense, Input
@@ -69,31 +65,29 @@ output_img = Dense(input_size, activation='sigmoid')(hidden_2)
 autoencoder = Model(input_img, output_img)
 autoencoder.compile(optimizer='adam', loss='binary_crossentropy')
             </code></pre>
-            <p><strong>Deep Explanation:</strong>
-                <ul>
-                    <li>The <strong>encoder</strong> reduces the <strong>784-dimensional</strong> input into a <strong>32-dimensional latent representation</strong>.</li>
-                    <li>The <strong>decoder</strong> reconstructs the original input using <strong>two dense layers</strong>.</li>
-                    <li><strong>ReLU activation</strong> is used in hidden layers to introduce <strong>non-linearity</strong>.</li>
-                    <li><strong>Sigmoid activation</strong> is used in the output layer to keep pixel values between <strong>0 and 1</strong>.</li>
-                    <li>We use <strong>binary cross-entropy</strong> as the loss function because we are reconstructing pixel values.</li>
-                </ul>
-            </p>
+            <p><strong>Deep Explanation:</strong></p>
+            <ul>
+                <li>The **encoder** compresses the **784-dimensional input** into a **32-dimensional latent representation**.</li>
+                <li>The **decoder** reconstructs the original **784-dimensional image** using two dense layers.</li>
+                <li><strong>ReLU activation</strong> is used in hidden layers to introduce **non-linearity**.</li>
+                <li><strong>Sigmoid activation</strong> is used in the output layer to restrict pixel values between **0 and 1**.</li>
+                <li><strong>Binary cross-entropy</strong> is used as the loss function because we are reconstructing pixel intensities.</li>
+            </ul>
         
             <h3>📌 Training the Autoencoder</h3>
-            <p>We train the autoencoder using the <strong>original images as both inputs and targets</strong> (self-supervised learning).</p>
+            <p>Since the autoencoder is **self-supervised**, the input and output data are identical.</p>
             <pre><code>
 autoencoder.fit(x_train, x_train, epochs=10, batch_size=256, validation_data=(x_test, x_test))
             </code></pre>
-            <p><strong>Deep Explanation:</strong>
-                <ul>
-                    <li>The autoencoder is trained for <strong>10 epochs</strong>, meaning the dataset passes through the network <strong>10 times</strong>.</li>
-                    <li>A <strong>batch size of 256</strong> means the model processes <strong>256 images at a time</strong> before updating weights.</li>
-                    <li>We validate performance on the <strong>test set</strong> to ensure the model generalizes well.</li>
-                </ul>
-            </p>
+            <p><strong>Deep Explanation:</strong></p>
+            <ul>
+                <li>Training runs for **10 epochs**, meaning the dataset passes through the network **10 times**.</li>
+                <li>A **batch size of 256** means the model processes **256 images per update step**.</li>
+                <li>We validate performance on the **test set** to check generalization.</li>
+            </ul>
         
             <h3>📌 Denoising Autoencoder</h3>
-            <p>A <strong>denoising autoencoder</strong> removes noise from images by learning to reconstruct the original clean version.</p>
+            <p>A **denoising autoencoder** removes noise from images by learning to reconstruct the original clean version.</p>
             <pre><code>
 def add_noise(data, noise_factor=0.4):
     noisy_data = data + noise_factor * np.random.normal(loc=0.0, scale=1.0, size=data.shape)
@@ -106,19 +100,18 @@ x_test_noisy = add_noise(x_test)
 # Train denoising autoencoder
 autoencoder.fit(x_train_noisy, x_train, epochs=10, batch_size=256, validation_data=(x_test_noisy, x_test))
             </code></pre>
-            <p><strong>Deep Explanation:</strong>
-                <ul>
-                    <li>We <strong>add Gaussian noise</strong> to the images while keeping pixel values within [0,1].</li>
-                    <li>The network <strong>learns to map noisy images back to clean images</strong>.</li>
-                    <li>The denoising autoencoder <strong>forces the network to learn robust feature representations</strong>.</li>
-                </ul>
-            </p>
-
+            <p><strong>Deep Explanation:</strong></p>
+            <ul>
+                <li>We **add Gaussian noise** to images but **clip values** between **0 and 1**.</li>
+                <li>The model is trained to **map noisy images back to their original clean versions**.</li>
+                <li>Denoising autoencoders learn **robust feature representations**, making them useful for **image restoration and signal processing**.</li>
+            </ul>
+        
             <h3>📌 Summary</h3>
             <ul>
-                <li>Built a <strong>basic autoencoder</strong> and trained it on <strong>MNIST</strong>.</li>
-                <li>Implemented a <strong>denoising autoencoder</strong> to remove noise from images.</li>
-                <li>Explored <strong>sparse autoencoders</strong>, which enforce sparsity in the latent representation.</li>
+                <li>Built an **autoencoder** to learn a compressed representation of data.</li>
+                <li>Explored **denoising autoencoders** for cleaning noisy images.</li>
+                <li>Used **self-supervised learning**, where inputs and outputs are identical.</li>
             </ul>
         </section>
     </main>

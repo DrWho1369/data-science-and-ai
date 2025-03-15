@@ -16,101 +16,112 @@
 
         <section id="lab6">
             <h2>🤖 Lab 6: Deep Learning with Keras</h2>
-            <p>This lab introduces <strong>Multi-Layer Perceptron (MLP) models</strong> using <strong>Keras</strong> with <strong>TensorFlow</strong> as the backend. We will cover defining, compiling, training, and evaluating deep learning models.</p>
+            <p>Deep learning is a subset of machine learning that mimics the human brain by using **neural networks**. In this lab, we will implement a **Multi-Layer Perceptron (MLP)** using **Keras** with **TensorFlow** as the backend. We will cover:</p>
+            <ul>
+                <li>Defining an MLP model using **Sequential API and Functional API**.</li>
+                <li>Compiling the model by selecting an **optimizer and loss function**.</li>
+                <li>Training the model and monitoring its **performance over time**.</li>
+                <li>Evaluating the model and understanding **generalization and overfitting**.</li>
+            </ul>
         
             <h3>📌 Why Keras?</h3>
-            <p>Keras is a <strong>high-level neural network API</strong> that allows easy model building while using powerful backend engines like TensorFlow. It is widely used for research and production due to its <strong>flexibility, ease of use, and strong industry adoption</strong>.</p>
+            <p><strong>Keras</strong> is a high-level neural network API that simplifies deep learning development while utilizing powerful backend engines like **TensorFlow**. Benefits of Keras:</p>
+            <ul>
+                <li>**User-Friendly** – Simplifies neural network implementation.</li>
+                <li>**Fast Prototyping** – Quick model development and experimentation.</li>
+                <li>**Built-in Support** – Pre-trained models and advanced layers are readily available.</li>
+            </ul>
         
             <h3>📌 Defining an MLP Model with Keras</h3>
-            <p>The <strong>Sequential API</strong> allows us to define deep learning models in a layer-by-layer manner.</p>
+            <p>The **Sequential API** allows us to build deep learning models **layer by layer**.</p>
             <pre><code>
-        from keras.models import Sequential
-        from keras.layers import Dense
-        import numpy
-        
-        # Set random seed for reproducibility
-        numpy.random.seed(7)
-        
-        # Define a simple feedforward MLP model
-        model = Sequential()
-        model.add(Dense(12, input_dim=8, activation='relu'))  # First hidden layer
-        model.add(Dense(8, activation='relu'))  # Second hidden layer
-        model.add(Dense(1, activation='sigmoid'))  # Output layer
+from keras.models import Sequential
+from keras.layers import Dense
+import numpy
+
+# Set random seed for reproducibility
+numpy.random.seed(7)
+
+# Define a simple feedforward MLP model
+model = Sequential()
+model.add(Dense(12, input_dim=8, activation='relu'))  # First hidden layer
+model.add(Dense(8, activation='relu'))  # Second hidden layer
+model.add(Dense(1, activation='sigmoid'))  # Output layer
             </code></pre>
-            <p><strong>Deep Explanation:</strong>
-                <ul>
-                    <li>The model consists of <strong>three layers</strong>: <strong>two hidden layers</strong> and <strong>one output layer</strong>.</li>
-                    <li><code>input_dim=8</code> specifies that the input has <strong>8 features</strong>, which corresponds to the dataset’s input shape.</li>
-                    <li><strong>ReLU (Rectified Linear Unit)</strong> is used in the hidden layers to introduce <strong>non-linearity</strong>, making it easier for the network to learn complex patterns.</li>
-                    <li><strong>Sigmoid activation</strong> is used in the output layer because this is a <strong>binary classification problem</strong> (output between 0 and 1).</li>
-                </ul>
-            </p>
+            <p><strong>Deep Explanation:</strong></p>
+            <ul>
+                <li><strong>Hidden Layers:</strong> The model consists of <strong>two hidden layers</strong> with **ReLU activation**.</li>
+                <li><strong>Input Dimension:</strong> <code>input_dim=8</code> means the model takes **8 input features** from the dataset.</li>
+                <li><strong>Activation Functions:</strong>
+                    <ul>
+                        <li><strong>ReLU (Rectified Linear Unit):</strong> Used in hidden layers to introduce **non-linearity**, helping the model learn complex patterns.</li>
+                        <li><strong>Sigmoid:</strong> Used in the output layer since this is a **binary classification** problem (0 or 1).</li>
+                    </ul>
+                </li>
+            </ul>
         
             <h3>📌 Alternative: Functional API</h3>
-            <p>The Functional API allows more flexibility, supporting <strong>multiple inputs/outputs and complex architectures</strong>.</p>
+            <p>The Functional API is more flexible and allows **complex model architectures** such as shared layers and multiple inputs/outputs.</p>
             <pre><code>
-        from keras import Input, Model
-        
-        input_layer = Input(shape=(8,))
-        hidden_layer1 = Dense(12, activation='relu')(input_layer)
-        hidden_layer2 = Dense(8, activation='relu')(hidden_layer1)
-        output_layer = Dense(1, activation='sigmoid')(hidden_layer2)
-        
-        model = Model(inputs=input_layer, outputs=output_layer)
+from keras import Input, Model
+
+input_layer = Input(shape=(8,))
+hidden_layer1 = Dense(12, activation='relu')(input_layer)
+hidden_layer2 = Dense(8, activation='relu')(hidden_layer1)
+output_layer = Dense(1, activation='sigmoid')(hidden_layer2)
+
+model = Model(inputs=input_layer, outputs=output_layer)
             </code></pre>
-            <p><strong>Deep Explanation:</strong>
-                <ul>
-                    <li>Uses <code>Input()</code> to define the <strong>input layer explicitly</strong>, which allows for <strong>custom model architectures</strong>.</li>
-                    <li>Each layer <strong>connects independently</strong>, enabling <strong>shared layers, multiple inputs/outputs, or parallel processing</strong>.</li>
-                </ul>
-            </p>
+            <p><strong>Deep Explanation:</strong></p>
+            <ul>
+                <li>Allows for **custom architectures**, useful for complex models such as **residual networks**.</li>
+                <li>Each layer **connects explicitly**, giving more control over the network structure.</li>
+            </ul>
         
             <h3>📌 Model Compilation</h3>
-            <p>Before training, we <strong>compile the model</strong>, specifying the loss function, optimizer, and evaluation metric.</p>
+            <p>Before training, we must **compile the model**, selecting the **loss function**, **optimizer**, and **evaluation metric**.</p>
             <pre><code>
-        model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
             </code></pre>
-            <p><strong>Deep Explanation:</strong>
-                <ul>
-                    <li><code>binary_crossentropy</code> is used for <strong>binary classification problems</strong> because it measures the difference between predicted probabilities and actual labels.</li>
-                    <li><code>adam</code> (Adaptive Moment Estimation) is an <strong>advanced optimization algorithm</strong> that adapts the learning rate for better convergence.</li>
-                    <li><code>accuracy</code> is used as a performance metric, tracking how often predictions match actual values.</li>
-                </ul>
-            </p>
+            <p><strong>Deep Explanation:</strong></p>
+            <ul>
+                <li><strong>Loss Function:</strong> <code>binary_crossentropy</code> is used for **binary classification problems**.</li>
+                <li><strong>Optimizer:</strong> <code>adam</code> (Adaptive Moment Estimation) dynamically adjusts the learning rate for better convergence.</li>
+                <li><strong>Evaluation Metric:</strong> <code>accuracy</code> tracks how often predictions match actual values.</li>
+            </ul>
         
             <h3>📌 Training the Model</h3>
-            <p>We use the <strong>fit()</strong> function to train the model for 150 epochs.</p>
+            <p>The **fit() function** trains the model for a specified number of **epochs**.</p>
             <pre><code>
-        model.fit(X, Y, epochs=150, batch_size=10)
+model.fit(X, Y, epochs=150, batch_size=10)
             </code></pre>
-            <p><strong>Deep Explanation:</strong>
-                <ul>
-                    <li>Trains for <strong>150 epochs</strong>, meaning the dataset is passed through the model <strong>150 times</strong>.</li>
-                    <li>Uses a <strong>batch size of 10</strong>, meaning weights are updated every <strong>10 samples</strong> instead of after every sample.</li>
-                </ul>
-            </p>
+            <p><strong>Deep Explanation:</strong></p>
+            <ul>
+                <li>The model **trains for 150 epochs**, meaning it passes through the dataset 150 times.</li>
+                <li>A **batch size of 10** means weights are updated after every 10 samples.</li>
+                <li>Smaller batch sizes lead to **smoother convergence**, while larger batches speed up training but might cause instability.</li>
+            </ul>
         
             <h3>📌 Model Evaluation</h3>
-            <p>Evaluating model performance on <strong>unseen data</strong>.</p>
+            <p>After training, we evaluate the model on **unseen data** to check its generalization ability.</p>
             <pre><code>
-        scores = model.evaluate(X, Y)
-        print(f"Accuracy: {scores[1]*100:.2f}%")
+scores = model.evaluate(X, Y)
+print(f"Accuracy: {scores[1]*100:.2f}%")
             </code></pre>
-            <p><strong>Deep Explanation:</strong>
-                <ul>
-                    <li>The model is tested on unseen data to measure <strong>generalization performance</strong>.</li>
-                    <li>Accuracy is reported as a percentage, showing how well the model performs.</li>
-                    <li>However, using the <strong>same training data for evaluation can lead to overestimated performance</strong>—a separate test set should be used.</li>
-                </ul>
-            </p>
+            <p><strong>Deep Explanation:</strong></p>
+            <ul>
+                <li>Evaluates the model’s performance on **test data**.</li>
+                <li>Accuracy score shows **how well the model performs**.</li>
+                <li>Using the **same training data for evaluation** leads to overfitting—separate test sets should be used.</li>
+            </ul>
         
             <h3>📌 Summary</h3>
             <ul>
-                <li>Built an <strong>MLP model</strong> using <strong>Keras Sequential and Functional API</strong>.</li>
-                <li>Implemented <strong>cross-validation and validation sets</strong>.</li>
-                <li>Applied <strong>saving/loading models</strong> for future use.</li>
+                <li>Built an <strong>MLP model</strong> using **Keras Sequential and Functional API**.</li>
+                <li>Compiled the model using **loss functions, optimizers, and metrics**.</li>
+                <li>Trained the model for **multiple epochs** with **batch processing**.</li>
+                <li>Evaluated model performance using **accuracy as a metric**.</li>
             </ul>
-        
         </section>
     </main>
     

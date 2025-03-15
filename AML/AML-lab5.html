@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AML Lab 5 - Automating and Saving Models </title>
+    <title>AML Lab 5 - Automating and Saving Models</title>
     <link rel="stylesheet" href="aml-styles.css">
 </head>
 <body>
@@ -16,10 +16,16 @@
 
         <section id="lab5">
             <h2>⚙️ Lab 5: Automating and Saving Models</h2>
-            <p>Machine learning workflows often involve <strong>multiple steps</strong>, including data preparation, model training, evaluation, and deployment. This lab focuses on automating these steps using <strong>Pipelines</strong>, preventing <strong>data leakage</strong>, and <strong>saving trained models</strong> for future use.</p>
+            <p>Building a machine learning model requires multiple steps, including **data preprocessing, feature selection, training, evaluation, and model deployment**. Instead of manually repeating these steps, we can **automate the entire pipeline** and ensure **reproducibility and efficiency**. In this lab, we will:</p>
+            <ul>
+                <li>Use **Pipelines** to automate preprocessing and model training.</li>
+                <li>Prevent **data leakage** by ensuring transformations happen only on training data.</li>
+                <li>Use **FeatureUnion** to combine multiple feature selection techniques.</li>
+                <li>Save and load models for **future use without retraining**.</li>
+            </ul>
         
-            <h3>📌 Using Pipelines in Scikit-Learn</h3>
-            <p>Pipelines help <strong>combine preprocessing and model training</strong> into a single workflow, ensuring that data transformations only happen on the <strong>training set</strong> during cross-validation.</p>
+            <h3>📌 Automating Workflows with Pipelines</h3>
+            <p>A **Pipeline** chains multiple processing steps into a single workflow, ensuring **data transformations occur only on training data** and preventing data leakage.</p>
             <pre><code>
 from pandas import read_csv
 from sklearn.model_selection import KFold, cross_val_score
@@ -47,13 +53,13 @@ print(f"Mean Accuracy: {results.mean():.3f}")
             </code></pre>
             <p><strong>Deep Explanation:</strong></p>
             <ul>
-                <li>Pipelines <strong>automate preprocessing</strong> by ensuring transformations are applied correctly during training.</li>
-                <li><code>Pipeline(steps)</code> chains transformations into a <strong>single reusable workflow</strong>, simplifying model development.</li>
-                <li><code>cross_val_score</code> performs <strong>10-fold cross-validation</strong>, improving robustness by testing on different subsets.</li>
+                <li><code>StandardScaler()</code> ensures **all features are on the same scale**, improving model performance.</li>
+                <li><code>Pipeline(steps)</code> **chains transformations and modeling into a single object**, reducing repetitive code.</li>
+                <li><code>cross_val_score()</code> applies **10-fold cross-validation**, reducing bias by evaluating on different subsets of data.</li>
             </ul>
         
             <h3>📌 Extracting Model Coefficients</h3>
-            <p>After training, we can <strong>extract model parameters</strong> like LDA coefficients to understand how features contribute to predictions.</p>
+            <p>Understanding **how a model makes decisions** is important for interpretability. After training, we can extract **Linear Discriminant Analysis (LDA) coefficients**.</p>
             <pre><code>
 model.fit(X, Y)
 lda_model = model.named_steps['lda']
@@ -63,12 +69,13 @@ print(lda_model.coef_)
             </code></pre>
             <p><strong>Deep Explanation:</strong></p>
             <ul>
-                <li>After fitting, we access the trained <strong>LDA model</strong> using <code>model.named_steps['lda']</code>.</li>
-                <li><strong>LDA coefficients</strong> reveal how much each feature contributes to decision-making.</li>
+                <li>The model is first trained using <code>model.fit(X, Y)</code>.</li>
+                <li>We retrieve the trained **LDA model** using <code>model.named_steps['lda']</code>.</li>
+                <li>The **LDA coefficients** show how much weight each feature has in determining the classification.</li>
             </ul>
         
             <h3>📌 Feature Engineering with FeatureUnion</h3>
-            <p>FeatureUnion combines <strong>multiple feature selection techniques</strong> to improve model performance.</p>
+            <p>Instead of selecting one feature engineering technique, we can **combine multiple methods** using <strong>FeatureUnion</strong>.</p>
             <pre><code>
 from sklearn.pipeline import FeatureUnion
 from sklearn.decomposition import PCA
@@ -88,12 +95,13 @@ print(f"Mean Accuracy: {results.mean():.3f}")
             </code></pre>
             <p><strong>Deep Explanation:</strong></p>
             <ul>
-                <li><code>FeatureUnion</code> allows simultaneous <strong>dimensionality reduction (PCA) and feature selection (SelectKBest)</strong>.</li>
-                <li>The final dataset is fed into a <strong>Logistic Regression model</strong> for classification.</li>
+                <li><code>PCA(n_components=3)</code> reduces dimensionality while retaining the most **variance in the data**.</li>
+                <li><code>SelectKBest(k=6)</code> selects the **top 6 features based on statistical significance**.</li>
+                <li><code>FeatureUnion</code> **combines both methods** to create a **richer feature set**.</li>
             </ul>
         
             <h3>📌 Saving and Loading Models</h3>
-            <p>Machine learning models can be saved for <strong>future use</strong> using Pickle or Joblib.</p>
+            <p>Once a model is trained, we **don’t need to retrain it every time**—we can save it using **Pickle or Joblib**.</p>
             <h4>Saving a Model with Pickle</h4>
             <pre><code>
 import pickle
@@ -121,19 +129,17 @@ print(loaded_model.predict(X[:5]))
             </code></pre>
             <p><strong>Deep Explanation:</strong></p>
             <ul>
-                <li><code>pickle</code> and <code>joblib</code> allow storing trained models for reuse.</li>
-                <li><strong>Pickle</strong> is a general Python serialization tool, while <strong>Joblib</strong> is optimized for large numpy arrays.</li>
+                <li><code>pickle</code> is used for **serializing Python objects**, including models.</li>
+                <li><code>joblib</code> is optimized for **handling large NumPy arrays**, making it faster for machine learning models.</li>
             </ul>
         
             <h3>📌 Summary</h3>
             <ul>
-                <li><strong>Pipelines</strong> streamline ML workflows and <strong>prevent data leakage</strong>.</li>
-                <li><strong>FeatureUnion</strong> combines multiple feature engineering techniques.</li>
-                <li><strong>Bagging and Random Forests</strong> improve model performance using ensembles.</li>
-                <li><strong>Hyperparameter tuning</strong> finds the best model configuration.</li>
-                <li><strong>Saving models</strong> allows easy reuse without retraining.</li>
+                <li>We automated preprocessing and modeling using **Pipelines**.</li>
+                <li>We extracted **LDA model coefficients** to interpret feature importance.</li>
+                <li>We used **FeatureUnion** to combine multiple feature engineering techniques.</li>
+                <li>We saved and loaded trained models using **Pickle and Joblib**.</li>
             </ul>
-        
         </section>
     </main>
     

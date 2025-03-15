@@ -15,7 +15,7 @@
         <a href="AML-homepage.html" class="back-button">← Back to Homepage</a>
         <section id="lab7">
             <h2>🖼️ Lab 7: Convolutional Neural Networks (CNN) with Keras</h2>
-            <p><strong>Convolutional Neural Networks (CNNs)</strong> are a class of deep learning models designed for <strong>image classification and pattern recognition</strong>. Unlike traditional fully connected networks, CNNs can extract spatial hierarchies of features, making them highly effective for visual data.</p>
+            <p><strong>Convolutional Neural Networks (CNNs)</strong> are a class of deep learning models designed for <strong>image classification and pattern recognition</strong>. Unlike traditional fully connected networks, CNNs extract <strong>spatial hierarchies of features</strong>, making them highly effective for visual data.</p>
         
             <h3>📌 Loading and Visualizing the MNIST Dataset</h3>
             <p>We begin by loading the <strong>MNIST handwritten digits dataset</strong>, which consists of <strong>60,000 training</strong> and <strong>10,000 test images</strong>.</p>
@@ -28,23 +28,19 @@ import matplotlib.pyplot as plt
 (x_train, y_train), (x_test, y_test) = keras.datasets.mnist.load_data()
 
 # Display first 4 images
-plt.subplot(221)
-plt.imshow(x_train[0], cmap=plt.get_cmap('gray'))
-plt.subplot(222)
-plt.imshow(x_train[1], cmap=plt.get_cmap('gray'))
-plt.subplot(223)
-plt.imshow(x_train[2], cmap=plt.get_cmap('gray'))
-plt.subplot(224)
-plt.imshow(x_train[3], cmap=plt.get_cmap('gray'))
+plt.figure(figsize=(6,6))
+for i in range(4):
+    plt.subplot(2,2,i+1)
+    plt.imshow(x_train[i], cmap='gray')
+    plt.axis('off')
 plt.show()
             </code></pre>
-            <p><strong>Deep Explanation:</strong>
-                <ul>
-                    <li>The <strong>MNIST dataset</strong> consists of <strong>28x28 pixel grayscale images</strong>.</li>
-                    <li>Using <strong>matplotlib</strong>, we visualize the <strong>first four training images</strong>.</li>
-                    <li>Each pixel intensity is between <strong>0 (black) and 255 (white)</strong>.</li>
-                </ul>
-            </p>
+            <p><strong>Deep Explanation:</strong></p>
+            <ul>
+                <li><strong>MNIST dataset</strong>: 28×28 pixel grayscale images representing digits 0-9.</li>
+                <li>Each pixel intensity is between <strong>0 (black) and 255 (white)</strong>.</li>
+                <li>Visualization helps confirm that data is loaded correctly.</li>
+            </ul>
         
             <h3>📌 Preprocessing: Reshaping & Normalization</h3>
             <p>Before feeding images into a CNN, we must <strong>reshape and normalize</strong> them.</p>
@@ -53,19 +49,18 @@ img_rows, img_cols = 28, 28
 input_shape = (img_rows, img_cols, 1)
 
 # Reshape dataset to include a single grayscale channel
-x_train = x_train.reshape(x_train.shape[0], img_rows, img_cols, 1)
-x_test = x_test.reshape(x_test.shape[0], img_rows, img_cols, 1)
+x_train = x_train.reshape(-1, img_rows, img_cols, 1)
+x_test = x_test.reshape(-1, img_rows, img_cols, 1)
 
 # Normalize pixel values to range [0,1]
 x_train = x_train.astype('float32') / 255.
 x_test = x_test.astype('float32') / 255.
             </code></pre>
-            <p><strong>Deep Explanation:</strong>
-                <ul>
-                    <li>Reshapes images into <strong>(samples, height, width, channels)</strong> format for Keras.</li>
-                    <li>Normalization helps prevent <strong>exploding gradients</strong> and speeds up training.</li>
-                </ul>
-            </p>
+            <p><strong>Deep Explanation:</strong></p>
+            <ul>
+                <li><strong>Reshaping:</strong> CNNs require an explicit **channel dimension** (1 for grayscale, 3 for RGB).</li>
+                <li><strong>Normalization:</strong> Scaling values between **0 and 1** improves training efficiency and stability.</li>
+            </ul>
         
             <h3>📌 Defining the CNN Model</h3>
             <p>The CNN consists of <strong>convolutional layers, pooling layers, and fully connected layers</strong>.</p>
@@ -75,27 +70,27 @@ from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
 
 # Define CNN architecture
 model = Sequential()
-model.add(Conv2D(32, kernel_size=(5, 5), activation='relu', input_shape=input_shape, padding='same'))
-model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Conv2D(32, kernel_size=(5,5), activation='relu', input_shape=input_shape, padding='same'))
+model.add(MaxPooling2D(pool_size=(2,2)))
 
-model.add(Conv2D(64, kernel_size=(5, 5), activation='relu', padding='same'))
-model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Conv2D(64, kernel_size=(5,5), activation='relu', padding='same'))
+model.add(MaxPooling2D(pool_size=(2,2)))
 
 model.add(Dropout(0.25))  # Reduce overfitting
 model.add(Flatten())  # Convert 2D feature maps to a 1D vector
 model.add(Dense(1000, activation='relu'))
 model.add(Dropout(0.5))  # Further prevent overfitting
-model.add(Dense(num_classes, activation='softmax'))
+model.add(Dense(10, activation='softmax'))
             </code></pre>
-            <p><strong>Deep Explanation:</strong>
-                <ul>
-                    <li><strong>Conv2D layers</strong>: Extract features from images using <strong>filters (kernels)</strong>.</li>
-                    <li><strong>ReLU activation</strong>: Introduces <strong>non-linearity</strong> to detect complex patterns.</li>
-                    <li><strong>MaxPooling2D</strong>: Reduces image size while <strong>preserving important features</strong>.</li>
-                    <li><strong>Flatten</strong>: Converts <strong>2D feature maps into a 1D vector</strong> for fully connected layers.</li>
-                    <li><strong>Softmax output</strong>: Converts the final layer’s output into <strong>probabilities for 10 digits</strong>.</li>
-                </ul>
-            </p>
+            <p><strong>Deep Explanation:</strong></p>
+            <ul>
+                <li><strong>Conv2D:</strong> Applies filters to detect edges, textures, and patterns.</li>
+                <li><strong>ReLU activation:</strong> Introduces non-linearity, allowing the model to learn complex features.</li>
+                <li><strong>MaxPooling2D:</strong> Downsamples feature maps, reducing computational cost.</li>
+                <li><strong>Flatten:</strong> Converts 2D feature maps into a 1D vector before passing them to dense layers.</li>
+                <li><strong>Dropout:</strong> Prevents overfitting by randomly deactivating neurons during training.</li>
+                <li><strong>Softmax output:</strong> Converts the final layer’s output into probability values for 10 digit classes.</li>
+            </ul>
         
             <h3>📌 Compiling and Training the Model</h3>
             <p>We compile the model using the <strong>Adam optimizer</strong> and train it for <strong>12 epochs</strong>.</p>
@@ -105,13 +100,12 @@ model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accur
 # Train model
 history = model.fit(x_train, y_train, batch_size=128, epochs=12, validation_data=(x_test, y_test), verbose=1)
             </code></pre>
-            <p><strong>Deep Explanation:</strong>
-                <ul>
-                    <li><strong>Adam optimizer</strong> dynamically adjusts learning rates for better convergence.</li>
-                    <li><strong>Categorical cross-entropy</strong> is used because we have <strong>multi-class classification (digits 0-9).</strong></li>
-                    <li>The model is trained for <strong>12 epochs</strong>, meaning the dataset passes through the model 12 times.</li>
-                </ul>
-            </p>
+            <p><strong>Deep Explanation:</strong></p>
+            <ul>
+                <li><strong>Adam optimizer:</strong> Adaptive learning rate for efficient optimization.</li>
+                <li><strong>Categorical cross-entropy:</strong> Used because we have **multi-class classification (digits 0-9).**</li>
+                <li><strong>Epochs:</strong> The dataset passes through the model 12 times.</li>
+            </ul>
         
             <h3>📌 Evaluating Model Performance</h3>
             <p>We compute <strong>test accuracy</strong> to measure model performance.</p>
@@ -120,12 +114,11 @@ score = model.evaluate(x_test, y_test, verbose=0)
 print(f"Test loss: {score[0]}")
 print(f"Test accuracy: {score[1]*100:.2f}%")
             </code></pre>
-            <p><strong>Deep Explanation:</strong>
-                <ul>
-                    <li>The model is tested on unseen <strong>test data</strong> to measure generalization.</li>
-                    <li>We print the <strong>accuracy (%)</strong> as a key performance metric.</li>
-                </ul>
-            </p>
+            <p><strong>Deep Explanation:</strong></p>
+            <ul>
+                <li>The model is tested on unseen data to measure generalization.</li>
+                <li>Accuracy (%) is used as a key performance metric.</li>
+            </ul>
         </section>
     </main>
     

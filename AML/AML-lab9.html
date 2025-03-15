@@ -15,19 +15,19 @@
         <a href="AML-homepage.html" class="back-button">← Back to Homepage</a>
         <section id="lab9">
             <h2>⏳ Lab 9: Long Short-Term Memory (LSTM) Networks</h2>
-            <p>LSTMs are a type of <strong>Recurrent Neural Network (RNN)</strong> that solve the <strong>vanishing gradient problem</strong> by maintaining memory over long sequences. They are ideal for tasks involving <strong>sequential dependencies</strong>, such as time-series forecasting and natural language processing.</p>
+            <p><strong>Long Short-Term Memory (LSTM)</strong> networks are a type of <strong>Recurrent Neural Network (RNN)</strong> designed to handle **sequential data** while addressing the **vanishing gradient problem**. Unlike standard RNNs, LSTMs use **memory cells and gated mechanisms** to retain long-term dependencies, making them ideal for **time-series forecasting, speech recognition, and natural language processing**.</p>
         
             <h3>📌 1. Time-Series Forecasting with LSTM</h3>
-            <p>This section focuses on using an <strong>LSTM model</strong> to predict future airline passenger numbers based on past trends.</p>
+            <p>We will train an LSTM model to predict **future airline passenger numbers** based on past trends.</p>
         
             <h4>🔹 Loading and Visualizing the Dataset</h4>
             <pre><code>
         from pandas import read_csv
         import matplotlib.pyplot as plt
-        
+
         # Load dataset (excluding date column)
         dataset = read_csv('international-airline-passengers.csv', usecols=[1], engine='python', skipfooter=3)
-        
+
         # Plot dataset
         plt.plot(dataset)
         plt.title("International Airline Passengers Over Time")
@@ -35,173 +35,115 @@
         plt.ylabel("Passengers (in thousands)")
         plt.show()
             </code></pre>
-            <p><strong>Explanation:</strong>
-                <ul>
-                    <li>Uses <strong>pandas</strong> to load only the passenger count column from the dataset.</li>
-                    <li><code>matplotlib</code> is used to visualize <strong>trends in passenger data</strong> over time.</li>
-                    <li>Time-series data is characterized by <strong>seasonal patterns and trends</strong>, which an LSTM can capture.</li>
-                </ul>
-            </p>
+            <p><strong>Deep Explanation:</strong></p>
+            <ul>
+                <li>This dataset represents <strong>monthly airline passenger counts</strong> over time.</li>
+                <li><strong>Time-series forecasting</strong> aims to predict future values by learning patterns from past data.</li>
+                <li>Seasonality, trends, and irregularities can significantly affect predictions, making **LSTMs useful for capturing dependencies.**</li>
+            </ul>
         
             <h4>🔹 Data Normalization</h4>
             <pre><code>
         from sklearn.preprocessing import MinMaxScaler
-        
+
         # Scale data between 0 and 1
         scaler = MinMaxScaler(feature_range=(0, 1))
         dataset = scaler.fit_transform(dataset)
-        
+
         print(dataset[:10])  # View first 10 normalized values
             </code></pre>
-            <p><strong>Explanation:</strong>
-                <ul>
-                    <li>LSTMs are <strong>sensitive to large numerical values</strong>, so we normalize data to a <strong>0-1 range</strong>.</li>
-                    <li>Scaling ensures <strong>faster convergence</strong> and reduces the risk of gradient issues during training.</li>
-                </ul>
-            </p>
+            <p><strong>Deep Explanation:</strong></p>
+            <ul>
+                <li><strong>Feature scaling</strong> is crucial for neural networks, ensuring numerical values remain in a **consistent range**.</li>
+                <li>LSTMs are sensitive to **scale differences**, and normalizing values between **0 and 1** speeds up convergence.</li>
+            </ul>
         
             <h4>🔹 Reshaping Data for LSTM</h4>
             <pre><code>
         import numpy as np
         from sklearn.model_selection import train_test_split
-        
+
         # Split dataset into train and test sets (80/20 split)
         trainX, testX = train_test_split(dataset, test_size=0.2, shuffle=False)
-        
+
         # Reshape to LSTM input format: [samples, time steps, features]
         trainX = np.reshape(trainX, (trainX.shape[0], trainX.shape[1], 1))
         testX = np.reshape(testX, (testX.shape[0], testX.shape[1], 1))
-        
-        print(trainX.shape)  # Expected: (samples, time_steps, features)
             </code></pre>
-            <p><strong>Explanation:</strong>
-                <ul>
-                    <li>LSTMs require input in the shape <strong>(samples, time steps, features)</strong>.</li>
-                    <li>Each sample represents <strong>one time step</strong> with <strong>one feature (passenger count)</strong>.</li>
-                </ul>
-            </p>
+            <p><strong>Deep Explanation:</strong></p>
+            <ul>
+                <li>LSTMs require input in the form **(samples, time steps, features)**.</li>
+                <li>Each **sample represents a sequence of past observations**, while the model predicts the next value.</li>
+            </ul>
         
             <h4>🔹 Defining and Training an LSTM Model</h4>
             <pre><code>
         from keras.models import Sequential
         from keras.layers import LSTM, Dense
-        
+
         # Build LSTM model
         model = Sequential()
-        model.add(LSTM(4, input_shape=(1, 1)))  # 4 memory cells
+        model.add(LSTM(50, input_shape=(1, 1)))  # 50 memory cells
         model.add(Dense(1))  # Output layer
-        
+
         model.compile(loss='mean_squared_error', optimizer='adam')
-        
+
         # Train model
         model.fit(trainX, trainY, epochs=100, batch_size=1, verbose=2)
             </code></pre>
-            <p><strong>Explanation:</strong>
-                <ul>
-                    <li>Uses <strong>4 LSTM units</strong> to learn sequential dependencies in the data.</li>
-                    <li>The <strong>output layer</strong> contains <strong>1 neuron</strong>, which predicts the next passenger count.</li>
-                    <li><code>mean_squared_error</code> is used as the loss function because this is a <strong>regression task</strong>.</li>
-                </ul>
-            </p>
+            <p><strong>Deep Explanation:</strong></p>
+            <ul>
+                <li>The LSTM layer consists of **50 memory cells** that capture **temporal dependencies** in the data.</li>
+                <li><code>Dense(1)</code> serves as the output layer, predicting a **single numerical value** (passenger count).</li>
+                <li><strong>Mean squared error (MSE)</strong> is used as the loss function for **regression tasks**.</li>
+            </ul>
         
             <h3>📌 2. Spam Classification with LSTM</h3>
-            <p>We use an LSTM model to classify <strong>SMS messages</strong> as <strong>spam or not spam</strong>.</p>
+            <p>We will now use an **LSTM-based text classifier** to detect spam messages.</p>
         
-            <h4>🔹 Loading and Preprocessing the Dataset</h4>
-            <pre><code>
-        import pandas as pd
-        from sklearn.preprocessing import LabelEncoder
-        
-        # Load dataset
-        df = pd.read_csv('spam.csv', delimiter=',', encoding='latin-1')
-        
-        # Keep only relevant columns
-        df = df[['v1', 'v2']]
-        
-        # Encode labels (ham=0, spam=1)
-        le = LabelEncoder()
-        df['v1'] = le.fit_transform(df['v1'])
-        
-        # Split into train/test
-        X_train, X_test, Y_train, Y_test = train_test_split(df['v2'], df['v1'], test_size=0.15)
-        
-        print(df.head())
-            </code></pre>
-            <p><strong>Explanation:</strong>
-                <ul>
-                    <li>Loads <strong>SMS spam dataset</strong> and removes unnecessary columns.</li>
-                    <li>Encodes labels: <strong>ham (0), spam (1)</strong>, converting categorical labels into numerical format.</li>
-                    <li>Splits data into <strong>training (85%) and testing (15%) sets</strong>.</li>
-                </ul>
-            </p>
-        
-            <h4>🔹 Tokenizing and Padding the Text Data</h4>
+            <h4>🔹 Text Preprocessing & Tokenization</h4>
             <pre><code>
         from tensorflow.keras.preprocessing.text import Tokenizer
         from tensorflow.keras.preprocessing.sequence import pad_sequences
-        
+
         # Tokenize text
-        tokenizer = Tokenizer(num_words=1000)
+        tokenizer = Tokenizer(num_words=5000)
         tokenizer.fit_on_texts(X_train)
         sequences = tokenizer.texts_to_sequences(X_train)
-        
-        # Pad sequences
+
+        # Pad sequences to ensure uniform input size
         max_len = 150
         X_train_seq = pad_sequences(sequences, maxlen=max_len)
-        
-        print(X_train_seq.shape)  # Expected: (num_samples, 150)
             </code></pre>
-            <p><strong>Explanation:</strong>
-                <ul>
-                    <li>Converts text messages into <strong>numerical sequences</strong>.</li>
-                    <li>Pads sequences to <strong>ensure uniform length (150 words per message).</strong></li>
-                </ul>
-            </p>
+            <p><strong>Deep Explanation:</strong></p>
+            <ul>
+                <li>Converts text messages into **numerical sequences** using word-to-index mapping.</li>
+                <li>Pads sequences to **ensure uniform input size**, as LSTMs require **fixed-length inputs**.</li>
+            </ul>
         
-            <h4>🔹 Defining and Training the LSTM Model</h4>
+            <h4>🔹 Defining and Training the Spam Detection Model</h4>
             <pre><code>
         from keras.layers import Embedding, Dropout, Activation, Input
         from keras.models import Model
-        
+
         # Define LSTM model
         inputs = Input(shape=[max_len])
-        layer = Embedding(1000, 50, input_length=max_len)(inputs)
+        layer = Embedding(5000, 64, input_length=max_len)(inputs)
         layer = LSTM(64)(layer)
         layer = Dense(256, activation='relu')(layer)
         layer = Dropout(0.5)(layer)
         layer = Dense(1, activation='sigmoid')(layer)
-        
+
         model = Model(inputs, layer)
         model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
-        
-        # Train model
-        model.fit(X_train_seq, Y_train, batch_size=128, epochs=5, validation_split=0.2)
             </code></pre>
-            <p><strong>Explanation:</strong>
-                <ul>
-                    <li>Trains an LSTM <strong>binary classifier</strong> for spam detection.</li>
-                    <li>Uses <strong>Dropout (0.5)</strong> to reduce overfitting.</li>
-                    <li>Uses <strong>Sigmoid activation</strong> in the output layer for binary classification.</li>
-                </ul>
-            </p>
-        
-            <h3>📌 Summary</h3>
+            <p><strong>Deep Explanation:</strong></p>
             <ul>
-                <li>Built an <strong>LSTM model for time-series forecasting</strong>.</li>
-                <li>Developed an <strong>LSTM spam classification model</strong>.</li>
-                <li>Applied <strong>data normalization, tokenization, and padding</strong> for sequence modeling.</li>
+                <li>Uses **word embeddings** to capture the semantic meaning of words.</li>
+                <li>The **LSTM layer processes sequential dependencies** in the text.</li>
+                <li>**Dropout (0.5)** prevents overfitting, and **sigmoid activation** outputs a probability score for spam detection.</li>
             </ul>
-        
         </section>
-        
-        
-        
     </main>
-    
-    <footer>
-        <p>&copy; 2025 Thomas Baker - MSc Data Science & AI Revision</p>
-    </footer>
-    
-    <script defer src="aml-flashcards.js"></script>
 </body>
 </html>
