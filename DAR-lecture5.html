@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 5 - Assessing Model Accuracy & Cross-Validation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Session 5 - Assessing Model Accuracy & Cross-Validation</h1>
+    </header>
+    
+    <main>
+        <a href="DAR-homepage.html" class="back-button">← Back to Homepage</a>
+
+        <section id="notes">
+            <h2>Revision Notes</h2>
+            <article>
+                <h3>1. Introduction to Model Accuracy</h3>
+                <p><strong>Training Data:</strong> The dataset used to build the model.</p>
+                <p><strong>Testing Data:</strong> The dataset used to evaluate model performance on unseen data.</p>
+                <p><strong>Goal:</strong> Minimize the difference between training and testing error.</p>
+                
+                <h3>2. Measuring Quality of Fit</h3>
+                <p><strong>Mean Squared Error (MSE):</strong></p>
+                <pre>MSE = (1/n) Σ (yi - ŷi)^2</pre>
+                <p>Lower MSE indicates better model accuracy.</p>
+                
+                <h3>3. Bias-Variance Trade-off</h3>
+                <ul>
+                    <li><strong>Bias:</strong> Error from overly simplistic models (e.g., linear regression).</li>
+                    <li><strong>Variance:</strong> Error from overly complex models (e.g., deep neural networks).</li>
+                    <li><strong>Trade-off:</strong> Aim to balance bias and variance for optimal model performance.</li>
+                </ul>
+                
+                <h3>4. Cross-Validation (CV)</h3>
+                <p>Used to estimate test error when a separate test dataset is not available.</p>
+                <ul>
+                    <li><strong>Hold-out Method:</strong> Splitting data into training and testing sets (e.g., 70%/30%).</li>
+                    <li><strong>Leave-One-Out CV (LOOCV):</strong> Uses n-1 observations for training and 1 for testing, repeated n times.</li>
+                    <li><strong>K-Fold Cross-Validation:</strong> Divides data into k subsets and trains the model k times on different splits.</li>
+                </ul>
+                
+                <h3>5. Model Selection & Hyperparameter Tuning</h3>
+                <p><strong>Goal:</strong> Optimize model complexity and performance.</p>
+                <ul>
+                    <li>Use cross-validation to compare different hyperparameter settings.</li>
+                    <li>Choose the model with the lowest validation error.</li>
+                </ul>
+            </article>
+        </section>
+        
+        <section id="flashcards">
+            <h2>Flashcards</h2>
+            <div class="flashcard-container">
+                <div class="flashcard" data-question="What is the goal of assessing model accuracy?" data-answer="To minimize the difference between training and testing error."></div>
+                <div class="flashcard" data-question="What is the formula for MSE?" data-answer="MSE = (1/n) Σ (yi - ŷi)^2"></div>
+                <div class="flashcard" data-question="What does the bias-variance trade-off describe?" data-answer="The balance between underfitting (high bias) and overfitting (high variance)."></div>
+                <div class="flashcard" data-question="What is Leave-One-Out Cross-Validation (LOOCV)?" data-answer="A method where each observation is used as a test set once while training on the rest."></div>
+                <div class="flashcard" data-question="What is K-Fold Cross-Validation?" data-answer="A method that splits data into k subsets, trains on k-1 subsets, and tests on the remaining one, repeated k times."></div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Thomas Baker - Data Analytics Revision</p>
+    </footer>
+    
+    <script defer src="flashcards.js"></script>
+</body>
+</html>

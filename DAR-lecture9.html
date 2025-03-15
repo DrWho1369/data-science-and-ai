@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 9 - Clustering and Principal Component Analysis (PCA)</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Session 9 - Clustering and Principal Component Analysis (PCA)</h1>
+    </header>
+    
+    <main>
+        <a href="DAR-homepage.html" class="back-button">← Back to Homepage</a>
+
+        <section id="notes">
+            <h2>Revision Notes</h2>
+            <article>
+                <h3>1. Introduction to Unsupervised Learning</h3>
+                <p><strong>Supervised vs. Unsupervised Learning:</strong></p>
+                <ul>
+                    <li>**Supervised Learning**: Both X (features) and Y (labels) are known.</li>
+                    <li>**Unsupervised Learning**: Only X (features) are available, and the goal is to find structure in data.</li>
+                </ul>
+                
+                <h3>2. Clustering</h3>
+                <p><strong>Definition:</strong> Clustering finds subgroups (clusters) in data, where observations within a cluster are similar, but different across clusters.</p>
+                <p>Applications include **gene expression analysis, customer segmentation, and anomaly detection**.</p>
+                
+                <h3>3. K-Means Clustering</h3>
+                <p><strong>Key Steps:</strong></p>
+                <ul>
+                    <li>Specify the number of clusters (K).</li>
+                    <li>Randomly assign each data point to a cluster.</li>
+                    <li>Compute cluster centroids (mean of assigned points).</li>
+                    <li>Reassign points to the closest centroid.</li>
+                    <li>Repeat until assignments stop changing.</li>
+                </ul>
+                <p><strong>Within-Cluster Variation:</strong> The sum of squared distances between points and their cluster centroids.</p>
+                <p><strong>Local Optima Issue:</strong> K-Means can get stuck in local optima; hence, multiple runs with different starting points improve results.</p>
+                
+                <h3>4. Principal Component Analysis (PCA)</h3>
+                <p><strong>Definition:</strong> A technique for **dimensionality reduction** by transforming correlated variables into uncorrelated principal components.</p>
+                <p><strong>Applications:</strong> Data visualization, noise reduction, feature extraction.</p>
+                
+                <h3>5. PCA Mathematics</h3>
+                <ul>
+                    <li>Compute the **covariance matrix** of the dataset.</li>
+                    <li>Find the **eigenvalues** and **eigenvectors** of the covariance matrix.</li>
+                    <li>Sort eigenvectors by **eigenvalues** (largest eigenvalue = most important direction).</li>
+                    <li>Transform data using the top eigenvectors (Principal Components).</li>
+                </ul>
+                <p><strong>Variance Explained:</strong> The proportion of total variance captured by each Principal Component.</p>
+                <p><strong>Scree Plot:</strong> A visualization showing the proportion of variance explained by each component.</p>
+            </article>
+        </section>
+        
+        <section id="flashcards">
+            <h2>Flashcards</h2>
+            <div class="flashcard-container">
+                <div class="flashcard" data-question="What is clustering?" data-answer="A technique for finding subgroups in a dataset where observations within a cluster are similar."></div>
+                <div class="flashcard" data-question="What is the key goal of K-Means clustering?" data-answer="To minimize within-cluster variation by assigning points to the closest centroid."></div>
+                <div class="flashcard" data-question="What is the main challenge of K-Means clustering?" data-answer="It can get stuck in local optima, requiring multiple runs with different starting points."></div>
+                <div class="flashcard" data-question="What does PCA do?" data-answer="Transforms correlated variables into uncorrelated principal components to reduce dimensionality."></div>
+                <div class="flashcard" data-question="What is an eigenvector in PCA?" data-answer="A direction along which variance in the data is maximized."></div>
+                <div class="flashcard" data-question="How do we decide how many principal components to keep?" data-answer="Using a scree plot or choosing components that explain most of the variance." ></div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Thomas Baker - Data Analytics Revision</p>
+    </footer>
+    
+    <script defer src="flashcards.js"></script>
+</body>
+</html>

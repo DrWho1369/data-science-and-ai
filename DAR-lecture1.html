@@ -12,6 +12,8 @@
     </header>
     
     <main>
+        <a href="DAR-homepage.html" class="back-button">← Back to Homepage</a>
+
         <section id="notes">
             <h2>Revision Notes</h2>
             <article>
@@ -42,6 +44,36 @@
                 </ul>
             </article>
         </section>
+
+        <section id="r-exercises">
+            <h2>R Exercises</h2>
+            <h3>Vectors</h3>
+            <p>Create a vector <code>u</code> that has values -10 to 0. Here are different ways to do it:</p>
+            <pre><code>
+    u <- c(-10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0)
+    u <- -10:0
+    u <- seq(-10,0)
+    u <- seq(from = -10, to = 0, by = 1)
+    u <- seq(from = -10, to = 0, length.out = 11)
+            </code></pre>
+            
+            <h3>Basic Arithmetic in R</h3>
+            <p>Perform arithmetic operations on vectors.</p>
+            <pre><code>
+    v <- c(1,2,3,4,5)
+    w <- c(10,20,30,40,50)
+    sum_vw <- v + w  # Element-wise addition
+    prod_vw <- v * w  # Element-wise multiplication
+            </code></pre>
+            
+            <h3>Data Frames</h3>
+            <p>Create a data frame with sample data.</p>
+            <pre><code>
+    df <- data.frame(Name=c("Alice", "Bob", "Charlie"), Age=c(25, 30, 35), Score=c(80, 90, 85))
+    print(df)
+    summary(df)
+            </code></pre>
+        </section>
         
         <section id="flashcards">
             <h2>Flashcards</h2>
@@ -55,7 +87,7 @@
     </main>
     
     <footer>
-        <p>&copy; 2025 Your Name - Data Analytics Revision</p>
+        <p>&copy; 2025 Thomas Baker - Data Analytics Revision</p>
     </footer>
     
     <script defer src="flashcards.js"></script>

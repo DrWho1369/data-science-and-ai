@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 6 - Bayesian Networks and Decision Trees</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Session 6 - Bayesian Networks and Decision Trees</h1>
+    </header>
+    
+    <main>
+        <a href="DAR-homepage.html" class="back-button">← Back to Homepage</a>
+
+        <section id="notes">
+            <h2>Revision Notes</h2>
+            <article>
+                <h3>1. Bayesian Networks and Naïve Bayes Classifier</h3>
+                <p><strong>Bayes’ Theorem:</strong> A fundamental theorem for probabilistic classification:</p>
+                <pre>P(H|E) = (P(E|H) * P(H)) / P(E)</pre>
+                <p>Where:</p>
+                <ul>
+                    <li>P(H|E): Posterior probability of hypothesis H given evidence E.</li>
+                    <li>P(E|H): Likelihood of evidence given H.</li>
+                    <li>P(H): Prior probability of H.</li>
+                    <li>P(E): Total probability of evidence.</li>
+                </ul>
+                <p><strong>Naïve Bayes Assumption:</strong> Assumes features are independent given the class label.</p>
+                
+                <h3>2. Example: Predicting Play Golf Decision</h3>
+                <p>Using Bayes' Theorem, we can classify whether a person will play golf based on weather conditions.</p>
+                <p>Formula for classification:</p>
+                <pre>P(Play Golf | Outlook) = (P(Outlook | Play Golf) * P(Play Golf)) / P(Outlook)</pre>
+                
+                <h3>3. Decision Trees</h3>
+                <p><strong>What is a Decision Tree?</strong></p>
+                <ul>
+                    <li>Supervised learning algorithm for classification & regression.</li>
+                    <li>Splits data based on feature conditions (e.g., Outlook = Sunny).</li>
+                </ul>
+                <p><strong>Types of Decision Trees:</strong></p>
+                <ul>
+                    <li>**Classification Tree:** Predicts discrete labels (e.g., Yes/No).</li>
+                    <li>**Regression Tree:** Predicts continuous values.</li>
+                </ul>
+                
+                <h3>4. Tree Construction and Pruning</h3>
+                <p><strong>Tree Growth:</strong> Splitting nodes using impurity measures like Gini index or Entropy.</p>
+                <p><strong>Pruning:</strong> Reduces tree complexity by removing less significant branches.</p>
+                
+                <h3>5. Advantages and Disadvantages of Decision Trees</h3>
+                <p><strong>Advantages:</strong></p>
+                <ul>
+                    <li>Easy to interpret and visualize.</li>
+                    <li>Handles both numerical and categorical data.</li>
+                    <li>Non-parametric (no assumptions about data distribution).</li>
+                </ul>
+                <p><strong>Disadvantages:</strong></p>
+                <ul>
+                    <li>Prone to overfitting (can create deep, complex trees).</li>
+                    <li>Greedy algorithm (may not find the global best split).</li>
+                </ul>
+            </article>
+        </section>
+        
+        <section id="flashcards">
+            <h2>Flashcards</h2>
+            <div class="flashcard-container">
+                <div class="flashcard" data-question="What is Bayes' Theorem?" data-answer="P(H|E) = (P(E|H) * P(H)) / P(E)"></div>
+                <div class="flashcard" data-question="What assumption does Naïve Bayes make?" data-answer="Features are independent given the class label."></div>
+                <div class="flashcard" data-question="What is a decision tree?" data-answer="A supervised learning algorithm that splits data based on feature conditions."></div>
+                <div class="flashcard" data-question="What is the difference between a classification tree and a regression tree?" data-answer="Classification predicts discrete labels, regression predicts continuous values."></div>
+                <div class="flashcard" data-question="What is pruning in decision trees?" data-answer="A technique to remove less significant branches to prevent overfitting."></div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Thomas Baker - Data Analytics Revision</p>
+    </footer>
+    
+    <script defer src="flashcards.js"></script>
+</body>
+</html>

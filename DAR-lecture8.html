@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 8 - Support Vector Machines (SVM)</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Session 8 - Support Vector Machines (SVM)</h1>
+    </header>
+    
+    <main>
+        <a href="DAR-homepage.html" class="back-button">← Back to Homepage</a>
+
+        <section id="notes">
+            <h2>Revision Notes</h2>
+            <article>
+                <h3>1. Introduction to SVM</h3>
+                <p><strong>Support Vector Machines (SVM):</strong> A supervised learning algorithm used for classification and regression tasks.</p>
+                <p>Developed in the 1990s, SVMs perform well on a variety of settings and are often considered strong "out-of-the-box" classifiers.</p>
+                
+                <h3>2. Maximal Margin Classifier</h3>
+                <p><strong>Linearly Separable Classes:</strong> If a straight line can perfectly separate two classes, we use a **maximal margin classifier**.</p>
+                <p><strong>Margin:</strong> The smallest perpendicular distance from any data point to the separation boundary.</p>
+                
+                <h3>3. Support Vector Classifier (Soft Margin SVM)</h3>
+                <p>When classes are **not perfectly separable**, a **support vector classifier (SVC)** allows some misclassified points while maximizing the margin.</p>
+                <p><strong>Cost Parameter (C):</strong> Controls the trade-off between maximizing margin and minimizing classification error.</p>
+                
+                <h3>4. Support Vector Machines (SVM)</h3>
+                <p>If data is **not linearly separable**, we transform it into a higher-dimensional space using **kernels**.</p>
+                <p><strong>Kernel Trick:</strong> Maps data to a higher-dimensional space where a linear decision boundary can be found.</p>
+                <ul>
+                    <li>**Linear Kernel:** Used for linearly separable data.</li>
+                    <li>**Polynomial Kernel:** Introduces polynomial features.</li>
+                    <li>**Radial Basis Function (RBF) Kernel:** Handles complex decision boundaries.</li>
+                    <li>**Sigmoid Kernel:** Inspired by neural networks.</li>
+                </ul>
+                
+                <h3>5. Tuning SVM Parameters</h3>
+                <ul>
+                    <li><strong>Cost (C):</strong> Large C results in fewer support vectors (more complex model, high variance).</li>
+                    <li><strong>Gamma (γ):</strong> In RBF kernels, controls the influence of individual training points.</li>
+                    <li>Use **Cross-Validation (CV)** to select the best C and γ values.</li>
+                </ul>
+                
+                <h3>6. Multi-Class Classification with SVM</h3>
+                <p>For **more than two classes**, SVMs use **one-vs-one** classification (pairwise comparisons) and vote on the final class.</p>
+            </article>
+        </section>
+        
+        <section id="flashcards">
+            <h2>Flashcards</h2>
+            <div class="flashcard-container">
+                <div class="flashcard" data-question="What is the margin in an SVM?" data-answer="The smallest perpendicular distance from any point to the decision boundary."></div>
+                <div class="flashcard" data-question="What is the difference between a Support Vector Classifier (SVC) and an SVM?" data-answer="SVC allows soft margins, while SVM maps data to a higher-dimensional space for non-linear separation."></div>
+                <div class="flashcard" data-question="What is the purpose of the kernel trick in SVMs?" data-answer="To map data into a higher-dimensional space where a linear decision boundary can be found."></div>
+                <div class="flashcard" data-question="What does the cost parameter (C) control in an SVM?" data-answer="C controls the trade-off between maximizing margin and minimizing classification error."></div>
+                <div class="flashcard" data-question="What is the difference between a linear and an RBF kernel?" data-answer="A linear kernel separates data using a straight line, while an RBF kernel can model complex, non-linear decision boundaries."></div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Thomas Baker - Data Analytics Revision</p>
+    </footer>
+    
+    <script defer src="flashcards.js"></script>
+</body>
+</html>

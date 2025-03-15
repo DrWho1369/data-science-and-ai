@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 7 - Bagging and Random Forests</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Session 7 - Bagging and Random Forests</h1>
+    </header>
+    
+    <main>
+        <a href="DAR-homepage.html" class="back-button">← Back to Homepage</a>
+
+        <section id="notes">
+            <h2>Revision Notes</h2>
+            <article>
+                <h3>1. Introduction to Bagging</h3>
+                <p><strong>Problem with Decision Trees:</strong> High variance in predictions.</p>
+                <p><strong>Bagging (Bootstrap Aggregating):</strong> Combines multiple decision trees trained on bootstrapped datasets.</p>
+                <ul>
+                    <li>Reduces variance by averaging predictions.</li>
+                    <li>Uses random sampling with replacement.</li>
+                </ul>
+                
+                <h3>2. Bootstrapping</h3>
+                <p><strong>Random Sampling with Replacement:</strong> Each bootstrap dataset is sampled from the original dataset.</p>
+                <p><strong>Key Idea:</strong> Repeated sampling improves model stability.</p>
+                
+                <h3>3. Bagging for Regression & Classification Trees</h3>
+                <ul>
+                    <li><strong>Regression:</strong> Average predictions of all trees.</li>
+                    <li><strong>Classification:</strong> Majority vote across all trees.</li>
+                </ul>
+                
+                <h3>4. Random Forests</h3>
+                <p>Enhances bagging by introducing **random feature selection**.</p>
+                <ul>
+                    <li>Each tree selects a random subset of features at each split.</li>
+                    <li>Helps decorrelate trees, improving model robustness.</li>
+                </ul>
+                
+                <h3>5. Evaluating Model Performance</h3>
+                <p><strong>Out-of-Bag (OOB) Error:</strong> Uses unseen samples for validation.</p>
+                <p><strong>Variable Importance:</strong> Measures the impact of each feature.</p>
+                
+                <h3>6. Example: Boston Housing Data</h3>
+                <pre>
+                library(randomForest)
+                set.seed(1)
+                bag.boston <- randomForest(medv ~ ., data=Boston, mtry=12, importance=TRUE)
+                yhat.bag <- predict(bag.boston, newdata=Boston[-train,])
+                mean((yhat.bag - Boston[-train, "medv"])^2)
+                </pre>
+            </article>
+        </section>
+        
+        <section id="flashcards">
+            <h2>Flashcards</h2>
+            <div class="flashcard-container">
+                <div class="flashcard" data-question="What is the purpose of Bagging?" data-answer="To reduce variance in models by averaging predictions."></div>
+                <div class="flashcard" data-question="How does Bootstrapping work?" data-answer="It randomly samples data with replacement to create multiple training sets."></div>
+                <div class="flashcard" data-question="What is the main advantage of Random Forests over Bagging?" data-answer="Random forests decorrelate trees by selecting a random subset of features at each split."></div>
+                <div class="flashcard" data-question="How is the Out-of-Bag (OOB) error calculated?" data-answer="By evaluating model performance on samples not used in training."></div>
+                <div class="flashcard" data-question="What is Variable Importance in Random Forests?" data-answer="A measure of how much a feature contributes to model accuracy."></div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Thomas Baker - Data Analytics Revision</p>
+    </footer>
+    
+    <script defer src="flashcards.js"></script>
+</body>
+</html>
