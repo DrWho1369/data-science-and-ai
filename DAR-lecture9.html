@@ -13,7 +13,41 @@
     
     <main>
         <a href="DAR-homepage.html" class="back-button">← Back to Homepage</a>
-
+        
+        <section id="objectives">
+            <h2>Key Learning Objectives</h2>
+            <ul>
+                <li>Understand the difference between supervised and unsupervised learning.</li>
+                <li>Learn how clustering techniques identify patterns in unlabeled data.</li>
+                <li>Explore K-Means Clustering and its optimization process.</li>
+                <li>Understand how within-cluster variation is minimized in K-Means.</li>
+                <li>Learn how Principal Component Analysis (PCA) reduces dimensionality.</li>
+                <li>Understand the role of eigenvalues and eigenvectors in PCA.</li>
+                <li>Explore how scree plots are used to determine the number of principal components to retain.</li>
+                <li>Learn how PCA preserves variance while reducing data dimensions.</li>
+                <li>Understand the significance of data scaling before applying PCA.</li>
+                <li>Explore real-world applications of clustering and PCA in data science.</li>
+            </ul>
+        </section>
+        
+        <section id="flashcards">
+            <h2>Flashcards</h2>
+            <div class="flashcard-container">
+                <div class="flashcard" data-question="What is clustering?" data-answer="A technique for finding subgroups in a dataset where observations within a cluster are similar."></div>
+                <div class="flashcard" data-question="What is the key goal of K-Means clustering?" data-answer="To minimize within-cluster variation by assigning points to the closest centroid."></div>
+                <div class="flashcard" data-question="What is the main challenge of K-Means clustering?" data-answer="It can get stuck in local optima, requiring multiple runs with different starting points."></div>
+                <div class="flashcard" data-question="What does PCA do?" data-answer="Transforms correlated variables into uncorrelated principal components to reduce dimensionality."></div>
+                <div class="flashcard" data-question="What is K-Means clustering?" data-answer="An unsupervised learning algorithm that partitions data into K distinct clusters by minimizing within-cluster variation."></div>
+                <div class="flashcard" data-question="What metric does K-Means clustering minimize?" data-answer="The sum of squared Euclidean distances between each point and its cluster centroid."></div>
+                <div class="flashcard" data-question="How do you determine the optimal number of clusters in K-Means?" data-answer="Using the Elbow Method, which plots the within-cluster sum of squares (WCSS) to find the point where additional clusters provide diminishing returns."></div>
+                <div class="flashcard" data-question="What is Principal Component Analysis (PCA)?" data-answer="A dimensionality reduction technique that transforms correlated variables into a set of linearly uncorrelated principal components."></div>
+                <div class="flashcard" data-question="What are eigenvectors and eigenvalues in PCA?" data-answer="Eigenvectors define the direction of principal components, while eigenvalues indicate the amount of variance explained by each component."></div>
+                <div class="flashcard" data-question="How do you decide how many principal components to keep in PCA?" data-answer="By examining a scree plot and retaining components that explain most of the variance, typically using the elbow rule."></div>
+                <div class="flashcard" data-question="What is the difference between supervised and unsupervised learning?" data-answer="Supervised learning uses labeled data with known outputs, while unsupervised learning identifies patterns and structures in unlabeled data."></div>
+                <div class="flashcard" data-question="What is the role of the covariance matrix in PCA?" data-answer="It captures relationships between variables and is used to compute eigenvectors and eigenvalues for dimensionality reduction."></div>
+                <div class="flashcard" data-question="Why is scaling important before applying PCA?" data-answer="Scaling ensures that variables with larger magnitudes do not dominate principal component calculations, especially when variables have different units."></div>
+            </div>
+        </section>
         <section id="notes">
             <h2>Revision Notes</h2>
             <article>
@@ -55,18 +89,95 @@
                 <p><strong>Scree Plot:</strong> A visualization showing the proportion of variance explained by each component.</p>
             </article>
         </section>
+
+        <section id="code-snippets">
+            <h2>R Code Snippets</h2>
         
-        <section id="flashcards">
-            <h2>Flashcards</h2>
-            <div class="flashcard-container">
-                <div class="flashcard" data-question="What is clustering?" data-answer="A technique for finding subgroups in a dataset where observations within a cluster are similar."></div>
-                <div class="flashcard" data-question="What is the key goal of K-Means clustering?" data-answer="To minimize within-cluster variation by assigning points to the closest centroid."></div>
-                <div class="flashcard" data-question="What is the main challenge of K-Means clustering?" data-answer="It can get stuck in local optima, requiring multiple runs with different starting points."></div>
-                <div class="flashcard" data-question="What does PCA do?" data-answer="Transforms correlated variables into uncorrelated principal components to reduce dimensionality."></div>
-                <div class="flashcard" data-question="What is an eigenvector in PCA?" data-answer="A direction along which variance in the data is maximized."></div>
-                <div class="flashcard" data-question="How do we decide how many principal components to keep?" data-answer="Using a scree plot or choosing components that explain most of the variance." ></div>
-            </div>
+            <h3>1. Loading and Exploring the Dataset</h3>
+            <p>We begin by loading the <strong>Wine Quality Training Dataset</strong> to analyze factors affecting wine quality.</p>
+            <pre><code>
+        # Load training dataset
+        training_data <- read.table("WineQuality_training.txt", header = TRUE, sep = ",")
+        summary(training_data)
+            </code></pre>
+            <p><strong>Interpretation:</strong> This command loads the dataset and provides a statistical summary. The <code>summary()</code> function helps to quickly understand the dataset by displaying descriptive statistics such as the mean, median, minimum, and maximum values of each variable. This is essential for detecting anomalies or patterns before applying machine learning models.</p>
+        
+            <h3>2. Implementing 10-Fold Cross-Validation</h3>
+            <p>We use <strong>10-fold cross-validation</strong> to evaluate model performance, ensuring our model generalizes well.</p>
+            <pre><code>
+        library(caret)
+        library(ROCR)
+        
+        set.seed(11)  # Ensure reproducibility
+        training_data[,3] <- as.factor(training_data[,3])  # Convert 'quality' to a factor
+        folds <- createFolds(y=training_data[,3], k=10)  # Split data into 10 folds
+            </code></pre>
+            <p><strong>Interpretation:</strong> Cross-validation is a technique used to assess model performance on unseen data. By splitting the dataset into 10 parts (folds), the model is trained on 9 folds and tested on the remaining 1, repeating this process for all folds. This helps to identify how well the model generalizes and prevents overfitting.</p>
+        
+            <h3>3. Logistic Regression with Cross-Validation</h3>
+            <p>We train a logistic regression model using <strong>alcohol content</strong> as the predictor variable.</p>
+            <pre><code>
+        auc_value_alcohol <- numeric()
+        
+        for(i in 1:10){
+            fold_cv_test <- training_data[folds[[i]],]
+            fold_cv_train <- training_data[-folds[[i]],]
+            
+            trained_model_alcohol <- glm(quality ~ alcohol, data = fold_cv_train, family = binomial)
+            pred_prob_alcohol <- predict(trained_model_alcohol, fold_cv_test, type='response')
+            
+            pr_alcohol <- prediction(pred_prob_alcohol, fold_cv_test$quality)
+            auroc_alcohol <- performance(pr_alcohol, measure = "auc")
+            auc_value_alcohol <- append(auc_value_alcohol, auroc_alcohol@y.values[[1]])
+        }
+        
+        print(mean(auc_value_alcohol))
+            </code></pre>
+            <p><strong>Interpretation:</strong> The <strong>mean AUROC score</strong> is a key metric for evaluating classifier performance. An AUROC value close to 1 indicates a strong predictive model, whereas a value closer to 0.5 suggests random guessing. This test helps determine whether alcohol content alone is a meaningful predictor of wine quality.</p>
+        
+            <h3>4. Comparing Predictive Power of Residual Sugar</h3>
+            <p>We repeat cross-validation using <strong>residual sugar</strong> instead of alcohol.</p>
+            <pre><code>
+        auc_value_sugar <- numeric()
+        
+        for(i in 1:10){
+            fold_cv_test <- training_data[folds[[i]],]
+            fold_cv_train <- training_data[-folds[[i]],]
+            
+            trained_model_sugar <- glm(quality ~ residual.sugar, data = fold_cv_train, family = binomial)
+            pred_prob_sugar <- predict(trained_model_sugar, fold_cv_test, type='response')
+            
+            pr_sugar <- prediction(pred_prob_sugar, fold_cv_test$quality)
+            auroc_sugar <- performance(pr_sugar, measure = "auc")
+            auc_value_sugar <- append(auc_value_sugar, auroc_sugar@y.values[[1]])
+        }
+        
+        print(mean(auc_value_sugar))
+            </code></pre>
+            <p><strong>Interpretation:</strong> This model assesses whether residual sugar is a better predictor of wine quality than alcohol content. The AUROC scores from both models allow us to compare their effectiveness, with a higher AUROC score indicating a stronger predictor.</p>
+        
+            <h3>5. Combining Alcohol & Residual Sugar</h3>
+            <p>We now train a model with both predictors to check for <strong>improved accuracy</strong>.</p>
+            <pre><code>
+        auc_value_alcohol_sugar <- numeric()
+        
+        for(i in 1:10){
+            fold_cv_test <- training_data[folds[[i]],]
+            fold_cv_train <- training_data[-folds[[i]],]
+            
+            trained_model_alcohol_sugar <- glm(quality ~ alcohol + residual.sugar, data = fold_cv_train, family = binomial)
+            pred_prob_alcohol_sugar <- predict(trained_model_alcohol_sugar, fold_cv_test, type='response')
+            
+            pr_alcohol_sugar <- prediction(pred_prob_alcohol_sugar, fold_cv_test$quality)
+            auroc_alcohol_sugar <- performance(pr_alcohol_sugar, measure = "auc")
+            auc_value_alcohol_sugar <- append(auc_value_alcohol_sugar, auroc_alcohol_sugar@y.values[[1]])
+        }
+        
+        print(mean(auc_value_alcohol_sugar))
+            </code></pre>
+            <p><strong>Interpretation:</strong> This model combines both alcohol and residual sugar as predictors to evaluate if using multiple variables enhances classification performance. If the AUROC score of this model is higher than those of the single-variable models, it indicates that a combination of predictors improves wine quality classification.</p>
         </section>
+        
     </main>
     
     <footer>

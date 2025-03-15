@@ -13,7 +13,38 @@
     
     <main>
         <a href="DAR-homepage.html" class="back-button">← Back to Homepage</a>
-
+        <section id="objectives">
+            <h2>Key Learning Objectives</h2>
+            <ul>
+                <li>Understand the fundamentals of Bayesian Networks and how they model probabilistic relationships.</li>
+                <li>Learn the role of Bayes' Theorem in probabilistic classification and decision-making.</li>
+                <li>Explore the Naïve Bayes classifier and its assumption of feature independence.</li>
+                <li>Understand how Decision Trees make classification and regression predictions by splitting data.</li>
+                <li>Learn about entropy, information gain, and Gini index as methods for decision tree splitting.</li>
+                <li>Explore the impact of pruning on decision trees and how it prevents overfitting.</li>
+            </ul>
+        </section>
+        
+        
+        <section id="flashcards">
+            <h2>Flashcards</h2>
+            <div class="flashcard-container">
+                <div class="flashcard" data-question="What is Bayes' Theorem Formula?" data-answer="P(H|E) = (P(E|H) * P(H)) / P(E)"></div>
+                <div class="flashcard" data-question="What assumption does Naïve Bayes make?" data-answer="Features are independent given the class label."></div>
+                <div class="flashcard" data-question="What is a decision tree?" data-answer="A supervised learning algorithm that splits data based on feature conditions."></div>
+                <div class="flashcard" data-question="What is pruning in decision trees?" data-answer="A technique to remove less significant branches to prevent overfitting."></div>
+                <div class="flashcard" data-question="What is Bayes' Theorem?" data-answer="A formula that calculates the probability of an event given prior knowledge: P(H|E) = (P(E|H) * P(H)) / P(E)."></div>
+                <div class="flashcard" data-question="What is a Bayesian Network?" data-answer="A graphical model that represents probabilistic relationships among variables using nodes and directed edges."></div>
+                <div class="flashcard" data-question="What is the Naïve Bayes classifier?" data-answer="A classification algorithm based on Bayes' Theorem that assumes independence between predictors."></div>
+                <div class="flashcard" data-question="What is the difference between classification and regression trees?" data-answer="Classification trees predict categorical outcomes / discrete labels, while regression trees predict continuous values."></div>
+                <div class="flashcard" data-question="What is entropy in decision trees?" data-answer="A measure of randomness or impurity in a dataset used to determine the best split in a decision tree."></div>
+                <div class="flashcard" data-question="What is information gain in decision trees?" data-answer="A metric that measures the reduction in entropy after a dataset is split based on a feature."></div>
+                <div class="flashcard" data-question="Why is pruning used in decision trees?" data-answer="To reduce overfitting by removing branches that have little contribution to model accuracy."></div>
+                <div class="flashcard" data-question="What are the advantages of decision trees?" data-answer="They are interpretable, handle categorical and numerical data, and require little preprocessing."></div>
+                <div class="flashcard" data-question="What is the main disadvantage of decision trees?" data-answer="They are prone to overfitting, especially when deep trees are created without pruning."></div>
+                <div class="flashcard" data-question="How does a Bayesian classifier make predictions?" data-answer="By calculating posterior probabilities for each class and assigning the class with the highest probability to the observation."></div>
+            </div>
+        </section>
         <section id="notes">
             <h2>Revision Notes</h2>
             <article>
@@ -183,18 +214,6 @@
             <p><strong>Interpretation:</strong> <strong>The highest AUROC score indicates the best predictive model</strong>.</p>
         </section>
         
-        
-        
-        <section id="flashcards">
-            <h2>Flashcards</h2>
-            <div class="flashcard-container">
-                <div class="flashcard" data-question="What is Bayes' Theorem?" data-answer="P(H|E) = (P(E|H) * P(H)) / P(E)"></div>
-                <div class="flashcard" data-question="What assumption does Naïve Bayes make?" data-answer="Features are independent given the class label."></div>
-                <div class="flashcard" data-question="What is a decision tree?" data-answer="A supervised learning algorithm that splits data based on feature conditions."></div>
-                <div class="flashcard" data-question="What is the difference between a classification tree and a regression tree?" data-answer="Classification predicts discrete labels, regression predicts continuous values."></div>
-                <div class="flashcard" data-question="What is pruning in decision trees?" data-answer="A technique to remove less significant branches to prevent overfitting."></div>
-            </div>
-        </section>
     </main>
     
     <footer>

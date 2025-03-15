@@ -13,7 +13,38 @@
     
     <main>
         <a href="DAR-homepage.html" class="back-button">← Back to Homepage</a>
-
+        <section id="objectives">
+            <h2>Key Learning Objectives</h2>
+            <ul>
+                <li>Understand the limitations of decision trees and how bagging reduces variance.</li>
+                <li>Learn how bootstrapping works and why it is used in bagging.</li>
+                <li>Explore how bagging improves model stability by averaging predictions.</li>
+                <li>Understand how Random Forests improve upon bagging by introducing feature randomness.</li>
+                <li>Learn how Out-of-Bag (OOB) error is used to estimate model performance.</li>
+                <li>Understand the concept of Variable Importance and how Random Forests measure it.</li>
+            </ul>
+        </section>
+        
+        <section id="flashcards">
+            <h2>Flashcards</h2>
+            <div class="flashcard-container">
+                <div class="flashcard" data-question="What is the purpose of Bagging?" data-answer="To reduce variance in models by averaging predictions."></div>
+                <div class="flashcard" data-question="How does Bootstrapping work?" data-answer="It randomly samples data with replacement to create multiple training sets."></div>
+                <div class="flashcard" data-question="What is the main advantage of Random Forests over Bagging?" data-answer="Random forests decorrelate trees by selecting a random subset of features at each split."></div>
+                <div class="flashcard" data-question="How is the Out-of-Bag (OOB) error calculated?" data-answer="By evaluating model performance on samples not used in training."></div>
+                <div class="flashcard" data-question="What is Variable Importance in Random Forests?" data-answer="A measure of how much a feature contributes to model accuracy."></div>
+                <div class="flashcard" data-question="What is the main disadvantage of decision trees?" data-answer="They suffer from high variance, meaning small changes in data can lead to different tree structures."></div>
+                <div class="flashcard" data-question="How does bagging improve decision trees?" data-answer="Bagging reduces variance by averaging predictions from multiple decision trees trained on bootstrapped datasets."></div>
+                <div class="flashcard" data-question="What is bootstrapping in bagging?" data-answer="A resampling technique where training data is randomly sampled with replacement to create multiple datasets."></div>
+                <div class="flashcard" data-question="How does bagging work for regression and classification?" data-answer="For regression, it averages predictions; for classification, it takes a majority vote among models."></div>
+                <div class="flashcard" data-question="What is Out-of-Bag (OOB) error estimation?" data-answer="An estimate of model error calculated using the unused (out-of-bag) samples from bootstrapped datasets."></div>
+                <div class="flashcard" data-question="What is the key difference between bagging and random forests?" data-answer="Random forests improve bagging by decorrelating trees, randomly selecting a subset of predictors at each split."></div>
+                <div class="flashcard" data-question="Why does random forests reduce overfitting compared to bagging?" data-answer="By using only a random subset of features at each split, it prevents dominant variables from always being selected."></div>
+                <div class="flashcard" data-question="How is variable importance measured in random forests?" data-answer="By calculating the decrease in Mean Squared Error (MSE) or Gini impurity when a variable is used for splitting."></div>
+                <div class="flashcard" data-question="What is the role of the ‘mtry’ parameter in random forests?" data-answer="It controls the number of predictors randomly selected at each split, improving diversity between trees."></div>
+                <div class="flashcard" data-question="How does increasing the number of trees in a random forest affect performance?" data-answer="It stabilizes predictions and reduces variance, but after a point, adding more trees does not significantly improve accuracy."></div>
+            </div>
+        </section>
         <section id="notes">
             <h2>Revision Notes</h2>
             <article>
@@ -263,16 +294,7 @@ print(mean(auc_value_alcohol_sugar))
     <p><strong>Interpretation:</strong> If this model's AUROC score is <strong>higher</strong> than previous models, it suggests that alcohol and residual sugar <strong>together</strong> are more predictive of wine quality than either variable alone.</p>
 </section>
 
-        <section id="flashcards">
-            <h2>Flashcards</h2>
-            <div class="flashcard-container">
-                <div class="flashcard" data-question="What is the purpose of Bagging?" data-answer="To reduce variance in models by averaging predictions."></div>
-                <div class="flashcard" data-question="How does Bootstrapping work?" data-answer="It randomly samples data with replacement to create multiple training sets."></div>
-                <div class="flashcard" data-question="What is the main advantage of Random Forests over Bagging?" data-answer="Random forests decorrelate trees by selecting a random subset of features at each split."></div>
-                <div class="flashcard" data-question="How is the Out-of-Bag (OOB) error calculated?" data-answer="By evaluating model performance on samples not used in training."></div>
-                <div class="flashcard" data-question="What is Variable Importance in Random Forests?" data-answer="A measure of how much a feature contributes to model accuracy."></div>
-            </div>
-        </section>
+        
     </main>
     
     <footer>

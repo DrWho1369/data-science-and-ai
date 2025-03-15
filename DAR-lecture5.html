@@ -13,7 +13,34 @@
     
     <main>
         <a href="DAR-homepage.html" class="back-button">← Back to Homepage</a>
-
+        <section id="objectives">
+            <h2>Key Learning Objectives</h2>
+            <ul>
+                <li>Understand the importance of assessing model accuracy to avoid overfitting and underfitting.</li>
+                <li>Learn different metrics for evaluating model performance, such as Mean Squared Error (MSE) and R-squared.</li>
+                <li>Explore the bias-variance trade-off and its impact on model generalization.</li>
+                <li>Understand the principles of Cross-Validation (Hold-out, K-Fold CV, and LOOCV).</li>
+                <li>Learn how Cross-Validation helps in hyperparameter tuning and model selection.</li>
+            </ul>
+        </section>
+        <section id="flashcards">
+            <h2>Flashcards</h2>
+            <div class="flashcard-container">
+                <div class="flashcard" data-question="What is the goal of assessing model accuracy?" data-answer="To minimize the difference between training and testing error."></div>
+                <div class="flashcard" data-question="What is the formula for MSE?" data-answer="MSE = (1/n) Σ (yi - ŷi)^2"></div>
+                <div class="flashcard" data-question="What is K-Fold Cross-Validation?" data-answer="A method that splits data into k subsets, trains on k-1 subsets, and tests on the remaining one, repeated k times."></div>
+                <div class="flashcard" data-question="What is the purpose of assessing model accuracy?" data-answer="To evaluate how well a model generalizes to unseen data by measuring its error on test datasets."></div>
+                <div class="flashcard" data-question="What is Mean Squared Error (MSE)?" data-answer="MSE is the average of squared differences between actual and predicted values, measuring model accuracy."></div>
+                <div class="flashcard" data-question="Why is training MSE not a good indicator of model performance?" data-answer="A low training MSE may indicate overfitting, meaning the model does not generalize well to new data."></div>
+                <div class="flashcard" data-question="What is the Bias-Variance trade-off?" data-answer="The trade-off between underfitting (high bias) and overfitting (high variance) when selecting a model."></div>
+                <div class="flashcard" data-question="How can we estimate model accuracy when a test dataset is unavailable?" data-answer="By using cross-validation techniques such as k-fold CV or Leave-One-Out Cross-Validation (LOOCV)."></div>
+                <div class="flashcard" data-question="What is k-fold cross-validation?" data-answer="A technique that splits data into k subsets (folds), training on k-1 folds and testing on the remaining fold, repeating k times."></div>
+                <div class="flashcard" data-question="What is Leave-One-Out Cross-Validation (LOOCV)?" data-answer="A special case of k-fold CV where k equals the number of observations, fitting the model n times, each time using n-1 observations for training and 1 for testing."></div>
+                <div class="flashcard" data-question="Why is k-fold CV preferred over LOOCV?" data-answer="k-fold CV balances bias and variance, while LOOCV has lower bias but much higher computational cost."></div>
+                <div class="flashcard" data-question="What is the purpose of an ROC curve?" data-answer="It visualizes the trade-off between true positive rate (TPR) and false positive rate (FPR) at different classification thresholds."></div>
+                <div class="flashcard" data-question="How is cross-validation used for model selection?" data-answer="It helps choose the best hyperparameters or model by comparing predictive accuracy across different configurations."></div>            
+            </div>
+        </section>
         <section id="notes">
             <h2>Revision Notes</h2>
             <article>
@@ -169,17 +196,6 @@
             <p><strong>Interpretation:</strong> <strong>The highest AUROC score indicates the best predictive model</strong>.</p>
         </section>
         
-        
-        <section id="flashcards">
-            <h2>Flashcards</h2>
-            <div class="flashcard-container">
-                <div class="flashcard" data-question="What is the goal of assessing model accuracy?" data-answer="To minimize the difference between training and testing error."></div>
-                <div class="flashcard" data-question="What is the formula for MSE?" data-answer="MSE = (1/n) Σ (yi - ŷi)^2"></div>
-                <div class="flashcard" data-question="What does the bias-variance trade-off describe?" data-answer="The balance between underfitting (high bias) and overfitting (high variance)."></div>
-                <div class="flashcard" data-question="What is Leave-One-Out Cross-Validation (LOOCV)?" data-answer="A method where each observation is used as a test set once while training on the rest."></div>
-                <div class="flashcard" data-question="What is K-Fold Cross-Validation?" data-answer="A method that splits data into k subsets, trains on k-1 subsets, and tests on the remaining one, repeated k times."></div>
-            </div>
-        </section>
     </main>
     
     <footer>

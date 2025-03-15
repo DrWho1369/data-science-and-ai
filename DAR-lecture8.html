@@ -13,7 +13,43 @@
     
     <main>
         <a href="DAR-homepage.html" class="back-button">← Back to Homepage</a>
-
+        
+        <section id="objectives">
+            <h2>Key Learning Objectives</h2>
+            <ul>
+                <li>Understand the fundamental concept of Support Vector Machines (SVM) for classification.</li>
+                <li>Learn the difference between Maximal Margin Classifiers, Support Vector Classifiers (SVC), and full SVMs.</li>
+                <li>Explore the role of support vectors in defining the decision boundary.</li>
+                <li>Understand how the cost parameter (C) controls the trade-off between margin maximization and classification error.</li>
+                <li>Learn about the kernel trick and how it enables non-linear classification.</li>
+                <li>Explore different kernel functions: Linear, Polynomial, Radial Basis Function (RBF), and Sigmoid.</li>
+                <li>Understand how gamma influences decision boundaries in the RBF kernel.</li>
+                <li>Learn how to tune SVM hyperparameters using cross-validation.</li>
+                <li>Explore how SVMs handle multi-class classification using one-vs-one or one-vs-all strategies.</li>
+                <li>Understand performance evaluation metrics for SVMs, including precision, recall, F1-score, and ROC-AUC.</li>
+            </ul>
+        </section>
+        
+        <section id="flashcards">
+            <h2>Flashcards</h2>
+            <div class="flashcard-container">
+                <div class="flashcard" data-question="What is the margin in an SVM?" data-answer="The smallest perpendicular distance from any point to the decision boundary."></div>
+                <div class="flashcard" data-question="What is the difference between a Support Vector Classifier (SVC) and an SVM?" data-answer="SVC allows soft margins, while SVM maps data to a higher-dimensional space for non-linear separation."></div>
+                <div class="flashcard" data-question="What is the purpose of the kernel trick in SVMs?" data-answer="To map data into a higher-dimensional space where a linear decision boundary can be found."></div>
+                <div class="flashcard" data-question="What does the cost parameter (C) control in an SVM?" data-answer="C controls the trade-off between maximizing margin and minimizing classification error."></div>
+                <div class="flashcard" data-question="What is the difference between a linear and an RBF kernel?" data-answer="A linear kernel separates data using a straight line, while an RBF kernel can model complex, non-linear decision boundaries."></div>
+                <div class="flashcard" data-question="What is a Support Vector Machine (SVM)?" data-answer="A supervised learning algorithm that finds the optimal hyperplane to separate classes in a dataset."></div>
+                <div class="flashcard" data-question="What is the Maximal Margin Classifier?" data-answer="A special case of SVM that finds the widest possible margin between two linearly separable classes."></div>
+                <div class="flashcard" data-question="What are support vectors?" data-answer="Data points that lie on the margin boundary and influence the decision boundary of the SVM."></div>
+                <div class="flashcard" data-question="Why are Maximal Margin Classifiers not always ideal?" data-answer="They are highly sensitive to small changes in data and may not exist if the classes are not linearly separable."></div>
+                <div class="flashcard" data-question="What is a Support Vector Classifier (SVC)?" data-answer="A soft-margin classifier that allows some misclassified points to improve generalization to new data."></div>
+                <div class="flashcard" data-question="What is the role of the cost parameter (C) in SVM?" data-answer="C controls the trade-off between maximizing the margin and minimizing classification errors. A high C results in low bias and high variance, while a low C results in high bias and low variance."></div>
+                <div class="flashcard" data-question="What is the Kernel Trick in SVM?" data-answer="A mathematical function that transforms non-linearly separable data into a higher-dimensional space where a linear classifier can be applied."></div>
+                <div class="flashcard" data-question="What are common kernel functions used in SVM?" data-answer="Linear, Polynomial, Radial Basis Function (RBF), and Sigmoid kernels."></div>
+                <div class="flashcard" data-question="What does the gamma parameter control in the RBF kernel?" data-answer="Gamma controls the influence of each training example. A low gamma creates a smoother decision boundary, while a high gamma leads to a more complex boundary."></div>
+                <div class="flashcard" data-question="How is model performance evaluated in SVM?" data-answer="Using metrics such as accuracy, confusion matrix, precision, recall, F1-score, and ROC-AUC curves."></div>
+            </div>
+        </section>
         <section id="notes">
             <h2>Revision Notes</h2>
             <article>
@@ -137,18 +173,6 @@
         print(mean(auc_value_alcohol_sugar))
             </code></pre>
             <p><strong>Interpretation:</strong> If this model's AUROC score is <strong>higher</strong> than previous models, it suggests that alcohol and residual sugar <strong>together</strong> are more predictive of wine quality than either variable alone.</p>
-        </section>
-        
-        
-        <section id="flashcards">
-            <h2>Flashcards</h2>
-            <div class="flashcard-container">
-                <div class="flashcard" data-question="What is the margin in an SVM?" data-answer="The smallest perpendicular distance from any point to the decision boundary."></div>
-                <div class="flashcard" data-question="What is the difference between a Support Vector Classifier (SVC) and an SVM?" data-answer="SVC allows soft margins, while SVM maps data to a higher-dimensional space for non-linear separation."></div>
-                <div class="flashcard" data-question="What is the purpose of the kernel trick in SVMs?" data-answer="To map data into a higher-dimensional space where a linear decision boundary can be found."></div>
-                <div class="flashcard" data-question="What does the cost parameter (C) control in an SVM?" data-answer="C controls the trade-off between maximizing margin and minimizing classification error."></div>
-                <div class="flashcard" data-question="What is the difference between a linear and an RBF kernel?" data-answer="A linear kernel separates data using a straight line, while an RBF kernel can model complex, non-linear decision boundaries."></div>
-            </div>
         </section>
     </main>
     

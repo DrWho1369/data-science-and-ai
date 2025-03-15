@@ -13,6 +13,36 @@
     
     <main>
         <a href="DAR-homepage.html" class="back-button">← Back to Homepage</a>
+        <section id="objectives">
+            <h2>Key Learning Objectives</h2>
+            <ul>
+                <li>Understand the difference between regression and classification problems.</li>
+                <li>Learn how logistic regression models categorical outcomes.</li>
+                <li>Explore the logistic function and its use in probability estimation.</li>
+                <li>Understand Maximum Likelihood Estimation (MLE) for estimating logistic regression coefficients.</li>
+                <li>Evaluate model performance using confusion matrices, accuracy, precision, recall, and AUC-ROC.</li>
+            </ul>
+        </section>
+
+        <section id="flashcards">
+            <h2>Flashcards</h2>
+            <div class="flashcard-container">
+                <div class="flashcard" data-question="What is classification?" data-answer="Predicting a categorical response variable."></div>
+                <div class="flashcard" data-question="What is the formula for the logistic function?" data-answer="p(X) = e^(β0+β1X) / (1 + e^(β0+β1X))"></div>
+                <div class="flashcard" data-question="What does a positive β1 coefficient mean?" data-answer="As X increases, probability of Y=1 increases."></div>
+                <div class="flashcard" data-question="How is model performance evaluated?" data-answer="Using a confusion matrix, accuracy, precision, recall, and F1-score."></div>
+                <div class="flashcard" data-question="What is the key difference between regression and classification?" data-answer="Regression predicts continuous outcomes, while classification predicts categorical outcomes."></div>
+                <div class="flashcard" data-question="Why is linear regression not suitable for classification?" data-answer="Linear regression can predict values beyond the range of 0 and 1, making it inappropriate for probability estimation."></div>
+                <div class="flashcard" data-question="What function is used in logistic regression to constrain outputs between 0 and 1?" data-answer="The logistic (sigmoid) function, defined as p(X) = e^(β0+β1X) / (1 + e^(β0+β1X))."></div>
+                <div class="flashcard" data-question="What is the log-odds (logit) transformation in logistic regression?" data-answer="It is the logarithm of the odds ratio: log(p(X) / (1 - p(X))) = β0 + β1X."></div>
+                <div class="flashcard" data-question="What does the coefficient β1 indicate in logistic regression?" data-answer="β1 represents the change in log-odds for a one-unit increase in X, or equivalently, e^β1 is the odds multiplier."></div>
+                <div class="flashcard" data-question="What statistical method is used to estimate coefficients in logistic regression?" data-answer="Maximum Likelihood Estimation (MLE) is used to find the parameters that maximize the likelihood of observed data."></div>
+                <div class="flashcard" data-question="What is the decision rule for classification using logistic regression?" data-answer="If P(Y=1 | X) > 0.5, predict class 1; otherwise, predict class 0."></div>
+                <div class="flashcard" data-question="How do you evaluate a logistic regression model?" data-answer="Using a confusion matrix, accuracy, precision, recall, F1-score, and the Area Under the ROC Curve (AUC)."></div>
+                <div class="flashcard" data-question="What is multiple logistic regression?" data-answer="A logistic regression model that includes multiple predictor variables instead of just one."></div>
+                <div class="flashcard" data-question="What is the purpose of an ROC curve?" data-answer="To visualize the trade-off between sensitivity (true positive rate) and specificity (false positive rate) at different threshold values."></div>
+            </div>
+        </section>
 
         <section id="notes">
             <h2>Revision Notes</h2>
@@ -173,18 +203,6 @@ log(p(X) / (1 - p(X))) = β0 + β1X
             <p><strong>Interpretation:</strong> This shows how admission probability changes based on university rank.</p>
         </section>
         
-        
-        <section id="flashcards">
-            <h2>Flashcards</h2>
-            <div class="flashcard-container">
-                <div class="flashcard" data-question="What is classification?" data-answer="Predicting a categorical response variable."></div>
-                <div class="flashcard" data-question="Why is linear regression not suitable for classification?" data-answer="Predictions can fall outside 0-1 range and don't work well for categorical outcomes."></div>
-                <div class="flashcard" data-question="What is the formula for the logistic function?" data-answer="p(X) = e^(β0+β1X) / (1 + e^(β0+β1X))"></div>
-                <div class="flashcard" data-question="What is the log-odds equation in logistic regression?" data-answer="log(p(X) / (1 - p(X))) = β0 + β1X"></div>
-                <div class="flashcard" data-question="What does a positive β1 coefficient mean?" data-answer="As X increases, probability of Y=1 increases."></div>
-                <div class="flashcard" data-question="How is model performance evaluated?" data-answer="Using a confusion matrix, accuracy, precision, recall, and F1-score."></div>
-            </div>
-        </section>
     </main>
     
     <footer>

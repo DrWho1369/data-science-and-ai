@@ -14,6 +14,35 @@
     <main>
         <a href="DAR-homepage.html" class="back-button">← Back to Homepage</a>
 
+        <section id="objectives">
+            <h2>Key Learning Objectives</h2>
+            <ul>
+                <li>Understand the basic concepts of linear regression and how it differs from classification.</li>
+                <li>Learn how to interpret coefficients in a regression model.</li>
+                <li>Explore the least squares method for estimating regression coefficients.</li>
+                <li>Evaluate model performance using R², residual standard error, and hypothesis testing.</li>
+                <li>Understand confidence and prediction intervals in regression analysis.</li>
+            </ul>
+        </section>
+        <section id="flashcards">
+            <h2>Flashcards</h2>
+            <div class="flashcard-container">
+                <div class="flashcard" data-question="What is the formula for a simple linear regression model?" data-answer="Y = β0 + β1X + ε"></div>
+                <div class="flashcard" data-question="What does the slope (β1) represent?" data-answer="The expected change in Y for a one-unit increase in X."></div>
+                <div class="flashcard" data-question="What is the least squares criterion?" data-answer="Minimizing the Residual Sum of Squares (RSS)."></div>
+                <div class="flashcard" data-question="How do you interpret an R-squared (R²) value?" data-answer="0: No variance explained. 1: Perfect fit."></div>
+                <div class="flashcard" data-question="What is Simple Linear Regression?" data-answer="A statistical method for predicting a quantitative response (Y) using a single predictor variable (X) with the equation Y ≈ β0 + β1X."></div>
+                <div class="flashcard" data-question="What do β0 and β1 represent in linear regression?" data-answer="β0 is the intercept (where the line crosses the Y-axis), and β1 is the slope (the change in Y for a one-unit increase in X)."></div>
+                <div class="flashcard" data-question="What is the least squares method?" data-answer="A technique to estimate regression coefficients by minimizing the sum of squared residuals (differences between observed and predicted values)."></div>
+                <div class="flashcard" data-question="What assumptions does linear regression make?" data-answer="Linearity, Independence of errors, Homoscedasticity (constant variance), and Normally distributed residuals."></div>
+                <div class="flashcard" data-question="How is the goodness-of-fit of a linear regression model evaluated?" data-answer="Using metrics like R² (coefficient of determination), Residual Standard Error (RSE), and p-values of regression coefficients."></div>
+                <div class="flashcard" data-question="What is the meaning of R² in linear regression?" data-answer="R² represents the proportion of variance in Y explained by X. An R² of 1 means perfect fit, while 0 means no relationship."></div>
+                <div class="flashcard" data-question="What is the difference between a confidence interval and a prediction interval?" data-answer="A confidence interval estimates the mean response for a given X, while a prediction interval estimates an individual response, which is wider due to additional uncertainty."></div>
+                <div class="flashcard" data-question="What is multicollinearity in multiple linear regression?" data-answer="When predictor variables are highly correlated, making it difficult to determine their individual effects on the response variable."></div>
+                <div class="flashcard" data-question="How do we check if a linear regression model is appropriate for the data?" data-answer="By plotting residuals, checking normality of residuals, and ensuring no patterns in residual vs. fitted plots."></div>
+                <div class="flashcard" data-question="What is the impact of outliers in linear regression?" data-answer="Outliers can distort the regression line, affecting slope and intercept estimates. They should be detected and analyzed before removal."></div>
+            </div>            
+        </section>
         <section id="notes">
             <h2>Revision Notes</h2>
             <article>
@@ -80,15 +109,6 @@ predict(lm.fit, data.frame(distance=c(0.5,3,5.5)), interval="confidence")</code>
 predict(lm.fit, data.frame(distance=c(0.5,3,5.5)), interval="prediction")</code></pre>
         </section>
         
-        <section id="flashcards">
-            <h2>Flashcards</h2>
-            <div class="flashcard-container">
-                <div class="flashcard" data-question="What is the formula for a simple linear regression model?" data-answer="Y = β0 + β1X + ε"></div>
-                <div class="flashcard" data-question="What does the slope (β1) represent?" data-answer="The expected change in Y for a one-unit increase in X."></div>
-                <div class="flashcard" data-question="What is the least squares criterion?" data-answer="Minimizing the Residual Sum of Squares (RSS)."></div>
-                <div class="flashcard" data-question="How do you interpret an R-squared (R²) value?" data-answer="0: No variance explained. 1: Perfect fit."></div>
-            </div>
-        </section>
     </main>
     
     <footer>
