@@ -22,34 +22,123 @@
                 <p>Developed in the 1990s, SVMs perform well on a variety of settings and are often considered strong "out-of-the-box" classifiers.</p>
                 
                 <h3>2. Maximal Margin Classifier</h3>
-                <p><strong>Linearly Separable Classes:</strong> If a straight line can perfectly separate two classes, we use a **maximal margin classifier**.</p>
+                <p><strong>Linearly Separable Classes:</strong> If a straight line can perfectly separate two classes, we use a <strong>maximal margin classifier</strong>.</p>
                 <p><strong>Margin:</strong> The smallest perpendicular distance from any data point to the separation boundary.</p>
                 
                 <h3>3. Support Vector Classifier (Soft Margin SVM)</h3>
-                <p>When classes are **not perfectly separable**, a **support vector classifier (SVC)** allows some misclassified points while maximizing the margin.</p>
+                <p>When classes are <strong>not perfectly separable</strong>, a <strong>support vector classifier (SVC)</strong> allows some misclassified points while maximizing the margin.</p>
                 <p><strong>Cost Parameter (C):</strong> Controls the trade-off between maximizing margin and minimizing classification error.</p>
                 
                 <h3>4. Support Vector Machines (SVM)</h3>
-                <p>If data is **not linearly separable**, we transform it into a higher-dimensional space using **kernels**.</p>
+                <p>If data is <strong>not linearly separable</strong>, we transform it into a higher-dimensional space using <strong>kernels</strong>.</p>
                 <p><strong>Kernel Trick:</strong> Maps data to a higher-dimensional space where a linear decision boundary can be found.</p>
                 <ul>
-                    <li>**Linear Kernel:** Used for linearly separable data.</li>
-                    <li>**Polynomial Kernel:** Introduces polynomial features.</li>
-                    <li>**Radial Basis Function (RBF) Kernel:** Handles complex decision boundaries.</li>
-                    <li>**Sigmoid Kernel:** Inspired by neural networks.</li>
+                    <li><strong>Linear Kernel:</strong> Used for linearly separable data.</li>
+                    <li><strong>Polynomial Kernel:</strong> Introduces polynomial features.</li>
+                    <li><strong>Radial Basis Function (RBF) Kernel:</strong> Handles complex decision boundaries.</li>
+                    <li><strong>Sigmoid Kernel:</strong> Inspired by neural networks.</li>
                 </ul>
                 
                 <h3>5. Tuning SVM Parameters</h3>
                 <ul>
                     <li><strong>Cost (C):</strong> Large C results in fewer support vectors (more complex model, high variance).</li>
                     <li><strong>Gamma (γ):</strong> In RBF kernels, controls the influence of individual training points.</li>
-                    <li>Use **Cross-Validation (CV)** to select the best C and γ values.</li>
+                    <li>Use <strong>Cross-Validation (CV)</strong> to select the best C and γ values.</li>
                 </ul>
                 
                 <h3>6. Multi-Class Classification with SVM</h3>
-                <p>For **more than two classes**, SVMs use **one-vs-one** classification (pairwise comparisons) and vote on the final class.</p>
+                <p>For <strong>more than two classes</strong>, SVMs use <strong>one-vs-one</strong> classification (pairwise comparisons) and vote on the final class.</p>
             </article>
         </section>
+
+        <section id="code-snippets">
+            <h2>WEEK 8 LABS - R Code Snippets</h2>
+        
+            <h3>1. Loading and Exploring the Dataset</h3>
+            <p>We begin by loading the <strong>Wine Quality Training Dataset</strong> to analyze factors affecting wine quality.</p>
+            <pre><code>
+        # Load training dataset
+        training_data <- read.table("WineQuality_training.txt", header = TRUE, sep = ",")
+        summary(training_data)
+            </code></pre>
+            <p><strong>Interpretation:</strong> This command loads the dataset and provides a statistical summary. The summary function gives key insights into the dataset, such as the mean, median, minimum, and maximum values, helping us understand data distribution.</p>
+        
+            <h3>2. Implementing 10-Fold Cross-Validation</h3>
+            <p>We use <strong>10-fold cross-validation</strong> to evaluate model performance, ensuring our model generalizes well.</p>
+            <pre><code>
+        library(caret)
+        library(ROCR)
+        
+        set.seed(11)  # Ensure reproducibility
+        training_data[,3] <- as.factor(training_data[,3])  # Convert 'quality' to a factor
+        folds <- createFolds(y=training_data[,3], k=10)  # Split data into 10 folds
+            </code></pre>
+            <p><strong>Interpretation:</strong> This process divides the dataset into 10 equally sized folds. The model is trained on 9 folds and tested on the remaining one, improving its ability to generalize across unseen data.</p>
+        
+            <h3>3. Logistic Regression with Cross-Validation</h3>
+            <p>We train a logistic regression model using <strong>alcohol content</strong> as the predictor variable.</p>
+            <pre><code>
+        auc_value_alcohol <- numeric()
+        
+        for(i in 1:10){
+            fold_cv_test <- training_data[folds[[i]],]
+            fold_cv_train <- training_data[-folds[[i]],]
+            
+            trained_model_alcohol <- glm(quality ~ alcohol, data = fold_cv_train, family = binomial)
+            pred_prob_alcohol <- predict(trained_model_alcohol, fold_cv_test, type='response')
+            
+            pr_alcohol <- prediction(pred_prob_alcohol, fold_cv_test$quality)
+            auroc_alcohol <- performance(pr_alcohol, measure = "auc")
+            auc_value_alcohol <- append(auc_value_alcohol, auroc_alcohol@y.values[[1]])
+        }
+        
+        print(mean(auc_value_alcohol))
+            </code></pre>
+            <p><strong>Interpretation:</strong> The <strong>mean AUROC score</strong> measures the quality of predictions, with values closer to 1 indicating a strong model. This helps determine whether alcohol alone is a good predictor of wine quality.</p>
+        
+            <h3>4. Comparing Predictive Power of Residual Sugar</h3>
+            <p>We repeat cross-validation using <strong>residual sugar</strong> instead of alcohol.</p>
+            <pre><code>
+        auc_value_sugar <- numeric()
+        
+        for(i in 1:10){
+            fold_cv_test <- training_data[folds[[i]],]
+            fold_cv_train <- training_data[-folds[[i]],]
+            
+            trained_model_sugar <- glm(quality ~ residual.sugar, data = fold_cv_train, family = binomial)
+            pred_prob_sugar <- predict(trained_model_sugar, fold_cv_test, type='response')
+            
+            pr_sugar <- prediction(pred_prob_sugar, fold_cv_test$quality)
+            auroc_sugar <- performance(pr_sugar, measure = "auc")
+            auc_value_sugar <- append(auc_value_sugar, auroc_sugar@y.values[[1]])
+        }
+        
+        print(mean(auc_value_sugar))
+            </code></pre>
+            <p><strong>Interpretation:</strong> By substituting alcohol with residual sugar, we determine which variable better predicts wine quality. The AUROC values of both models will reveal which predictor contributes more to classification accuracy.</p>
+        
+            <h3>5. Combining Alcohol & Residual Sugar</h3>
+            <p>We now train a model with both predictors to check for <strong>improved accuracy</strong>.</p>
+            <pre><code>
+        auc_value_alcohol_sugar <- numeric()
+        
+        for(i in 1:10){
+            fold_cv_test <- training_data[folds[[i]],]
+            fold_cv_train <- training_data[-folds[[i]],]
+            
+            trained_model_alcohol_sugar <- glm(quality ~ alcohol + residual.sugar, data = fold_cv_train, family = binomial)
+            pred_prob_alcohol_sugar <- predict(trained_model_alcohol_sugar, fold_cv_test, type='response')
+            
+            pr_alcohol_sugar <- prediction(pred_prob_alcohol_sugar, fold_cv_test$quality)
+            auroc_alcohol_sugar <- performance(pr_alcohol_sugar, measure = "auc")
+            auc_value_alcohol_sugar <- append(auc_value_alcohol_sugar, auroc_alcohol_sugar@y.values[[1]])
+        }
+        
+        print(mean(auc_value_alcohol_sugar))
+            </code></pre>
+            <p><strong>Interpretation:</strong> If this model's AUROC score is <strong>higher</strong> than previous models, it suggests that alcohol and residual sugar <strong>together</strong> are more predictive of wine quality than either variable alone.</p>
+        </section>
+        
         
         <section id="flashcards">
             <h2>Flashcards</h2>

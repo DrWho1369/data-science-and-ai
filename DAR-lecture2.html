@@ -42,6 +42,55 @@
                 </ul>
             </article>
         </section>
+
+        <section id="r-exercises">
+            <h2>WEEK 2 LABS - R Exercises</h2>
+            
+            <h3>1. Basic Descriptive Statistics</h3>
+            <p>Define a numeric vector <code>x</code>:</p>
+            <pre><code>
+x <- c(10, 2, 15, 6, 4, 9, 12, 11, 3, 0, 12, 10, 9, 7, 11, 10, 8, 5, 10, 6)
+            </code></pre>
+            
+            <p>Calculate fundamental statistics:</p>
+            <ul>
+                <li><strong>Number of Observations:</strong></li>
+                <pre><code>length(x)</code></pre>
+                
+                <li><strong>Sum of All Observations:</strong></li>
+                <pre><code>sum(x)</code></pre>
+                
+                <li><strong>Mean (Average):</strong></li>
+                <pre><code>mean(x)</code></pre>
+                
+                <li><strong>Median (Middle Value):</strong></li>
+                <pre><code>median(x)</code></pre>
+                
+                <li><strong>Mode (Most Frequent Value):</strong></li>
+                <pre><code>table(x)[which.max(table(x))]</code></pre>
+                
+                <li><strong>Five Number Summary:</strong></li>
+                <pre><code>summary(x)</code></pre>
+            </ul>
+            
+            <h3>2. Generating Random Vectors & Computing Correlations</h3>
+            <p>Generate a normally distributed vector <code>y</code> with the same mean as <code>x</code>:</p>
+            <pre><code>y <- rnorm(20, mean(x), 1)</code></pre>
+            
+            <p>Compute the covariance and correlation between <code>x</code> and <code>y</code>:</p>
+            <pre><code>cov(x, y)
+cor(x, y)</code></pre>
+            
+            <p>Set a seed for reproducibility and generate another random variable <code>z</code>:</p>
+            <pre><code>set.seed(100)
+z <- rnorm(20, 8, 1)
+plot(x, z, main = "Scatter plot of x and z", xlab = "x", ylab = "z")</code></pre>
+            
+            <h3>3. Boxplot Visualization</h3>
+            <p>Create a Boxplot for <code>x</code> and <code>y</code> to visualize distributions:</p>
+            <pre><code>data <- data.frame(x, y)
+boxplot(data, col = c("green", "orange"), main = "Boxplot for x and y")</code></pre>
+        </section>
         
         <section id="flashcards">
             <h2>Flashcards</h2>

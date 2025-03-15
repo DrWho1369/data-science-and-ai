@@ -36,7 +36,7 @@
                 </ul>
                 
                 <h3>4. Random Forests</h3>
-                <p>Enhances bagging by introducing **random feature selection**.</p>
+                <p>Enhances bagging by introducing <strong>random feature selection</strong>.</p>
                 <ul>
                     <li>Each tree selects a random subset of features at each split.</li>
                     <li>Helps decorrelate trees, improving model robustness.</li>
@@ -56,7 +56,213 @@
                 </pre>
             </article>
         </section>
+
+        <section id="code-snippets">
+            <h2>WEEK 7 LABS - R Code Snippets</h2>
         
+            <h3>1. Loading and Exploring the Dataset</h3>
+            <p>We begin by loading the <strong>Wine Quality Training Dataset</strong> to analyze factors affecting wine quality.</p>
+            <pre><code>
+        # Load training dataset
+        training_data <- read.table("WineQuality_training.txt", header = TRUE, sep = ",")
+        summary(training_data)
+            </code></pre>
+            <p><strong>Interpretation:</strong> This displays key statistics for the dataset, including mean, median, min/max, and quartiles.</p>
+        
+            <h3>2. Implementing 10-Fold Cross-Validation</h3>
+            <p>We use <strong>10-fold cross-validation</strong> to evaluate model performance, ensuring our model generalizes well.</p>
+            <pre><code>
+        library(caret)
+        library(ROCR)
+        
+        set.seed(11)  # Ensure reproducibility
+        training_data[,3] <- as.factor(training_data[,3])  # Convert 'quality' to a factor
+        folds <- createFolds(y=training_data[,3], k=10)  # Split data into 10 folds
+            </code></pre>
+            <p><strong>Interpretation:</strong> This partitions the dataset into 10 subsets, where 9 are used for training and 1 for validation.</p>
+        
+            <h3>3. Logistic Regression with Cross-Validation</h3>
+            <p>We train a logistic regression model using <strong>alcohol content</strong> as the predictor variable.</p>
+            <pre><code>
+        auc_value_alcohol <- numeric()
+        
+        for(i in 1:10){
+            fold_cv_test <- training_data[folds[[i]],]
+            fold_cv_train <- training_data[-folds[[i]],]
+            
+            trained_model_alcohol <- glm(quality ~ alcohol, data = fold_cv_train, family = binomial)
+            pred_prob_alcohol <- predict(trained_model_alcohol, fold_cv_test, type='response')
+            
+            pr_alcohol <- prediction(pred_prob_alcohol, fold_cv_test$quality)
+            auroc_alcohol <- performance(pr_alcohol, measure = "auc")
+            auc_value_alcohol <- append(auc_value_alcohol, auroc_alcohol@y.values[[1]])
+        }
+        
+        print(mean(auc_value_alcohol))
+            </code></pre>
+            <p><strong>Interpretation:</strong> The <strong>mean AUROC score</strong> evaluates how well alcohol alone predicts wine quality (closer to 1 = better).</p>
+        
+            <h3>4. Comparing Predictive Power of Residual Sugar</h3>
+            <p>We repeat cross-validation using <strong>residual sugar</strong> instead of alcohol.</p>
+            <pre><code>
+        auc_value_sugar <- numeric()
+        
+        for(i in 1:10){
+            fold_cv_test <- training_data[folds[[i]],]
+            fold_cv_train <- training_data[-folds[[i]],]
+            
+            trained_model_sugar <- glm(quality ~ residual.sugar, data = fold_cv_train, family = binomial)
+            pred_prob_sugar <- predict(trained_model_sugar, fold_cv_test, type='response')
+            
+            pr_sugar <- prediction(pred_prob_sugar, fold_cv_test$quality)
+            auroc_sugar <- performance(pr_sugar, measure = "auc")
+            auc_value_sugar <- append(auc_value_sugar, auroc_sugar@y.values[[1]])
+        }
+        
+        print(mean(auc_value_sugar))
+            </code></pre>
+            <p><strong>Interpretation:</strong> Compares how well <strong>residual sugar</strong> predicts quality compared to alcohol.</p>
+        
+            <h3>5. Combining Alcohol & Residual Sugar</h3>
+            <p>We now train a model with both predictors to check for <strong>improved accuracy</strong>.</p>
+            <pre><code>
+        auc_value_alcohol_sugar <- numeric()
+        
+        for(i in 1:10){
+            fold_cv_test <- training_data[folds[[i]],]
+            fold_cv_train <- training_data[-folds[[i]],]
+            
+            trained_model_alcohol_sugar <- glm(quality ~ alcohol + residual.sugar, data = fold_cv_train, family = binomial)
+            pred_prob_alcohol_sugar <- predict(trained_model_alcohol_sugar, fold_cv_test, type='response')
+            
+            pr_alcohol_sugar <- prediction(pred_prob_alcohol_sugar, fold_cv_test$quality)
+            auroc_alcohol_sugar <- performance(pr_alcohol_sugar, measure = "auc")
+            auc_value_alcohol_sugar <- append(auc_value_alcohol_sugar, auroc_alcohol_sugar@y.values[[1]])
+        }
+        
+        print(mean(auc_value_alcohol_sugar))
+            </code></pre>
+            <p><strong>Interpretation:</strong> If this model's AUROC score is <strong>higher</strong> than previous models, it indicates alcohol and residual sugar <strong>together</strong> predict wine quality better.</p>
+        
+            <h3>6. Evaluating Model Accuracy on Test Data</h3>
+            <p>We test the trained models on <strong>new data</strong> to verify accuracy.</p>
+            <pre><code>
+        testing_data <- read.table("WineQuality_testing.txt", header = TRUE, sep = ",")
+        testing_data[,3] <- as.factor(testing_data[,3])
+        
+        prediction_trained_model_1 <- predict(trained_model_1, testing_data, type='response')
+        prediction_trained_model_2 <- predict(trained_model_2, testing_data, type='response')
+        prediction_trained_model_3 <- predict(trained_model_3, testing_data, type='response')
+            </code></pre>
+            <p><strong>Interpretation:</strong> We now compare model predictions to actual wine quality.</p>
+        
+            <h3>7. Calculating AUROC for Each Model</h3>
+            <p>We calculate <strong>AUROC scores</strong> for each model.</p>
+            <pre><code>
+        pr_trained_model_1 <- prediction(prediction_trained_model_1, testing_data$quality)
+        pr_trained_model_2 <- prediction(prediction_trained_model_2, testing_data$quality)
+        pr_trained_model_3 <- prediction(prediction_trained_model_3, testing_data$quality)
+        
+        # Compute AUROC scores
+        auroc_trained_model_1 <- performance(pr_trained_model_1, measure = "auc")@y.values[[1]]
+        auroc_trained_model_2 <- performance(pr_trained_model_2, measure = "auc")@y.values[[1]]
+        auroc_trained_model_3 <- performance(pr_trained_model_3, measure = "auc")@y.values[[1]]
+        
+        print(auroc_trained_model_1)  # AUROC for alcohol-only model
+        print(auroc_trained_model_2)  # AUROC for sugar-only model
+        print(auroc_trained_model_3)  # AUROC for combined model
+            </code></pre>
+            <p><strong>Interpretation:</strong> <strong>The highest AUROC score indicates the best predictive model</strong>.</p>
+        </section>
+        
+        <section id="code-snippets">
+    <h2>R Code Snippets</h2>
+
+    <h3>1. Loading and Exploring the Dataset</h3>
+    <p>We begin by loading the <strong>Wine Quality Training Dataset</strong> to analyze factors affecting wine quality.</p>
+    <pre><code>
+# Load training dataset
+training_data <- read.table("WineQuality_training.txt", header = TRUE, sep = ",")
+summary(training_data)
+    </code></pre>
+    <p><strong>Interpretation:</strong> This command loads the dataset and provides a statistical summary. The summary function gives key insights into the dataset, such as the mean, median, minimum, and maximum values, helping us understand data distribution.</p>
+
+    <h3>2. Implementing 10-Fold Cross-Validation</h3>
+    <p>We use <strong>10-fold cross-validation</strong> to evaluate model performance, ensuring our model generalizes well.</p>
+    <pre><code>
+library(caret)
+library(ROCR)
+
+set.seed(11)  # Ensure reproducibility
+training_data[,3] <- as.factor(training_data[,3])  # Convert 'quality' to a factor
+folds <- createFolds(y=training_data[,3], k=10)  # Split data into 10 folds
+    </code></pre>
+    <p><strong>Interpretation:</strong> This process divides the dataset into 10 equally sized folds. The model is trained on 9 folds and tested on the remaining one, improving its ability to generalize across unseen data.</p>
+
+    <h3>3. Logistic Regression with Cross-Validation</h3>
+    <p>We train a logistic regression model using <strong>alcohol content</strong> as the predictor variable.</p>
+    <pre><code>
+auc_value_alcohol <- numeric()
+
+for(i in 1:10){
+    fold_cv_test <- training_data[folds[[i]],]
+    fold_cv_train <- training_data[-folds[[i]],]
+    
+    trained_model_alcohol <- glm(quality ~ alcohol, data = fold_cv_train, family = binomial)
+    pred_prob_alcohol <- predict(trained_model_alcohol, fold_cv_test, type='response')
+    
+    pr_alcohol <- prediction(pred_prob_alcohol, fold_cv_test$quality)
+    auroc_alcohol <- performance(pr_alcohol, measure = "auc")
+    auc_value_alcohol <- append(auc_value_alcohol, auroc_alcohol@y.values[[1]])
+}
+
+print(mean(auc_value_alcohol))
+    </code></pre>
+    <p><strong>Interpretation:</strong> The <strong>mean AUROC score</strong> measures the quality of predictions, with values closer to 1 indicating a strong model. This helps determine whether alcohol alone is a good predictor of wine quality.</p>
+
+    <h3>4. Comparing Predictive Power of Residual Sugar</h3>
+    <p>We repeat cross-validation using <strong>residual sugar</strong> instead of alcohol.</p>
+    <pre><code>
+auc_value_sugar <- numeric()
+
+for(i in 1:10){
+    fold_cv_test <- training_data[folds[[i]],]
+    fold_cv_train <- training_data[-folds[[i]],]
+    
+    trained_model_sugar <- glm(quality ~ residual.sugar, data = fold_cv_train, family = binomial)
+    pred_prob_sugar <- predict(trained_model_sugar, fold_cv_test, type='response')
+    
+    pr_sugar <- prediction(pred_prob_sugar, fold_cv_test$quality)
+    auroc_sugar <- performance(pr_sugar, measure = "auc")
+    auc_value_sugar <- append(auc_value_sugar, auroc_sugar@y.values[[1]])
+}
+
+print(mean(auc_value_sugar))
+    </code></pre>
+    <p><strong>Interpretation:</strong> By substituting alcohol with residual sugar, we determine which variable better predicts wine quality. The AUROC values of both models will reveal which predictor contributes more to classification accuracy.</p>
+
+    <h3>5. Combining Alcohol & Residual Sugar</h3>
+    <p>We now train a model with both predictors to check for <strong>improved accuracy</strong>.</p>
+    <pre><code>
+auc_value_alcohol_sugar <- numeric()
+
+for(i in 1:10){
+    fold_cv_test <- training_data[folds[[i]],]
+    fold_cv_train <- training_data[-folds[[i]],]
+    
+    trained_model_alcohol_sugar <- glm(quality ~ alcohol + residual.sugar, data = fold_cv_train, family = binomial)
+    pred_prob_alcohol_sugar <- predict(trained_model_alcohol_sugar, fold_cv_test, type='response')
+    
+    pr_alcohol_sugar <- prediction(pred_prob_alcohol_sugar, fold_cv_test$quality)
+    auroc_alcohol_sugar <- performance(pr_alcohol_sugar, measure = "auc")
+    auc_value_alcohol_sugar <- append(auc_value_alcohol_sugar, auroc_alcohol_sugar@y.values[[1]])
+}
+
+print(mean(auc_value_alcohol_sugar))
+    </code></pre>
+    <p><strong>Interpretation:</strong> If this model's AUROC score is <strong>higher</strong> than previous models, it suggests that alcohol and residual sugar <strong>together</strong> are more predictive of wine quality than either variable alone.</p>
+</section>
+
         <section id="flashcards">
             <h2>Flashcards</h2>
             <div class="flashcard-container">

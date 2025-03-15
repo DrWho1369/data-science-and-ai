@@ -60,6 +60,119 @@ log(p(X) / (1 - p(X))) = β0 + β1X
                 </ul>
             </article>
         </section>
+
+        <section id="code-snippets">
+            <h2>WEEK 4 LABS - R Code Snippets</h2>
+        
+            <h3>1. Loading Data & Basic Exploration</h3>
+            <p>We begin by loading the dataset and installing required packages:</p>
+            <pre><code>
+        # Install package if not already installed
+        install.packages("aod")
+        
+        # Load necessary library
+        library(aod)
+        
+        # Read dataset from URL
+        mydata <- read.csv("https://stats.idre.ucla.edu/stat/data/binary.csv")
+        
+        # Display the first few rows
+        head(mydata)
+            </code></pre>
+        
+            <p><strong>Interpretation:</strong> This loads a dataset of student admissions, containing GRE, GPA, and rank information.</p>
+        
+            <h3>2. Descriptive Statistics</h3>
+            <p>To get a quick summary of the dataset:</p>
+            <pre><code>
+        summary(mydata)
+            </code></pre>
+        
+            <p><strong>Interpretation:</strong> This provides key statistics (mean, median, min/max) for each variable.</p>
+        
+            <h3>3. Checking Number of Observations</h3>
+            <p>We count the number of rows (observations) in the dataset:</p>
+            <pre><code>
+        nrow(mydata)
+            </code></pre>
+        
+            <p><strong>Interpretation:</strong> This dataset contains 400 observations.</p>
+        
+            <h3>4. Standard Deviation & Mean Calculations</h3>
+            <p>We calculate standard deviation and mean for numerical variables:</p>
+            <pre><code>
+        sapply(mydata, sd)  # Standard deviations
+        sapply(mydata[, -4], mean)  # Mean for numerical variables (excluding rank)
+            </code></pre>
+        
+            <p><strong>Interpretation:</strong> Standard deviation shows variability, while mean gives the average values for GRE, GPA, and admission.</p>
+        
+            <h3>5. Converting Rank to a Categorical Variable</h3>
+            <p>Since rank is an ordinal variable, we convert it to a factor:</p>
+            <pre><code>
+        mydata$rank <- factor(mydata$rank)
+            </code></pre>
+        
+            <p><strong>Interpretation:</strong> This ensures that the rank variable is treated correctly in regression models.</p>
+        
+            <h3>6. Logistic Regression Model</h3>
+            <p>We estimate a logistic regression model predicting admission:</p>
+            <pre><code>
+        glm.admit.fit <- glm(admit ~ gre + gpa + rank, data = mydata, family = "binomial")
+        summary(glm.admit.fit)
+            </code></pre>
+        
+            <p><strong>Interpretation:</strong> The model estimates the probability of admission based on GRE, GPA, and university ranking.</p>
+        
+            <h3>7. Interpreting Categorical Variables in Regression</h3>
+            <p>Rank is replaced by binary variables:</p>
+            <ul>
+                <li><strong>Rank2</strong>: 1 if rank is 2, otherwise 0.</li>
+                <li><strong>Rank3</strong>: 1 if rank is 3, otherwise 0.</li>
+                <li><strong>Rank4</strong>: 1 if rank is 4, otherwise 0.</li>
+            </ul>
+        
+            <p>Rank1 is omitted as a reference category.</p>
+        
+            <h3>8. Making Predictions</h3>
+            <p>We predict admission probabilities using the logistic regression model:</p>
+            <pre><code>
+        admit.prob <- predict(glm.admit.fit, type = "response")
+        head(admit.prob)
+            </code></pre>
+        
+            <p><strong>Interpretation:</strong> The model outputs the probability of admission for each student.</p>
+        
+            <h3>9. Creating Binary Predictions</h3>
+            <p>We convert predicted probabilities into binary outcomes:</p>
+            <pre><code>
+        admit.pred <- rep(1, 400)
+        admit.pred[admit.prob < 0.5] <- 0
+        head(admit.pred)
+            </code></pre>
+        
+            <p><strong>Interpretation:</strong> Admissions are predicted as 1 if probability ≥ 0.5, otherwise 0.</p>
+        
+            <h3>10. Confusion Matrix & Accuracy</h3>
+            <p>We evaluate model performance using a confusion matrix:</p>
+            <pre><code>
+        table(admit.pred, mydata$admit)  # Confusion matrix
+        mean(admit.pred == mydata$admit)  # Accuracy
+            </code></pre>
+        
+            <p><strong>Interpretation:</strong> The confusion matrix shows correctly and incorrectly classified admissions, while accuracy gives the percentage of correct predictions.</p>
+        
+            <h3>11. Predicting Admissions for Average Students</h3>
+            <p>We predict admission probabilities for students with average GRE & GPA:</p>
+            <pre><code>
+        newdata1 <- data.frame(gre = mean(mydata$gre), gpa = mean(mydata$gpa), rank = factor(1:4))
+        newdata1$admit1.prob <- predict(glm.admit.fit, newdata = newdata1, type = "response")
+        newdata1
+            </code></pre>
+        
+            <p><strong>Interpretation:</strong> This shows how admission probability changes based on university rank.</p>
+        </section>
+        
         
         <section id="flashcards">
             <h2>Flashcards</h2>

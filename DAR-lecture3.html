@@ -32,6 +32,53 @@
                 <p><strong>Residual Standard Error (RSE):</strong> Measures the average deviation of actual values from predicted values.</p>
             </article>
         </section>
+
+        <section id="code-snippets">
+            <h2>WEEK 3 LABS - R Code Snippets</h2>
+            <h3>2. Estimating the Model Coefficients</h3>
+            <p>We estimate the coefficients of a simple linear regression model using the <code>lm()</code> function.</p>
+            <pre><code>
+damage <- c(26.2, 17.8, 31.3, 23.1, 27.5, 36.0, 14.1, 22.3, 19.6, 31.3, 24.0, 17.3, 43.2, 36.4, 26.1)
+distance <- c(3.4, 1.8, 4.6, 2.3, 3.1, 5.5, 0.7, 3.0, 2.6, 4.3, 2.1, 1.1, 6.1, 4.8, 3.8)
+FireDam <- data.frame(damage, distance)
+lm.fit <- lm(damage ~ distance, FireDam)
+lm.fit</code></pre>
+            <p><strong>Interpretation:</strong> The model estimates the relationship between fire damage and distance. The output provides coefficients for the intercept and slope.</p>
+            
+            <h3>3. Visualizing the Regression Line</h3>
+            <p>To visually inspect the relationship between distance and damage, we plot the data and add the regression line.</p>
+            <pre><code>
+plot(distance, damage, xlab = "Distance", ylab = "Damage", main = "Distance vs Damage")
+abline(lm.fit)</code></pre>
+            
+            <h3>4. Evaluating Model Fit</h3>
+            <p>We check how well the model fits the data using summary statistics.</p>
+            <pre><code>
+summary(lm.fit)</code></pre>
+            <p><strong>Key Metrics:</strong></p>
+            <ul>
+                <li><strong>Residual Standard Error (RSE):</strong> Measures how much actual values deviate from predicted values. Lower RSE means better fit.</li>
+                <li><strong>R-squared:</strong> Proportion of variance in damage explained by distance. Higher values indicate a better model.</li>
+            </ul>
+            
+            <h3>5. Hypothesis Testing</h3>
+            <p>We check if the distance variable significantly predicts damage by analyzing the p-value.</p>
+            <pre><code>
+summary(lm.fit)</code></pre>
+            <p><strong>Interpretation:</strong> A small p-value (e.g., < 0.05) means we reject the null hypothesis, confirming that distance significantly impacts damage.</p>
+            
+            <h3>6. Making Predictions</h3>
+            <p>Predict damage for new distances using the estimated model.</p>
+            <pre><code>
+predict(lm.fit, newdata = data.frame(distance = c(0.5, 1.5, 2.5, 3.5)))</code></pre>
+            
+            <h3>7. Confidence & Prediction Intervals</h3>
+            <p>Confidence intervals estimate the mean response; prediction intervals estimate new individual responses.</p>
+            <pre><code>
+predict(lm.fit, data.frame(distance=c(0.5,3,5.5)), interval="confidence")</code></pre>
+            <pre><code>
+predict(lm.fit, data.frame(distance=c(0.5,3,5.5)), interval="prediction")</code></pre>
+        </section>
         
         <section id="flashcards">
             <h2>Flashcards</h2>
