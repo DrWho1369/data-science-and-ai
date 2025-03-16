@@ -14,6 +14,22 @@
     <main>
         <a href="AML-homepage.html" class="back-button">← Back to Homepage</a>
 
+        <section id="flashcards">
+            <h2>Flashcards</h2>
+            <div class="flashcard-container">
+                <div class="flashcard" data-question="What are three common ways to load a CSV file in Python?" data-answer="Using Python's standard library (csv.reader), NumPy (loadtxt), and Pandas (read_csv)."></div>
+                <div class="flashcard" data-question="What is the advantage of using Pandas to load CSV files?" data-answer="Pandas provides flexible data handling, automatic header detection, and powerful data analysis capabilities."></div>
+                <div class="flashcard" data-question="What is the purpose of the numpy.loadtxt() function?" data-answer="It loads numerical data from a text file into a NumPy array but assumes there is no header row."></div>
+                <div class="flashcard" data-question="How can you load a CSV file directly from a URL using NumPy?" data-answer="By using urlopen from urllib.request and passing the raw data to numpy.loadtxt()."></div>
+                <div class="flashcard" data-question="What does the delimiter argument do in CSV loading functions?" data-answer="It specifies how data values are separated, such as by commas, tabs, or spaces."></div>
+                <div class="flashcard" data-question="What is the purpose of the dtypes property in Pandas?" data-answer="It lists the data type of each column in a DataFrame to help identify necessary conversions."></div>
+                <div class="flashcard" data-question="Why is it important to check the shape of your dataset?" data-answer="To confirm the number of rows and columns and ensure it matches expectations before analysis."></div>
+                <div class="flashcard" data-question="What is the purpose of the describe() function in Pandas?" data-answer="It provides summary statistics like mean, standard deviation, min/max values, and quartiles for numerical columns."></div>
+                <div class="flashcard" data-question="What is skewness in a dataset?" data-answer="A measure of asymmetry in the distribution of values, indicating if data is biased towards higher or lower values."></div>
+                <div class="flashcard" data-question="Why is class distribution important in a classification problem?" data-answer="Uneven class distributions can lead to biased models, requiring techniques like resampling or weighting."></div>
+            </div>
+        </section>
+        
         <section id="lab1">
             <h2>🛠️ Lab 1: Loading Machine Learning Data</h2>
             <p>Properly loading data is the first crucial step in Machine Learning. This lab explores multiple ways to load data in Python, with a focus on <strong>CSV files</strong>. We use the <strong>Pima Indians Diabetes Dataset</strong>, which contains medical records used to predict diabetes.</p>

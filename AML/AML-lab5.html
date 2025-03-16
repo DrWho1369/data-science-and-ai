@@ -13,7 +13,31 @@
     
     <main>
         <a href="AML-homepage.html" class="back-button">← Back to Homepage</a>
-
+        <section id="flashcards">
+            <h2>Flashcards</h2>
+            <div class="flashcard-container">
+                <div class="flashcard" data-question="What is a machine learning pipeline?" data-answer="A sequence of data processing steps chained together, ensuring proper workflow from preprocessing to model evaluation."></div>
+                <div class="flashcard" data-question="Why are pipelines useful in machine learning?" data-answer="They prevent data leakage, automate workflows, and ensure consistency in data processing and model evaluation."></div>
+                <div class="flashcard" data-question="How does Scikit-Learn implement pipelines?" data-answer="Using the Pipeline class, where each step (e.g., scaling, feature selection, model training) is executed sequentially."></div>
+                <div class="flashcard" data-question="What problem does data leakage cause?" data-answer="Data leakage gives the model access to information from the test set during training, leading to overly optimistic performance estimates."></div>
+                <div class="flashcard" data-question="What is cross-validation in machine learning?" data-answer="A technique for evaluating a model by splitting the dataset into training and validation sets multiple times to get a reliable performance estimate."></div>
+                <div class="flashcard" data-question="Why is cross-validation used within pipelines?" data-answer="To ensure that data preprocessing, feature selection, and model evaluation occur only within each fold, preventing data leakage."></div>
+                <div class="flashcard" data-question="What does the FeatureUnion class in Scikit-Learn do?" data-answer="It combines multiple feature extraction methods into a single dataset, allowing diverse feature transformations in a pipeline."></div>
+                <div class="flashcard" data-question="How does feature extraction affect a machine learning model?" data-answer="It transforms raw data into a more useful format, improving performance and reducing complexity."></div>
+                <div class="flashcard" data-question="What are ensemble methods in machine learning?" data-answer="Techniques that combine multiple models to improve accuracy and robustness, such as Bagging, Boosting, and Voting."></div>
+                <div class="flashcard" data-question="How does bagging improve model performance?" data-answer="Bagging reduces variance by training multiple models on different subsets of data and averaging their predictions."></div>
+                <div class="flashcard" data-question="What is the purpose of boosting algorithms like AdaBoost?" data-answer="Boosting trains models sequentially, where each model corrects the mistakes of the previous one, improving performance."></div>
+                <div class="flashcard" data-question="What is a voting classifier?" data-answer="A model that combines predictions from multiple algorithms (e.g., logistic regression, decision trees) to improve overall performance."></div>
+                <div class="flashcard" data-question="What is hyperparameter tuning?" data-answer="The process of optimizing model parameters to improve performance, typically using GridSearchCV or RandomizedSearchCV."></div>
+                <div class="flashcard" data-question="What is the difference between Grid Search and Random Search?" data-answer="Grid Search evaluates all parameter combinations systematically, while Random Search samples parameters randomly for faster tuning."></div>
+                <div class="flashcard" data-question="What is the role of Pickle in machine learning?" data-answer="Pickle serializes and saves trained models for later use, allowing them to be reloaded without retraining."></div>
+                <div class="flashcard" data-question="How does Joblib differ from Pickle for saving models?" data-answer="Joblib is optimized for large NumPy arrays and is more efficient when working with complex machine learning models."></div>
+                <div class="flashcard" data-question="Why is saving machine learning models important?" data-answer="It allows trained models to be reused, deployed, and evaluated without needing to retrain from scratch."></div>
+                <div class="flashcard" data-question="What are the risks of model serialization?" data-answer="Compatibility issues may arise due to different Python or library versions when loading a saved model on another system."></div>
+                <div class="flashcard" data-question="What is the main goal of automating machine learning workflows?" data-answer="To create a repeatable and scalable process that improves efficiency, reduces errors, and ensures consistency in model training."></div>
+            </div>
+        </section>
+        
         <section id="lab5">
             <h2>⚙️ Lab 5: Automating and Saving Models</h2>
             <p>Building a machine learning model requires multiple steps, including <strong>data preprocessing, feature selection, training, evaluation, and model deployment</strong>. Instead of manually repeating these steps, we can <strong>automate the entire pipeline</strong> and ensure <strong>reproducibility and efficiency</strong>. In this lab, we will:</p>

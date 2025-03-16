@@ -13,7 +13,22 @@
     
     <main>
         <a href="AML-homepage.html" class="back-button">← Back to Homepage</a>
-
+        <section id="flashcards">
+            <h2>Flashcards</h2>
+            <div class="flashcard-container">
+                <div class="flashcard" data-question="What is feature selection in machine learning?" data-answer="Feature selection is the process of selecting the most relevant features in a dataset to improve model performance and reduce overfitting."></div>
+                <div class="flashcard" data-question="What are three benefits of feature selection?" data-answer="It reduces overfitting, improves accuracy, and decreases training time."></div>
+                <div class="flashcard" data-question="What is SelectKBest in Scikit-Learn?" data-answer="SelectKBest is a method that selects the top k features based on statistical tests, such as chi-squared for classification tasks."></div>
+                <div class="flashcard" data-question="What is Recursive Feature Elimination (RFE)?" data-answer="RFE recursively removes features and builds models to determine the best subset that contributes most to prediction."></div>
+                <div class="flashcard" data-question="How does Principal Component Analysis (PCA) reduce dimensionality?" data-answer="PCA transforms data into a lower-dimensional space by selecting principal components that capture the most variance."></div>
+                <div class="flashcard" data-question="What is the purpose of feature importance in decision trees?" data-answer="Feature importance ranks input features based on their contribution to model predictions, helping to understand feature relevance."></div>
+                <div class="flashcard" data-question="Why is resampling important in model evaluation?" data-answer="Resampling methods provide more reliable performance estimates by using different data splits for training and validation."></div>
+                <div class="flashcard" data-question="What is k-fold cross-validation?" data-answer="A method that splits the dataset into k subsets (folds), training the model on k-1 folds and validating it on the remaining fold."></div>
+                <div class="flashcard" data-question="What is Leave-One-Out Cross-Validation (LOOCV)?" data-answer="LOOCV trains on all but one data point and tests on the remaining one, repeating this process for all data points."></div>
+                <div class="flashcard" data-question="How does Shuffle Split differ from k-fold cross-validation?" data-answer="Shuffle Split randomly splits the data multiple times, instead of using contiguous folds, reducing variance in performance estimates."></div>
+            </div>
+        </section>
+        
         <section id="lab3">
             <h2>🛠️ Lab 3: Feature Selection & Resampling</h2>
             <p>Feature selection is crucial for improving <strong>model accuracy, reducing overfitting, and minimizing training time</strong>. This lab covers multiple feature selection methods and resampling techniques using the <strong>Pima Indians Diabetes Dataset</strong>.</p>

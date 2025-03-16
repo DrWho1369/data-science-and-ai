@@ -13,6 +13,32 @@
     
     <main>
         <a href="AML-homepage.html" class="back-button">← Back to Homepage</a>
+        <section id="flashcards">
+            <h2>Flashcards</h2>
+            <div class="flashcard-container">
+                <div class="flashcard" data-question="What is an LSTM?" data-answer="A Long Short-Term Memory (LSTM) network is a type of recurrent neural network (RNN) that can learn long-term dependencies in sequence data."></div>
+                <div class="flashcard" data-question="Why are LSTMs preferred over standard RNNs?" data-answer="LSTMs use special 'gates' to control the flow of information, solving the vanishing gradient problem in long sequences."></div>
+                <div class="flashcard" data-question="What is the purpose of the forget gate in an LSTM?" data-answer="It determines which information from the previous step should be discarded or kept."></div>
+                <div class="flashcard" data-question="What dataset is used for time series prediction in this lab?" data-answer="The international airline passengers dataset, which contains monthly passenger counts from 1949 to 1960."></div>
+                <div class="flashcard" data-question="Why do we normalize data before training an LSTM?" data-answer="LSTMs perform better when inputs are scaled between 0 and 1, avoiding large value disparities that affect gradient updates."></div>
+                <div class="flashcard" data-question="What does the reshape function do in LSTMs?" data-answer="It converts the dataset into a 3D array: [samples, time steps, features] required by Keras LSTMs."></div>
+                <div class="flashcard" data-question="What is the role of the MinMaxScaler in preprocessing?" data-answer="It scales data to a specified range (typically 0 to 1), improving training stability."></div>
+                <div class="flashcard" data-question="What function is used to split data into training and testing sets?" data-answer="The train_test_split function from scikit-learn."></div>
+                <div class="flashcard" data-question="What is the purpose of the create_dataset() function?" data-answer="It transforms the dataset into supervised learning format by creating input-output pairs."></div>
+                <div class="flashcard" data-question="What activation function is used in LSTM layers by default?" data-answer="The sigmoid activation function is commonly used in LSTMs for gating mechanisms."></div>
+                <div class="flashcard" data-question="What loss function is used for regression tasks in LSTMs?" data-answer="Mean Squared Error (MSE) is used to minimize prediction errors."></div>
+                <div class="flashcard" data-question="How do we evaluate LSTM model performance?" data-answer="Using Root Mean Squared Error (RMSE) to compare predicted and actual values."></div>
+                <div class="flashcard" data-question="What problem is solved in the second part of this lab?" data-answer="SMS spam classification using an LSTM model."></div>
+                <div class="flashcard" data-question="How is text data prepared for an LSTM?" data-answer="Text is tokenized using Tokenizer(), converted to sequences, and padded to ensure uniform length."></div>
+                <div class="flashcard" data-question="What is embedding in LSTM models?" data-answer="The embedding layer converts words into dense vector representations for better learning."></div>
+                <div class="flashcard" data-question="Why is dropout used in LSTM models?" data-answer="Dropout randomly disables neurons during training to reduce overfitting."></div>
+                <div class="flashcard" data-question="What activation function is used in the output layer for binary classification?" data-answer="Sigmoid, as it outputs probabilities between 0 and 1."></div>
+                <div class="flashcard" data-question="How is model performance measured in spam classification?" data-answer="Using accuracy, loss, and confusion matrices to evaluate predictions."></div>
+                <div class="flashcard" data-question="What is early stopping in deep learning?" data-answer="A technique that stops training when validation loss stops improving, preventing overfitting."></div>
+                <div class="flashcard" data-question="What is the main takeaway from using LSTMs in this lab?" data-answer="LSTMs can effectively model time-series data and text sequences, improving prediction accuracy."></div>
+            </div>
+        </section>
+        
         <section id="lab9">
             <h2>⏳ Lab 9: Long Short-Term Memory (LSTM) Networks</h2>
             <p><strong>Long Short-Term Memory (LSTM)</strong> networks are a type of <strong>Recurrent Neural Network (RNN)</strong> designed to handle <strong>sequential data</strong> while addressing the <strong>vanishing gradient problem</strong>. Unlike standard RNNs, LSTMs use <strong>memory cells and gated mechanisms</strong> to retain long-term dependencies, making them ideal for <strong>time-series forecasting, speech recognition, and natural language processing</strong>.</p>

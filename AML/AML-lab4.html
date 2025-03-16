@@ -13,7 +13,32 @@
     
     <main>
         <a href="AML-homepage.html" class="back-button">← Back to Homepage</a>
-
+        <section id="flashcards">
+            <h2>Flashcards</h2>
+            <div class="flashcard-container">
+                <div class="flashcard" data-question="What is classification accuracy?" data-answer="It is the number of correct predictions divided by the total number of predictions."></div>
+                <div class="flashcard" data-question="Why is classification accuracy sometimes misleading?" data-answer="It does not account for class imbalances or the cost of different types of errors."></div>
+                <div class="flashcard" data-question="What is Logarithmic Loss (LogLoss)?" data-answer="A metric that evaluates the confidence of a probabilistic classification model. Lower values are better."></div>
+                <div class="flashcard" data-question="What does a high LogLoss indicate?" data-answer="That the predicted probabilities are far from the actual labels."></div>
+                <div class="flashcard" data-question="What is the Area Under the ROC Curve (AUC)?" data-answer="A metric that measures a model's ability to distinguish between positive and negative classes."></div>
+                <div class="flashcard" data-question="What does an AUC value of 1.0 mean?" data-answer="The model perfectly classifies positive and negative instances."></div>
+                <div class="flashcard" data-question="What is a confusion matrix?" data-answer="A table showing the number of correct and incorrect predictions for each class."></div>
+                <div class="flashcard" data-question="What are Type I and Type II errors?" data-answer="Type I is a false positive, Type II is a false negative."></div>
+                <div class="flashcard" data-question="How do you interpret precision in a classification report?" data-answer="Precision is the proportion of true positive predictions among all positive predictions."></div>
+                <div class="flashcard" data-question="How do you interpret recall in a classification report?" data-answer="Recall measures how many actual positives were correctly identified by the model."></div>
+                <div class="flashcard" data-question="What is the F1-score?" data-answer="A harmonic mean of precision and recall, balancing false positives and false negatives."></div>
+                <div class="flashcard" data-question="What is cross-validation?" data-answer="A resampling technique used to evaluate machine learning models by splitting the data into multiple training and testing sets."></div>
+                <div class="flashcard" data-question="Why do we use k-fold cross-validation?" data-answer="To reduce variance in model evaluation by training and testing on multiple splits of the dataset."></div>
+                <div class="flashcard" data-question="What is the main purpose of evaluating multiple ML models?" data-answer="To identify the model that performs best on a given dataset."></div>
+                <div class="flashcard" data-question="Which models were compared in Lab 4?" data-answer="Logistic Regression, K-Nearest Neighbors, Decision Trees, SVM, Naïve Bayes, and LDA."></div>
+                <div class="flashcard" data-question="What does the ROC curve show?" data-answer="The trade-off between sensitivity (recall) and specificity for different classification thresholds."></div>
+                <div class="flashcard" data-question="What does a classification report summarize?" data-answer="Precision, recall, F1-score, and support for each class."></div>
+                <div class="flashcard" data-question="What is a good AUC score?" data-answer="Typically, AUC > 0.8 is considered good, while > 0.9 is excellent."></div>
+                <div class="flashcard" data-question="How do we compare machine learning models visually?" data-answer="Using boxplots to compare accuracy distributions across cross-validation folds."></div>
+                <div class="flashcard" data-question="What is the purpose of pruning in decision trees?" data-answer="To prevent overfitting by limiting tree depth and reducing complexity."></div>
+            </div>
+        </section>
+        
         <section id="lab4">
             <h2>⚖️ Lab 4: Comparing Machine Learning Algorithms</h2>
             <p>In machine learning, choosing the right model is essential for achieving high performance. This lab compares multiple <strong>classification algorithms</strong> using various evaluation metrics on the <strong>Pima Indians Diabetes Dataset</strong>.</p>

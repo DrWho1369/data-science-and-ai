@@ -13,7 +13,31 @@
     
     <main>
         <a href="AML-homepage.html" class="back-button">← Back to Homepage</a>
-
+        <section id="flashcards">
+            <h2>Flashcards</h2>
+            <div class="flashcard-container">
+                <div class="flashcard" data-question="What is Keras?" data-answer="Keras is a high-level deep learning API that simplifies building neural networks and is integrated into TensorFlow."></div>
+                <div class="flashcard" data-question="Why is Keras widely used?" data-answer="It is user-friendly, supports multiple backends, allows rapid prototyping, and is backed by major companies like Google and Microsoft."></div>
+                <div class="flashcard" data-question="What is an MLP (Multi-Layer Perceptron)?" data-answer="An MLP is a fully connected feedforward neural network with one or more hidden layers."></div>
+                <div class="flashcard" data-question="What activation functions are commonly used in an MLP?" data-answer="ReLU for hidden layers and Sigmoid or Softmax for output layers."></div>
+                <div class="flashcard" data-question="What is the purpose of setting a random seed before training?" data-answer="To ensure reproducibility of results when using stochastic machine learning processes."></div>
+                <div class="flashcard" data-question="How do you define a simple MLP model in Keras?" data-answer="Using Sequential API, adding Dense layers, and specifying activation functions."></div>
+                <div class="flashcard" data-question="What does the input_dim argument specify in a Dense layer?" data-answer="It defines the number of input features (e.g., input_dim=8 for a dataset with 8 features)."></div>
+                <div class="flashcard" data-question="What is the difference between Sequential and Functional API in Keras?" data-answer="Sequential API builds models linearly, while Functional API allows more complex architectures with shared layers and multiple inputs/outputs."></div>
+                <div class="flashcard" data-question="What does model.summary() do?" data-answer="It provides a structured summary of the layers, parameters, and output shapes in a neural network model."></div>
+                <div class="flashcard" data-question="What does model.compile() do?" data-answer="It configures the model with a loss function, optimizer, and evaluation metrics."></div>
+                <div class="flashcard" data-question="What loss function is commonly used for binary classification?" data-answer="Binary cross-entropy ('binary_crossentropy')."></div>
+                <div class="flashcard" data-question="Why is the Adam optimizer often used in deep learning?" data-answer="It adapts the learning rate dynamically and combines momentum and RMSprop advantages."></div>
+                <div class="flashcard" data-question="What is an epoch in training?" data-answer="One complete pass through the entire training dataset."></div>
+                <div class="flashcard" data-question="What is batch size in training?" data-answer="The number of samples processed before updating the model weights."></div>
+                <div class="flashcard" data-question="What is validation split in model.fit()?" data-answer="It reserves a portion of training data for validation during training (e.g., validation_split=0.2 reserves 20%)."></div>
+                <div class="flashcard" data-question="How can you evaluate a trained model?" data-answer="Using model.evaluate() to compute loss and accuracy on test data."></div>
+                <div class="flashcard" data-question="What does model.predict() return?" data-answer="It returns predicted probabilities or class labels depending on the output activation function."></div>
+                <div class="flashcard" data-question="What is k-fold cross-validation?" data-answer="A resampling method where the dataset is split into k subsets, and the model is trained and tested k times on different subsets."></div>
+                <div class="flashcard" data-question="How can you save and reload a trained Keras model?" data-answer="Using model.save() to save the entire model and model.load_model() to reload it for inference or further training."></div>
+            </div>
+        </section>
+        
         <section id="lab6">
             <h2>🤖 Lab 6: Deep Learning with Keras</h2>
             <p>Deep learning is a subset of machine learning that mimics the human brain by using <strong>neural networks</strong>. In this lab, we will implement a <strong>Multi-Layer Perceptron (MLP)</strong> using <strong>Keras</strong> with <strong>TensorFlow</strong> as the backend. We will cover:</p>

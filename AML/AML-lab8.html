@@ -13,7 +13,31 @@
     
     <main>
         <a href="AML-homepage.html" class="back-button">← Back to Homepage</a>
-
+        <section id="flashcards">
+            <h2>Flashcards</h2>
+            <div class="flashcard-container">
+                <div class="flashcard" data-question="What is an autoencoder?" data-answer="An autoencoder is a neural network that learns to encode input data into a compressed representation and then reconstruct it."></div>
+                <div class="flashcard" data-question="What is the purpose of the encoder in an autoencoder?" data-answer="The encoder compresses input data into a lower-dimensional latent representation."></div>
+                <div class="flashcard" data-question="What is the purpose of the decoder in an autoencoder?" data-answer="The decoder reconstructs the original input data from the compressed latent representation."></div>
+                <div class="flashcard" data-question="Why do we use autoencoders?" data-answer="Autoencoders are used for feature extraction, dimensionality reduction, anomaly detection, and noise removal."></div>
+                <div class="flashcard" data-question="Which dataset is used to train the autoencoder in this lab?" data-answer="The MNIST dataset of handwritten digits."></div>
+                <div class="flashcard" data-question="Why is binary cross-entropy used as the loss function?" data-answer="Because the input images are grayscale and normalized between 0 and 1, making it suitable for binary classification."></div>
+                <div class="flashcard" data-question="What is the function of the latent space in an autoencoder?" data-answer="The latent space stores a compressed version of the input data, capturing essential features."></div>
+                <div class="flashcard" data-question="What activation function is used in the hidden layers of an autoencoder?" data-answer="ReLU (Rectified Linear Unit) is commonly used for hidden layers."></div>
+                <div class="flashcard" data-question="Why is the sigmoid activation function used in the output layer?" data-answer="The sigmoid function ensures output values are between 0 and 1, matching the input pixel values."></div>
+                <div class="flashcard" data-question="What is the key difference between a standard autoencoder and a denoising autoencoder?" data-answer="A denoising autoencoder is trained to remove noise from input images by learning cleaner representations."></div>
+                <div class="flashcard" data-question="How is noise introduced in a denoising autoencoder?" data-answer="Random noise is added to input images before passing them through the autoencoder."></div>
+                <div class="flashcard" data-question="How is a denoising autoencoder trained?" data-answer="It is trained by mapping noisy inputs to clean outputs to learn noise-robust representations."></div>
+                <div class="flashcard" data-question="What is a sparse autoencoder?" data-answer="A sparse autoencoder uses a sparsity constraint to force only a fraction of neurons to activate, learning more meaningful representations."></div>
+                <div class="flashcard" data-question="How does regularization affect a sparse autoencoder?" data-answer="Regularization (e.g., L1 activity regularization) encourages sparsity in the latent space, reducing redundancy."></div>
+                <div class="flashcard" data-question="What is the risk of making an autoencoder too powerful?" data-answer="It may simply memorize input data instead of learning meaningful representations, leading to overfitting."></div>
+                <div class="flashcard" data-question="Why do we prefer a 'sandwich' architecture in autoencoders?" data-answer="A smaller bottleneck forces the network to learn compressed and useful feature representations."></div>
+                <div class="flashcard" data-question="What is the main advantage of a sparse autoencoder over a standard autoencoder?" data-answer="Sparse autoencoders learn feature representations even when the latent space is large by enforcing sparsity constraints."></div>
+                <div class="flashcard" data-question="What is the purpose of visualizing reconstructed images?" data-answer="It helps assess how well the autoencoder has learned to compress and reconstruct input data."></div>
+                <div class="flashcard" data-question="How can autoencoders be improved for better performance?" data-answer="By increasing the number of layers, nodes per layer, or using convolutional layers for image-based tasks."></div>
+            </div>
+        </section>
+        
         <section id="lab8">
             <h2>🧠 Lab 8: Autoencoders with Keras</h2>
             <p><strong>Autoencoders</strong> are a type of <strong>neural network</strong> used for <strong>unsupervised learning</strong>. They aim to learn <strong>efficient data representations</strong> by compressing input data into a <strong>latent space</strong> and then reconstructing it. They are widely used for <strong>feature learning, dimensionality reduction, denoising, and anomaly detection</strong>.</p>

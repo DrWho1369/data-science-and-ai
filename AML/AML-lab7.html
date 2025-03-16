@@ -13,6 +13,32 @@
     
     <main>
         <a href="AML-homepage.html" class="back-button">← Back to Homepage</a>
+        
+        <section id="flashcards">
+            <h2>Flashcards</h2>
+            <div class="flashcard-container">
+                <div class="flashcard" data-question="What is a Convolutional Neural Network (CNN)?" data-answer="A type of deep learning model designed for processing structured grid data, like images."></div>
+                <div class="flashcard" data-question="What dataset is used in this lab?" data-answer="The MNIST dataset of handwritten digits (28x28 grayscale images)."></div>
+                <div class="flashcard" data-question="How does the MNIST dataset help in deep learning?" data-answer="It is widely used as a benchmark for evaluating image classification models."></div>
+                <div class="flashcard" data-question="What does the Conv2D layer do?" data-answer="It applies convolutional filters to extract features from an input image."></div>
+                <div class="flashcard" data-question="Why do we use MaxPooling2D in a CNN?" data-answer="It reduces the spatial dimensions of feature maps, retaining important information while lowering computation cost."></div>
+                <div class="flashcard" data-question="What is dropout in CNNs?" data-answer="A regularization technique that randomly ignores a fraction of neurons during training to prevent overfitting."></div>
+                <div class="flashcard" data-question="How are images reshaped for CNN input?" data-answer="They are reshaped into a 4D tensor: (samples, height, width, channels), where channels = 1 for grayscale images."></div>
+                <div class="flashcard" data-question="Why do we normalize pixel values?" data-answer="To scale them between 0 and 1, improving training stability and convergence."></div>
+                <div class="flashcard" data-question="What is one-hot encoding, and why is it used?" data-answer="It converts categorical labels into binary vectors, ensuring compatibility with the neural network output layer."></div>
+                <div class="flashcard" data-question="What activation function is used in CNN layers?" data-answer="ReLU (Rectified Linear Unit) is commonly used to introduce non-linearity."></div>
+                <div class="flashcard" data-question="Why does the final layer use softmax activation?" data-answer="Softmax converts logits into probability distributions, allowing classification into multiple classes."></div>
+                <div class="flashcard" data-question="What loss function is used for CNN classification?" data-answer="Categorical cross-entropy, which measures the difference between predicted and actual class probabilities."></div>
+                <div class="flashcard" data-question="Why is the Adam optimizer commonly used in deep learning?" data-answer="It combines momentum and adaptive learning rate techniques, improving convergence speed."></div>
+                <div class="flashcard" data-question="What does model.fit() do in Keras?" data-answer="It trains the model using the provided dataset, adjusting weights through backpropagation."></div>
+                <div class="flashcard" data-question="What is the purpose of verbose in model training?" data-answer="It controls the amount of training information displayed during training (0: silent, 1: progress bar, 2: per-epoch output)."></div>
+                <div class="flashcard" data-question="What is evaluated using model.evaluate()?" data-answer="The model’s loss and accuracy on test data."></div>
+                <div class="flashcard" data-question="How do we visualize CNN training results?" data-answer="By plotting training and validation accuracy/loss across epochs using Matplotlib."></div>
+                <div class="flashcard" data-question="How can misclassified images be identified?" data-answer="By comparing true labels and predicted labels, then displaying incorrectly classified images."></div>
+                <div class="flashcard" data-question="How do we save a trained CNN model?" data-answer="Using model.save('model_name.h5') and later loading it with load_model()."></div>
+            </div>
+        </section>
+        
         <section id="lab7">
             <h2>🖼️ Lab 7: Convolutional Neural Networks (CNN) with Keras</h2>
             <p><strong>Convolutional Neural Networks (CNNs)</strong> are a class of deep learning models designed for <strong>image classification and pattern recognition</strong>. Unlike traditional fully connected networks, CNNs extract <strong>spatial hierarchies of features</strong>, making them highly effective for visual data.</p>
