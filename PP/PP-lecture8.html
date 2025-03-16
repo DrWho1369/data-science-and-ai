@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PP Lecture  8: More Object-Oriented Programming (OOP)</title>
+    <link rel="stylesheet" href="PP_styles.css">
+</head>
+<body>
+    <header>
+        <h1>Lecture 8:  More Object-Oriented Programming (OOP)</h1>
+    </header>
+
+    <main>
+        <a href="PP_index.html" class="back-button">← Back to Homepage</a>
+        <section id="key-objectives">
+            <h2>📌 Key Learning Objectives</h2>
+            <ul>
+                <li>Understand <strong>inheritance</strong> and why it helps in code reuse.</li>
+                <li>Differentiate between <strong>superclasses</strong> and <strong>subclasses</strong>.</li>
+                <li>Learn about <strong>method overriding</strong> and when to use it.</li>
+                <li>Understand <strong>polymorphism</strong> and how it makes code more flexible.</li>
+                <li>Write real-world object-oriented programs using inheritance and polymorphism.</li>
+            </ul>
+        </section>
+        <section id="flashcards">
+            <h2>🃏 Flashcards</h2>
+            <div class="flashcard-container">
+                <div class="flashcard" data-question="What is inheritance?" data-answer="A mechanism where a subclass derives properties and behaviors from a superclass."></div>
+                <div class="flashcard" data-question="What is the purpose of super() in Python?" data-answer="Allows a subclass to call methods from its superclass."></div>
+                <div class="flashcard" data-question="What is method overriding?" data-answer="A subclass replaces a method from the superclass with its own implementation."></div>
+                <div class="flashcard" data-question="What is polymorphism?" data-answer="A concept where a single interface can represent multiple types."></div>
+                <div class="flashcard" data-question="How does polymorphism help in coding?" data-answer="It allows writing flexible code that works with multiple object types."></div>
+                <div class="flashcard" data-question="Can a class inherit from multiple classes in Python?" data-answer="Yes, a class can have multiple superclasses."></div>
+                <div class="flashcard" data-question="What is a subclass?" data-answer="A class that inherits from another class (superclass)."></div>
+                <div class="flashcard" data-question="What happens if a subclass does not override a method?" data-answer="It inherits and uses the method from the superclass."></div>
+                <div class="flashcard" data-question="Give an example of polymorphism." data-answer="Different classes (Dog, Cat, Bird) can have the same method (speak()), but with different outputs."></div>
+                <div class="flashcard" data-question="Why is OOP useful?" data-answer="It promotes code reuse, modularity, and flexibility through inheritance and polymorphism."></div>
+            </div>
+        </section>
+        <section id="revision-notes">
+            <h2>📝 Revision Notes</h2>
+        
+            <h3>🔹 What is Inheritance?</h3>
+            <p>Inheritance allows a class to <strong>reuse code from another class</strong>, making it easier to manage and reduce repetition.</p>
+            <p>✅ Think of it like <strong>family traits</strong>: A child (subclass) <strong>inherits</strong> characteristics from a parent (superclass).</p>
+        
+            <h3>🔹 Creating a Superclass (Parent Class)</h3>
+            <p>A <strong>superclass</strong> is a general class that <strong>contains common attributes and methods</strong>.</p>
+            <pre><code>class Animal:
+            """Superclass representing general animals."""
+            def __init__(self, name):
+                self.name = name  # Stores the animal's name
+        
+            def speak(self):
+                return "Some generic animal sound"
+        
+        # Creating an instance of the superclass
+        animal = Animal("Generic Animal")
+        print(animal.speak())  # Output: Some generic animal sound
+        </code></pre>
+            <p>✅ This <strong>Animal class</strong> defines a general animal with a <code>speak()</code> method.</p>
+        
+            <h3>🔹 Creating a Subclass (Child Class)</h3>
+            <p>A <strong>subclass</strong> is a more specific version of a superclass. It <strong>inherits</strong> attributes/methods but can also define its own.</p>
+            <pre><code>class Dog(Animal):
+            """Dog class inherits from Animal"""
+            def speak(self):
+                return "Woof!"  # Overrides the speak method
+        
+        dog = Dog("Buddy")
+        print(dog.name)  # Output: Buddy
+        print(dog.speak())  # Output: Woof!
+        </code></pre>
+            <p>✅ The <strong>Dog class</strong> inherits from <strong>Animal</strong>, but <strong>overrides</strong> <code>speak()</code> to return "Woof!".</p>
+        
+            <h3>🔹 Using the Super() Function</h3>
+            <p>The <code>super()</code> function allows a subclass to call methods from its superclass.</p>
+            <pre><code>class Cat(Animal):
+            def __init__(self, name, color):
+                super().__init__(name)  # Calls Animal's __init__
+                self.color = color  # Adds a new attribute
+        
+            def speak(self):
+                return "Meow!"
+        
+        cat = Cat("Whiskers", "Black")
+        print(cat.name, cat.color)  # Output: Whiskers Black
+        print(cat.speak())  # Output: Meow!
+        </code></pre>
+            <p>✅ The <code>super().__init__(name)</code> line <strong>calls the constructor of the superclass (Animal)</strong>, so we don’t have to rewrite it.</p>
+        
+            <h3>🔹 Method Overriding</h3>
+            <p>A subclass can <strong>replace a method from its superclass</strong> with its own version. This is called <strong>overriding</strong>.</p>
+            <pre><code>class Bird(Animal):
+            """Bird class overrides speak() method"""
+            def speak(self):
+                return "Chirp chirp!"
+        
+        bird = Bird("Robin")
+        print(bird.speak())  # Output: Chirp chirp!
+        </code></pre>
+            <p>✅ Even though <strong>Bird</strong> inherited <strong>speak()</strong> from <strong>Animal</strong>, it <strong>overrides</strong> it to return "Chirp chirp!".</p>
+        
+            <h3>🔹 Polymorphism: Making Code More Flexible</h3>
+            <p>Polymorphism allows us to use the same method on <strong>different types of objects</strong>.</p>
+            <pre><code># A list of different animals
+        animals = [Dog("Rex"), Cat("Luna"), Bird("Tweety")]
+        
+        for animal in animals:
+            print(animal.name, "says", animal.speak())
+        
+        # Output:
+        # Rex says Woof!
+        # Luna says Meow!
+        # Tweety says Chirp chirp!
+        </code></pre>
+            <p>✅ The same <code>speak()</code> method works <strong>for different classes</strong>. This is the power of <strong>polymorphism</strong>!</p>
+        
+            <h3>🔹 Multiple Inheritance</h3>
+            <p>A class can inherit from <strong>multiple</strong> superclasses.</p>
+            <pre><code>class Flyable:
+            def fly(self):
+                return "I can fly!"
+        
+        class Parrot(Animal, Flyable):
+            """Parrot class inherits from both Animal and Flyable"""
+            def speak(self):
+                return "Squawk!"
+        
+        parrot = Parrot("Polly")
+        print(parrot.speak())  # Output: Squawk!
+        print(parrot.fly())    # Output: I can fly!
+        </code></pre>
+            <p>✅ <strong>Parrot</strong> inherits from <strong>both Animal and Flyable</strong>, so it has both <code>speak()</code> and <code>fly()</code> methods.</p>
+        </section>
+        
+      
+        
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Thomas Baker - MSc Data Science & AI Revision</p>
+    </footer>
+    
+    <script defer src="PP_flashcards.js"></script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PP Lecture  7: Introduction to Object-Oriented Programming (OOP)</title>
+    <link rel="stylesheet" href="PP_styles.css">
+</head>
+<body>
+    <header>
+        <h1>Lecture 7: Introduction to Object-Oriented Programming (OOP)</h1>
+    </header>
+
+    <main>
+        <a href="PP_index.html" class="back-button">← Back to Homepage</a>
+
+
+<section id="key-objectives">
+    <h2>📌 Key Learning Objectives</h2>
+    <ul>
+        <li>Understand what <strong>Object-Oriented Programming (OOP)</strong> is and why it’s used.</li>
+        <li>Learn how to define <strong>classes</strong> and create <strong>objects</strong>.</li>
+        <li>Understand <strong>constructors</strong> (<code>__init__</code>) and their role in object creation.</li>
+        <li>Explore <strong>encapsulation</strong> (hiding data for security and better code organization).</li>
+        <li>Discover <strong>operator overloading</strong> (customizing operators for objects).</li>
+        <li>Use <strong>type annotations</strong> in classes to improve code readability and error-checking.</li>
+    </ul>
+</section>
+
+<section id="flashcards">
+    <h2>🃏 Flashcards</h2>
+    <div class="flashcard-container">
+        <div class="flashcard" data-question="What is a class in Python?" data-answer="A blueprint for creating objects, defining their attributes and methods."></div>
+        <div class="flashcard" data-question="What is an object?" data-answer="An instance of a class that contains specific data and behaviors."></div>
+        <div class="flashcard" data-question="What does the __init__ method do?" data-answer="It initializes an object when it's created, setting its attributes."></div>
+        <div class="flashcard" data-question="What is encapsulation?" data-answer="The practice of restricting access to internal object details to protect data integrity."></div>
+        <div class="flashcard" data-question="How does operator overloading work?" data-answer="By defining special methods like __add__, __str__, etc., to modify operator behavior."></div>
+        <div class="flashcard" data-question="What is the purpose of type annotations in classes?" data-answer="To indicate expected data types for attributes and methods, improving code clarity."></div>
+        <div class="flashcard" data-question="What is the difference between a class and an instance?" data-answer="A class is a template; an instance is a specific object created from that class."></div>
+    </div>
+</section>
+<section id="revision-notes">
+    <h2>📝 Revision Notes</h2>
+
+    <h3>🔹 What is Object-Oriented Programming (OOP)?</h3>
+    <p>OOP is a programming paradigm that models real-world concepts using <strong>objects</strong>. These objects contain both <strong>data (attributes)</strong> and <strong>behaviors (methods)</strong>.</p>
+    <p>✅ Instead of writing functions separately, OOP <strong>bundles data and behavior together</strong>, making the program more organized.</p>
+
+    <h3>🔹 Defining a Class</h3>
+    <p>A <strong>class</strong> is a blueprint for creating objects. Think of it like a <strong>cookie cutter</strong>—it defines the shape, but the actual cookies (objects) are made from it.</p>
+    <pre><code>class Person:
+    """Defines a person with a name and age."""
+    def __init__(self, name, age):
+        self.name = name  # Instance variable for storing name
+        self.age = age  # Instance variable for storing age
+
+# Creating an object (instance of the class)
+person1 = Person("Alice", 30)
+
+# Accessing attributes
+print(person1.name)  # Output: Alice
+print(person1.age)   # Output: 30
+</code></pre>
+    <p>✅ The <code>self</code> keyword <strong>refers to the current instance of the class</strong>. It allows the object to store data inside itself.</p>
+
+    <h3>🔹 Attributes & Instance Variables</h3>
+    <p>Every object has <strong>its own</strong> data. Instance variables store this data:</p>
+    <pre><code>class Car:
+    def __init__(self, brand, model):
+        self.brand = brand  # Each object will have its own brand
+        self.model = model  # Each object will have its own model
+
+car1 = Car("Toyota", "Corolla")
+car2 = Car("Honda", "Civic")
+
+print(car1.brand)  # Output: Toyota
+print(car2.brand)  # Output: Honda
+</code></pre>
+    <p>✅ <code>car1</code> and <code>car2</code> <strong>are separate objects</strong>, each with different data.</p>
+
+    <h3>🔹 Encapsulation: Protecting Data</h3>
+    <p><strong>Encapsulation</strong> means <strong>hiding internal details</strong> of an object and only allowing controlled access.</p>
+    <p>✅ This prevents <strong>accidental modifications</strong> of sensitive data.</p>
+    <pre><code>class BankAccount:
+    def __init__(self, balance):
+        self.__balance = balance  # Private variable (indicated by double underscores)
+
+    def deposit(self, amount):
+        """Adds money to the account."""
+        self.__balance += amount
+
+    def get_balance(self):
+        """Returns the account balance."""
+        return self.__balance
+
+account = BankAccount(1000)
+account.deposit(500)
+print(account.get_balance())  # Output: 1500
+</code></pre>
+    <p>✅ The double underscore <code>__balance</code> makes it <strong>private</strong>, meaning it can't be directly accessed outside the class.</p>
+
+    <h3>🔹 Operator Overloading: Customizing Operators</h3>
+    <p>OOP allows you to <strong>override built-in operators</strong> (e.g., <code>+</code>, <code>-</code>) so they work with objects.</p>
+    <pre><code>class Time:
+    def __init__(self, hours, minutes):
+        self.hours = hours
+        self.minutes = minutes
+
+    def __add__(self, other):
+        """Defines how + works for Time objects"""
+        total_minutes = self.minutes + other.minutes
+        total_hours = self.hours + other.hours + (total_minutes // 60)
+        return Time(total_hours, total_minutes % 60)
+
+time1 = Time(2, 50)
+time2 = Time(1, 20)
+time3 = time1 + time2  # Uses __add__
+print(time3.hours, time3.minutes)  # Output: 4 10
+</code></pre>
+    <p>✅ The <code>__add__</code> method <strong>modifies how "+" behaves</strong> for objects of this class.</p>
+
+    <h3>🔹 Type Annotations for Classes</h3>
+    <p>Type annotations make it clear <strong>what type of data</strong> each variable should store.</p>
+    <pre><code>class Student:
+    name: str
+    age: int
+
+    def __init__(self, name: str, age: int):
+        self.name = name
+        self.age = age
+</code></pre>
+    <p>✅ This helps <strong>avoid errors</strong> and makes the code more readable.</p>
+</section>
+
+</main>
+
+<footer>
+    <p>&copy; 2025 Thomas Baker - MSc Data Science & AI Revision</p>
+</footer>
+
+<script defer src="PP_flashcards.js"></script>
+</body>
+</html>

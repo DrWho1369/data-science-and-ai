@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PP Lecture 6 - Software Development Principles</title>
+    <link rel="stylesheet" href="PP_styles.css">
+</head>
+<body>
+    <header>
+        <h1>Lecture 6 - Software Developement Principles</h1>
+    </header>
+
+    <main>
+        <a href="PP_index.html" class="back-button">← Back to Homepage</a>
+
+        <section id="key-learning-objectives">
+            <h2>📌 Key Learning Objectives</h2>
+            <ul>
+                <li>Understand what <strong>unit testing</strong> is and why it’s essential for writing reliable code.</li>
+                <li>Learn how <strong>Test-Driven Development (TDD)</strong> improves software quality.</li>
+                <li>Understand <strong>version control systems</strong>, their purpose, and how they help developers.</li>
+                <li>Master the basics of <strong>Git & GitHub</strong> for managing and sharing code.</li>
+            </ul>
+        </section>
+
+        <section id="flashcards">
+            <h2>🃏 Flashcards</h2>
+            <div class="flashcard-container">
+                <div class="flashcard" data-question="What is unit testing?" data-answer="A method of testing individual functions or components of a program."></div>
+                <div class="flashcard" data-question="What is the goal of Test-Driven Development (TDD)?" data-answer="To write tests before writing the actual code, ensuring correctness."></div>
+                <div class="flashcard" data-question="What is version control?" data-answer="A system that tracks changes to code and allows collaboration."></div>
+                <div class="flashcard" data-question="What is the difference between Git and GitHub?" data-answer="Git is a version control system; GitHub is a cloud-based platform for hosting Git repositories."></div>
+            </div>
+        </section>
+
+        <section id="revision-notes">
+            <h2>📝 Revision Notes</h2>
+
+            <h3>🔹 What is Unit Testing?</h3>
+            <p>Unit testing is a <strong>method of testing individual functions</strong> (small parts of a program) to ensure they work correctly.</p>
+            <p>✅ Helps <strong>catch bugs early</strong> and ensures that new changes <strong>don’t break existing code</strong>.</p>
+
+            <h4>🔹 Writing Unit Tests in Python (`unittest`)</h4>
+            <p>Python has a built-in module called `unittest` that allows us to test our code.</p>
+            <pre><code>import unittest  # Import the testing framework
+
+# Function to test
+def add(x, y):
+    return x + y
+
+# Create a test case (a class that runs tests)
+class TestMath(unittest.TestCase):
+    def test_addition(self):
+        # Check if add(2, 3) correctly returns 5
+        self.assertEqual(add(2, 3), 5)  
+
+# Run tests when the file is executed
+if __name__ == "__main__":
+    unittest.main()</code></pre>
+            <p>✅ `assertEqual()` checks if the function returns the expected value. If not, the test <strong>fails</strong>.</p>
+            <p>✅ Running `unittest.main()` <strong>executes all test cases</strong>.</p>
+
+            <h3>🔹 Test-Driven Development (TDD)</h3>
+            <p>TDD is a <strong>software development approach</strong> where you <strong>write tests before writing code</strong>.</p>
+            <p><strong>Steps in TDD:</strong></p>
+            <ol>
+                <li>Write a <strong>failing test</strong> (because the function doesn't exist yet).</li>
+                <li>Write just enough code to <strong>make the test pass</strong>.</li>
+                <li>Refactor (improve) the code to make it cleaner.</li>
+            </ol>
+
+            <h3>🔹 Using Pytest for Testing</h3>
+            <p>✅ `pytest` is a popular <strong>alternative to unittest</strong>, with a simpler syntax.</p>
+            <pre><code># Install pytest first: pip install pytest
+
+# Function to test
+def multiply(x, y):
+    return x * y
+
+# Test function
+def test_multiply():
+    assert multiply(2, 3) == 6  # ✅ Test passes
+
+# Run with: pytest test_file.py</code></pre>
+            <p>✅ `assert` is used instead of `self.assertEqual()` for simpler syntax.</p>
+
+            <h3>🔹 Version Control: Why Is It Important?</h3>
+            <p>Version control <strong>tracks changes to code</strong>, allowing developers to:</p>
+            <ul>
+                <li>🔹 <strong>Revert to previous versions</strong> if something breaks.</li>
+                <li>🔹 <strong>Collaborate</strong> with multiple developers without overwriting each other’s work.</li>
+                <li>🔹 <strong>Experiment with new features</strong> without affecting the main project.</li>
+            </ul>
+
+            <h3>🔹 Git Basics: Commands Every Developer Must Know</h3>
+            <pre><code># ✅ Initialize a new Git repository
+git init
+
+# ✅ Check the status of files
+git status
+
+# ✅ Add files to be tracked
+git add file.py
+
+# ✅ Commit changes with a message
+git commit -m "Added new feature"
+
+# ✅ View commit history
+git log
+
+# ✅ Push changes to GitHub
+git push origin main
+
+# ✅ Pull latest changes from GitHub
+git pull origin main</code></pre>
+            <p>✅ <strong>Git tracks changes to code</strong> using commits.</p>
+
+            <h3>🔹 GitHub: Hosting & Collaboration</h3>
+            <p><strong>GitHub</strong> is a cloud-based platform for hosting Git repositories, allowing developers to:</p>
+            <ul>
+                <li>🔹 <strong>Store and share code</strong> publicly or privately.</li>
+                <li>🔹 <strong>Collaborate</strong> on projects with multiple contributors.</li>
+                <li>🔹 <strong>Track issues and manage projects</strong>.</li>
+            </ul>
+
+            <h3>🔹 Working with GitHub: Pushing Code</h3>
+            <pre><code># ✅ Connect local Git repo to GitHub
+git remote add origin https://github.com/your-username/repo-name.git
+
+# ✅ Push local changes to GitHub
+git push -u origin main</code></pre>
+            <p>✅ This command <strong>links a local project</strong> to GitHub and pushes changes.</p>
+
+        </section>
+
+        <section id="key-code">
+            <h2>💻 Key Code / Functions</h2>
+
+            <h3>🔹 Running Unit Tests with `unittest`</h3>
+            <pre><code>import unittest
+
+class TestExample(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(2 + 2, 4)
+
+if __name__ == "__main__":
+    unittest.main()</code></pre>
+
+            <h3>🔹 Basic Git Workflow</h3>
+            <pre><code>git init
+git add .
+git commit -m "Initial commit"
+git push origin main</code></pre>
+
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Thomas Baker - MSc Data Science & AI Revision</p>
+    </footer>
+
+    <script defer src="PP_flashcards.js"></script>
+</body>
+</html>

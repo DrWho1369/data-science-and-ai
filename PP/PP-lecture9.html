@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PP Lecture 9: Functional Programming</title>
+    <link rel="stylesheet" href="PP_styles.css">
+</head>
+<body>
+    <header>
+        <h1>Lecture 9: Functional Programming</h1>
+    </header>
+
+    <main>
+        <a href="PP_index.html" class="back-button">← Back to Homepage</a>
+
+    <section id="learning-objectives">
+        <h2>Key Learning Objectives</h2>
+        <ul>
+            <li>Understand the fundamental principles of functional programming and its benefits.</li>
+            <li>Explain higher-order functions and their significance in functional programming.</li>
+            <li>Understand iterators and generators, and how they improve memory efficiency.</li>
+            <li>Write Python programs using list comprehensions and generator expressions.</li>
+            <li>Recognize the differences between imperative and functional programming paradigms.</li>
+        </ul>
+    </section>
+    <section id="flashcards">
+        <h2>Flashcards</h2>
+        <div class="flashcard-container">
+            <div class="flashcard" data-question="What is functional programming?" data-answer="A paradigm that emphasizes pure functions, immutability, and higher-order functions."></div>
+            <div class="flashcard" data-question="What is a higher-order function?" data-answer="A function that takes another function as an argument or returns a function."></div>
+            <div class="flashcard" data-question="What does the map function do?" data-answer="Applies a function to each item in an iterable and returns a new iterable."></div>
+            <div class="flashcard" data-question="How does the filter function work?" data-answer="Returns items from an iterable that satisfy a condition."></div>
+            <div class="flashcard" data-question="What is the main difference between list comprehensions and generator expressions?" data-answer="List comprehensions create full lists in memory, while generator expressions produce values lazily."></div>
+            <div class="flashcard" data-question="What is an iterator?" data-answer="An object that produces values lazily, allowing traversal without storing all elements in memory."></div>
+            <div class="flashcard" data-question="What is a generator?" data-answer="A function that yields values lazily using the yield keyword."></div>
+        </div>
+    </section>
+    <section id="revision-notes">
+        <h2>Revision Notes</h2>
+        
+        <h3>🔹 What is Functional Programming?</h3>
+        <p>Functional programming is a <strong>programming paradigm</strong> that focuses on treating functions as first-class citizens and avoiding mutable state. It emphasizes <strong>pure functions</strong>, <strong>higher-order functions</strong>, and <strong>immutability</strong>.</p>
+        <ul>
+            <li>Functions do not modify global variables.</li>
+            <li>It minimizes side effects and makes code easier to test and debug.</li>
+            <li>Recursion is often used instead of loops.</li>
+        </ul>
+
+        <h3>🔹 Higher-Order Functions</h3>
+        <p>A function is considered a <strong>higher-order function</strong> if it can do one or both of the following:</p>
+        <ul>
+            <li>Take another function as an argument.</li>
+            <li>Return a function as its result.</li>
+        </ul>
+        <p>Example of a higher-order function:</p>
+        <pre><code>
+def apply_function(func, value):
+    return func(value)
+
+def double(x):
+    return x * 2
+
+result = apply_function(double, 5)  # Outputs: 10
+print(result)
+        </code></pre>
+        <p><strong>Explanation:</strong></p>
+        <ul>
+            <li><code>apply_function</code> takes a function and a value.</li>
+            <li>The function (<code>double</code>) is applied to the value (5), returning 10.</li>
+            <li>Higher-order functions allow <strong>code reuse</strong> and <strong>flexibility</strong>.</li>
+        </ul>
+
+        <h3>🔹 Map, Filter, and Reduce</h3>
+        <p>Python provides built-in higher-order functions such as <code>map</code>, <code>filter</code>, and <code>reduce</code>:</p>
+        <pre><code>
+numbers = [1, 2, 3, 4, 5]
+
+# Using map to double each element
+squared = list(map(lambda x: x * x, numbers))
+print(squared)  # [1, 4, 9, 16, 25]
+
+# Using filter to get even numbers
+evens = list(filter(lambda x: x % 2 == 0, numbers))
+print(evens)  # [2, 4]
+
+from functools import reduce
+# Using reduce to compute the product of all numbers
+product = reduce(lambda x, y: x * y, numbers)
+print(product)  # 120
+        </code></pre>
+
+        <h3>🔹 Iterators & Generators</h3>
+        <p>Iterators are objects that allow you to <strong>traverse</strong> a sequence <strong>lazily</strong>, meaning they don't store all elements in memory.</p>
+        <pre><code>
+my_list = [1, 2, 3, 4]
+iterator = iter(my_list)
+print(next(iterator))  # 1
+print(next(iterator))  # 2
+        </code></pre>
+        <p><strong>Generators</strong> are special iterators that yield values <strong>one at a time</strong> using the <code>yield</code> keyword.</p>
+        <pre><code>
+def my_generator():
+    yield 1
+    yield 2
+    yield 3
+
+gen = my_generator()
+print(next(gen))  # 1
+print(next(gen))  # 2
+        </code></pre>
+
+        <h3>🔹 List Comprehensions & Generator Expressions</h3>
+        <p>List comprehensions offer a concise way to generate lists:</p>
+        <pre><code>
+squares = [x**2 for x in range(5)]  # [0, 1, 4, 9, 16]
+print(squares)
+        </code></pre>
+        <p>Generator expressions work similarly but produce values lazily.</p>
+        <pre><code>
+gen_exp = (x**2 for x in range(5))
+print(next(gen_exp))  # 0
+print(next(gen_exp))  # 1
+        </code></pre>
+    </section>
+</main>
+    <footer>
+        <p>&copy; 2025 Thomas Baker - MSc Data Science & AI Revision</p>
+    </footer>
+    
+    <script defer src="PP_flashcards.js"></script>
+  
+</body>
+</html>
