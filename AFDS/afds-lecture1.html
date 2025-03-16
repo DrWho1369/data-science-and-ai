@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecture 1: Vectors, Geometry, and Matrices</title>
+    <link rel="stylesheet" href="afds-styles.css">
+</head>
+<body>
+    <header>
+        <h1>Lecture 1: Vectors, Geometry, and Matrices</h1>
+        <p>Understanding the mathematical foundations of data science.</p>
+        <a href="afds_index.html" class="home-button">⬅ Back to Module</a>
+    </header>
+
+    <!-- Key Learning Objectives -->
+    <section id="key-objectives">
+        <h2>Key Learning Objectives</h2>
+        <ul>
+            <li>Understand the concept of <strong>vectors</strong> and their properties.</li>
+            <li>Explore <strong>geometric interpretations</strong> of vectors in space.</li>
+            <li>Learn about <strong>matrix operations</strong> and their applications in data science.</li>
+            <li>Develop a solid foundation in <strong>linear transformations</strong> and their role in computations.</li>
+        </ul>
+    </section>
+
+    <!-- Flashcards Section -->
+    <section id="flashcards">
+        <h2>Flashcards</h2>
+        <div class="flashcard-container">
+            <div class="flashcard" data-question="What is a vector?" data-answer="A mathematical object with both magnitude and direction, represented as an ordered list of numbers."></div>
+            <div class="flashcard" data-question="What is the dot product of two vectors?" data-answer="The sum of the element-wise product of two vectors, resulting in a scalar."></div>
+            <div class="flashcard" data-question="How do you find the magnitude of a vector?" data-answer="By taking the square root of the sum of the squares of its components."></div>
+            <div class="flashcard" data-question="What does it mean for two vectors to be orthogonal?" data-answer="They are perpendicular to each other, meaning their dot product is zero."></div>
+            <div class="flashcard" data-question="What is a matrix?" data-answer="A rectangular array of numbers used to represent linear transformations or systems of equations."></div>
+            <div class="flashcard" data-question="What is a determinant?" data-answer="A scalar value that represents the scaling factor of a transformation and helps determine matrix invertibility."></div>
+            <div class="flashcard" data-question="What is an identity matrix?" data-answer="A square matrix with ones on the diagonal and zeros elsewhere; it acts as the multiplicative identity."></div>
+            <div class="flashcard" data-question="What does multiplying a matrix by a vector do?" data-answer="It applies a linear transformation to the vector, changing its direction and/or magnitude."></div>
+            <div class="flashcard" data-question="What is the rank of a matrix?" data-answer="The number of linearly independent rows or columns in the matrix."></div>
+            <div class="flashcard" data-question="What is an eigenvector?" data-answer="A vector that remains in the same direction after a linear transformation, only scaled by an eigenvalue."></div>
+        </div>
+    </section>
+
+    <!-- Revision Notes -->
+    <section id="revision-notes">
+        <h2>Revision Notes</h2>
+        <h3>Vectors</h3>
+        <p>A <strong>vector</strong> is an ordered list of numbers that can be interpreted as a direction and magnitude in space. For example:</p>
+        <pre><code>
+        v = [3, 4]  # A vector in 2D space
+        </code></pre>
+        <p>The <strong>magnitude</strong> (or length) of a vector is given by:</p>
+        <pre><code>
+        |v| = sqrt(3² + 4²) = 5
+        </code></pre>
+        <p>Vectors can be <strong>added</strong>, <strong>subtracted</strong>, or <strong>scaled</strong> by multiplying them by a scalar.</p>
+
+        <h3>Dot Product and Orthogonality</h3>
+        <p>The <strong>dot product</strong> of two vectors <code>a</code> and <code>b</code> is calculated as:</p>
+        <pre><code>
+        a · b = a₁b₁ + a₂b₂ + ... + aₙbₙ
+        </code></pre>
+        <p>If the dot product is <strong>zero</strong>, the vectors are <strong>orthogonal (perpendicular).</strong></p>
+
+        <h3>Matrices</h3>
+        <p>A <strong>matrix</strong> is a rectangular array of numbers that can be used for <strong>linear transformations</strong> and solving systems of equations. Example:</p>
+        <pre><code>
+        A = | 1  2 |
+            | 3  4 |
+        </code></pre>
+        <p>The <strong>identity matrix</strong> acts as the neutral element in multiplication:</p>
+        <pre><code>
+        I = | 1  0 |
+            | 0  1 |
+        </code></pre>
+
+        <h3>Determinants and Inverses</h3>
+        <p>The <strong>determinant</strong> of a 2×2 matrix <code>A</code> is:</p>
+        <pre><code>
+        det(A) = (1×4) - (2×3) = -2
+        </code></pre>
+        <p>If <code>det(A) ≠ 0</code>, the matrix has an <strong>inverse</strong>, meaning it can be used to solve linear systems.</p>
+    </section>
+
+    <!-- Key Code / Functions -->
+    <section id="key-code">
+        <h2>Key Code / Functions</h2>
+        <h3>Vector Operations in Python (Using NumPy)</h3>
+        <pre><code>
+        import numpy as np
+        
+        # Define vectors
+        v1 = np.array([3, 4])
+        v2 = np.array([5, 6])
+
+        # Dot Product
+        dot_product = np.dot(v1, v2)
+
+        # Magnitude of a vector
+        magnitude = np.linalg.norm(v1)
+
+        # Check if orthogonal
+        if np.dot(v1, v2) == 0:
+            print("Vectors are orthogonal")
+        </code></pre>
+
+        <h3>Matrix Operations in Python</h3>
+        <pre><code>
+        # Define a matrix
+        A = np.array([[1, 2], [3, 4]])
+
+        # Compute determinant
+        det_A = np.linalg.det(A)
+
+        # Compute inverse
+        if det_A != 0:
+            A_inv = np.linalg.inv(A)
+        </code></pre>
+    </section>
+    <script src="flashcards.js"></script>
+
+</body>
+</html>

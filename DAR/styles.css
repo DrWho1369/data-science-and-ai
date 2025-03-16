@@ -200,6 +200,7 @@ code {
 }
 
 .home-button {
+    position: relative;
     display: inline-block;
     padding: 12px 20px;
     font-size: 1rem;

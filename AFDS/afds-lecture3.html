@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecture 3: Matrix Operations, Eigendecomposition & SVD</title>
+    <link rel="stylesheet" href="afds-styles.css">
+</head>
+<body>
+    <header>
+        <h1>Lecture 3: Matrix Operations, Eigendecomposition & SVD</h1>
+        <p>Understanding matrix operations, eigendecomposition, and singular value decomposition.</p>
+        <a href="afds_index.html" class="home-button">⬅ Back to Module</a>
+    </header>
+
+    <!-- Key Learning Objectives -->
+    <section id="key-objectives">
+        <h2>Key Learning Objectives</h2>
+        <ul>
+            <li>Understand how to multiply matrices and the logic behind it.</li>
+            <li>Learn about matrix transposition and its significance.</li>
+            <li>Explore the inverse of a matrix and its applications.</li>
+            <li>Understand vector decomposition and orthogonality.</li>
+            <li>Learn the concepts of eigendecomposition and spectral decomposition.</li>
+            <li>Define singular values and their relationship with eigenvalues.</li>
+            <li>Understand Singular Value Decomposition (SVD) and its components.</li>
+            <li>Apply matrix decompositions to real-world applications like data compression and PCA.</li>
+        </ul>
+    </section>
+
+    <!-- Flashcards Section -->
+    <section id="flashcards">
+        <h2>Flashcards</h2>
+        <div class="flashcard-container">
+            <div class="flashcard" data-question="What is an eigenvector?" data-answer="A vector that remains in the same direction after a linear transformation, scaled by an eigenvalue."></div>
+            <div class="flashcard" data-question="What is spectral decomposition?" data-answer="The decomposition of a symmetric matrix into eigenvalues and eigenvectors using an orthogonal matrix." ></div>
+            <div class="flashcard" data-question="What is a singular value?" data-answer="A singular value is the square root of an eigenvalue of the Gram matrix (AᵀA)."></div>
+            <div class="flashcard" data-question="What is Singular Value Decomposition (SVD)?" data-answer="SVD decomposes a matrix A into three matrices: A = UΣVᵀ." ></div>
+            <div class="flashcard" data-question="Why is the Gram matrix useful in SVD?" data-answer="It allows us to compute singular values as the square roots of eigenvalues of AᵀA." ></div>
+            <div class="flashcard" data-question="What are left and right singular vectors?" data-answer="Left singular vectors are columns of U, and right singular vectors are columns of V in SVD." ></div>
+            <div class="flashcard" data-question="Why is SVD important in PCA?" data-answer="SVD helps identify principal components of a dataset by decomposing the covariance matrix." ></div>
+            <div class="flashcard" data-question="What is an orthogonal matrix?" data-answer="A square matrix whose columns and rows are orthonormal, meaning its transpose is also its inverse." ></div>
+            <div class="flashcard" data-question="What does the diagonal matrix Σ contain in SVD?" data-answer="The singular values of the matrix A, which represent its scaling factors along orthogonal directions." ></div>
+            <div class="flashcard" data-question="How can SVD be used in image compression?" data-answer="By keeping only the largest singular values and truncating the lower ones, reducing data size while maintaining structure." ></div>
+            <div class="flashcard" data-question="What does it mean for a matrix to be diagonalizable?" data-answer="A matrix is diagonalizable if it can be written as PDP⁻¹, where P contains eigenvectors and D contains eigenvalues." ></div>
+            <div class="flashcard" data-question="Why does matrix multiplication not always commute?" data-answer="Because AB ≠ BA in general, unless both matrices are diagonal or satisfy special properties." ></div>
+            <div class="flashcard" data-question="How is the determinant of a matrix related to eigenvalues?" data-answer="The determinant of A is the product of its eigenvalues." ></div>
+            <div class="flashcard" data-question="What happens when an eigenvalue is zero?" data-answer="The matrix is singular (non-invertible) and has a nontrivial null space." ></div>
+        </div>
+    </section>
+
+    <!-- Revision Notes -->
+    <section id="revision-notes">
+        <h2>🟢 Matrix Multiplication</h2>
+        <p>Matrix multiplication is the process of multiplying two matrices, which results in a new matrix. If <code>A</code> is an <code>m × n</code> matrix and <code>B</code> is an <code>n × p</code> matrix, their product <code>C</code> is an <code>m × p</code> matrix.</p>
+        <p>The entry at position <code>(i, j)</code> in the resulting matrix is computed as:</p>
+        <pre><code>c_ij = a_i1 * b_1j + a_i2 * b_2j + ... + a_in * b_nj</code></pre>
+        
+        <h3>Example</h3>
+        <pre><code>A = | 1  2  3 |     B = | 2  0 |
+    | 4  5  6 |         | 1  3 |
+                        | 0  4 |
+
+C = A * B = | 4  18 |
+            | 13 39 |</code></pre>
+        
+        <h2>🟢 Vector Decomposition</h2>
+        <p>Vector decomposition allows us to express a vector as a <strong>linear combination</strong> of orthogonal basis vectors.</p>
+        <pre><code>u = a * v + b * w</code></pre>
+        <p>where:</p>
+        <ul>
+            <li><code>v</code> and <code>w</code> are <strong>orthogonal unit vectors</strong>.</li>
+            <li><code>a</code> and <code>b</code> are computed using <strong>dot products</strong>.</li>
+        </ul>
+        
+        <h2>🟢 Eigendecomposition</h2>
+        <p>Eigendecomposition is a way of <strong>breaking down</strong> a matrix into <strong>its eigenvalues and eigenvectors</strong>.</p>
+        <pre><code>A = P D P⁻¹</code></pre>
+        <p>Where:</p>
+        <ul>
+            <li>The <strong>columns of P</strong> are the <strong>eigenvectors</strong> of A.</li>
+            <li>The <strong>diagonal entries of D</strong> are the <strong>eigenvalues</strong> of A.</li>
+        </ul>
+        
+        <h2>🟢 Spectral Decomposition</h2>
+        <p>For a <strong>symmetric matrix</strong>, eigendecomposition simplifies to:</p>
+        <pre><code>A = P D P<sup>T</sup></code></pre>
+        
+        <h2>🟢 Singular Value Decomposition (SVD)</h2>
+        <p>Singular Value Decomposition (SVD) is a powerful technique used to decompose any matrix <code>A</code> into three matrices:</p>
+        <pre><code>A = U Σ V<sup>T</sup></code></pre>
+        <p>Where:</p>
+        <ul>
+            <li><code>U</code> is an <strong>orthogonal matrix</strong> (contains left singular vectors).</li>
+            <li><code>Σ</code> is a <strong>diagonal matrix</strong> (contains singular values).</li>
+            <li><code>V<sup>T</sup></code> is an <strong>orthogonal matrix</strong> (contains right singular vectors).</li>
+        </ul>
+        
+        <h2>🟢 Applications of SVD</h2>
+        <h3>1. Data Compression</h3>
+        <p>SVD can be used to approximate matrices by keeping only the <strong>largest singular values</strong>, reducing storage while retaining essential structure.</p>
+        <h3>2. Principal Component Analysis (PCA)</h3>
+        <p>SVD helps in PCA by identifying the <strong>principal components</strong> of a dataset, reducing its dimensionality while preserving variance.</p>
+    </section>
+
+    <!-- Key Code / Functions -->
+    <section id="key-code">
+        <h2>🟢 Key Python Code</h2>
+        <h3>Matrix Multiplication</h3>
+        <pre><code>import numpy as np
+A = np.array([[1, 2, 3], [4, 5, 6]])
+B = np.array([[2, 0], [1, 3], [0, 4]])
+C = np.dot(A, B)
+print(C)</code></pre>
+
+        <h3>Computing SVD</h3>
+        <pre><code>import numpy as np
+A = np.array([[3, 2, 2], [2, 3, -2]])
+U, S, Vt = np.linalg.svd(A)
+print("U:", U)
+print("Singular values:", S)
+print("V^T:", Vt)</code></pre>
+    </section>
+    <script src="flashcards.js"></script>
+</body>
+</html>

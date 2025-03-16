@@ -1,0 +1,236 @@
+/* Analytical Foundations of Data Science - Sleek UI for Homepage */
+
+body {
+    background: #0a192f;
+    color: #e0e8f9;
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+/* Home Button Styling */
+.home-button {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #00ffea;
+    background: transparent;
+    border: 2px solid #00ffea;
+    z-index: 10;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Hover Effect */
+.home-button:hover {
+    background: #00ffea;
+    color: #101014;
+    box-shadow: 0 0 15px rgba(0, 255, 234, 0.7);
+}
+
+
+/* Hero Section - Futuristic, Animated Neon Glow */
+header {
+    background: linear-gradient(135deg, #0a0f1f, #162b5c, #1e3a8a);
+    color: white;
+    text-align: center;
+    padding: 70px 20px 70px;
+    font-size: 1.8em;
+    font-weight: bold;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0px 0px 40px rgba(0, 173, 181, 0.6);
+    border-bottom: 3px solid rgba(255, 255, 255, 0.2);
+}
+
+/* More Intense Animated Glow */
+header::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(0, 173, 181, 0.9) 15%, transparent 80%);
+    filter: blur(120px);
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    animation: dramaticGlow 3s infinite alternate ease-in-out;
+}
+
+/* Stronger Neon Text Glow */
+header h1, header p {
+    position: relative;
+    z-index: 1;
+    text-shadow: 0px 0px 22px rgba(160, 196, 255, 0.8), 0px 0px 30px rgba(0, 173, 181, 0.6);
+}
+
+/* Subheading Styling */
+header p {
+    font-size: 1em;
+    font-weight: 300;
+    color: #a0c4ff;
+    letter-spacing: 1px;
+    margin-top: 10px;
+}
+
+/* Dramatic Pulsing Glow Animation */
+@keyframes dramaticGlow {
+    0% { 
+        transform: translate(-50%, -50%) scale(0.9); 
+        opacity: 1;
+        background: radial-gradient(circle, rgba(0, 173, 181, 1) 15%, transparent 80%);
+    }
+    50% { 
+        transform: translate(-50%, -50%) scale(1.3); 
+        opacity: 0.7;
+        background: radial-gradient(circle, rgba(0, 196, 255, 0.9) 20%, transparent 80%);
+    }
+    100% { 
+        transform: translate(-50%, -50%) scale(1.5); 
+        opacity: 0.5;
+        background: radial-gradient(circle, rgba(0, 120, 255, 0.8) 25%, transparent 90%);
+    }
+}
+
+
+
+/* Subheading Styling */
+header p {
+    font-size: 1em;
+    font-weight: 300;
+    color: #a0c4ff;
+    letter-spacing: 1px;
+    margin-top: 10px;
+}
+
+
+/* Section Styling */
+section {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    box-shadow: 0px 6px 14px rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+/* Lecture Cards */
+.lecture-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.lecture-card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+    transition: transform 0.3s ease-in-out, background 0.3s ease-in-out;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.lecture-card:hover {
+    transform: scale(1.05);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* List Formatting (Fix Indentation) */
+ul {
+    list-style-type: square;
+    padding-left: 40px;
+    text-align: left;
+}
+
+li {
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+/* Code Snippet Styling */
+pre {
+    background: #161b22;
+    padding: 15px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.2em;
+    text-align: left;
+}
+
+code {
+    color: #79c0ff;
+    font-size: 1em;
+}
+
+/* Flashcard Styling */
+.flashcard-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 15px;
+}
+
+.flashcard {
+    background: rgba(255, 255, 255, 0.1);
+    width: 320px;
+    height: 180px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 255, 234, 0.2);
+    cursor: pointer;
+    perspective: 1000px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+}
+
+.flashcard .flashcard-front,
+.flashcard .flashcard-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* padding: 10px; */
+    backface-visibility: hidden;
+}
+
+.flashcard .flashcard-back {
+    background: rgba(0, 255, 234, 0.2);
+    transform: rotateY(180deg);
+}
+
+.flashcard.flipped {
+    transform: rotateY(180deg);
+}
+
+
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    section {
+        padding: 20px;
+    }
+
+    .lecture-card {
+        font-size: 1em;
+    }
+}

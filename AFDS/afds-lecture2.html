@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecture 2: Systems of Linear Equations, Gauss-Jordan, Eigenvalues & Eigenvectors</title>
+    <link rel="stylesheet" href="afds-styles.css">
+</head>
+<body>
+    <header>
+        <h1>Lecture 2: Systems of Linear Equations, Gauss-Jordan, Eigenvalues & Eigenvectors</h1>
+        <a href="afds_index.html" class="home-button">⬅ Back to Module Homepage</a>
+    </header>
+
+    <section id="learning-objectives">
+        <h2>Key Learning Objectives</h2>
+        <ul>
+            <li>Understand the concept of a <strong>System of Linear Equations (SLEs)</strong>.</li>
+            <li>Identify <strong>unique, infinite, and no solution cases</strong> in SLEs.</li>
+            <li>Learn how to solve SLEs using <strong>Gauss-Jordan elimination</strong>.</li>
+            <li>Understand the concept of <strong>eigenvalues and eigenvectors</strong> and their role in matrix transformations.</li>
+            <li>Learn how to <strong>compute eigenvalues and eigenvectors</strong> using mathematical techniques and Python.</li>
+        </ul>
+    </section>
+
+    <section id="flashcards">
+        <h2>Flashcards</h2>
+        <div class="flashcard-container">
+            <div class="flashcard" data-question="What is a System of Linear Equations (SLE)?" data-answer="An SLE is a set of two or more linear equations involving the same variables."></div>
+            <div class="flashcard" data-question="What are the possible solutions to an SLE?" data-answer="1. Unique solution, 2. Infinitely many solutions, 3. No solution."></div>
+            <div class="flashcard" data-question="What is Gauss-Jordan elimination?" data-answer="A row-reduction method that transforms a system into reduced row echelon form (RREF) for easy solving."></div>
+            <div class="flashcard" data-question="What is an eigenvector?" data-answer="A vector that, when multiplied by a matrix, results in a scaled version of itself."></div>
+            <div class="flashcard" data-question="What is an eigenvalue?" data-answer="A scalar that represents how much an eigenvector is stretched or shrunk."></div>
+            <div class="flashcard" data-question="What is the characteristic equation for eigenvalues?" data-answer="det(A - λI) = 0, where λ are the eigenvalues."></div>
+            <div class="flashcard" data-question="What does it mean if an eigenvalue is zero?" data-answer="The matrix is singular and does not have an inverse."></div>
+            <div class="flashcard" data-question="What is the geometric meaning of eigenvectors?" data-answer="They indicate directions along which a transformation acts as pure scaling."></div>
+        </div>
+    </section>
+
+    <section id="revision-notes">
+        <h2>Revision Notes</h2>
+
+        <h3>1️⃣ What is a System of Linear Equations?</h3>
+        <p>An <strong>SLE</strong> consists of multiple linear equations involving the same set of unknown variables.</p>
+
+        <h4>🔹 Example of an SLE</h4>
+        <pre><code>
+        2x + 3y = 8
+        5x -  y = 4
+        </code></pre>
+        <p>The goal is to find values of <strong>x</strong> and <strong>y</strong> that satisfy both equations.</p>
+
+        <h3>2️⃣ Types of Solutions for SLEs</h3>
+        <ul>
+            <li><strong>Unique Solution:</strong> When the system has exactly one solution.</li>
+            <li><strong>Infinitely Many Solutions:</strong> When the system represents overlapping lines or planes.</li>
+            <li><strong>No Solution:</strong> When the equations represent parallel lines that never intersect.</li>
+        </ul>
+
+        <h3>3️⃣ Solving SLEs Using Gauss-Jordan Elimination</h3>
+        <p>The <strong>Gauss-Jordan elimination method</strong> is a systematic way to solve SLEs by transforming the augmented matrix into <strong>row echelon form (RREF)</strong>.</p>
+
+        <h4>🔹 Steps:</h4>
+        <ol>
+            <li>Convert the system into an <strong>augmented matrix</strong>.</li>
+            <li>Use row operations to create a <strong>leading 1 in the first column</strong>.</li>
+            <li>Make all other entries in that column <strong>zero</strong>.</li>
+            <li>Repeat the process for subsequent columns.</li>
+            <li>Continue until the matrix is in <strong>reduced row-echelon form (RREF)</strong>.</li>
+            <li>Extract the solutions from the final matrix.</li>
+        </ol>
+
+        <h3>4️⃣ Eigenvalues and Eigenvectors</h3>
+        <p>Eigenvalues and eigenvectors provide fundamental insights into <strong>linear transformations</strong>.</p>
+
+        <h4>🔹 Definition</h4>
+        <p>For a matrix <strong>A</strong>, an eigenvector <strong>v</strong> satisfies:</p>
+        <pre><code>
+        A * v = λ * v
+        </code></pre>
+        <p>where <strong>λ (lambda)</strong> is the eigenvalue.</p>
+
+        <h4>🔹 Finding Eigenvalues</h4>
+        <p>We solve the <strong>characteristic equation</strong>:</p>
+        <pre><code>
+        det(A - λI) = 0
+        </code></pre>
+
+        <h4>🔹 Finding Eigenvectors</h4>
+        <p>Once eigenvalues are found, we solve:</p>
+        <pre><code>
+        (A - λI) v = 0
+        </code></pre>
+        <p>to get the eigenvectors.</p>
+    </section>
+
+    <section id="key-code">
+        <h2>Key Code / Functions</h2>
+
+        <h3>Solving an SLE in Python using NumPy</h3>
+        <pre><code>
+import numpy as np
+
+A = np.array([[2, -1], [1, 1]])
+B = np.array([1, 5])
+
+X = np.linalg.solve(A, B)
+print("Solution:", X)
+        </code></pre>
+
+        <h3>Computing Eigenvalues and Eigenvectors</h3>
+        <pre><code>
+import numpy as np
+
+A = np.array([[4, -2], [1, 1]])
+
+# Compute eigenvalues and eigenvectors
+eigenvalues, eigenvectors = np.linalg.eig(A)
+
+print("Eigenvalues:", eigenvalues)
+print("Eigenvectors:\n", eigenvectors)
+        </code></pre>
+        <p>This computes the eigenvalues and eigenvectors of a given matrix using NumPy.</p>
+    </section>
+    <script src="flashcards.js"></script>
+
+</body>
+</html>
