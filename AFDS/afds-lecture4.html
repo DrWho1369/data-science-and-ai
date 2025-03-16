@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecture 4: Propositional Logic</title>
+    <link rel="stylesheet" href="afds-styles.css">
+</head>
+<body>
+    <header>
+        <h1>Lecture 4: Propositional Logic</h1>
+        <p>Understanding formal logic, Boolean algebra, and truth tables.</p>
+        <a href="afds_index.html" class="home-button">⬅ Back to Module</a>
+    </header>
+
+    <!-- Key Learning Objectives -->
+    <section id="key-objectives">
+        <h2>📌 Key Learning Objectives</h2>
+        <ul>
+            <li>Understand <strong>formal logic</strong> and how propositions form logical statements.</li>
+            <li>Learn the <strong>basic logical operators</strong>: AND (∧), OR (∨), NOT (¬), IMPLIES (→), XOR (⊕).</li>
+            <li>Construct and evaluate <strong>truth tables</strong>.</li>
+            <li>Understand <strong>Boolean algebra</strong> and the <strong>laws of Boolean logic</strong>.</li>
+            <li>Learn how to <strong>simplify logical formulas</strong> using <strong>De Morgan’s laws</strong> and other simplifications.</li>
+            <li>Convert logical formulas into <strong>Disjunctive Normal Form (DNF)</strong>.</li>
+            <li>Solve <strong>systems of Boolean equations</strong>.</li>
+        </ul>
+    </section>
+<!-- Flashcards Section -->
+<section id="flashcards">
+    <h2>Flashcards</h2>
+    <div class="flashcard-container">
+        <div class="flashcard" data-question="What is a proposition in logic?" data-answer="A statement that can be either true or false, but not both." ></div>
+        <div class="flashcard" data-question="What does the AND (∧) operator mean?" data-answer="A ∧ B is true only if both A and B are true." ></div>
+        <div class="flashcard" data-question="What does the OR (∨) operator mean?" data-answer="A ∨ B is true if at least one of A or B is true." ></div>
+        <div class="flashcard" data-question="What does the NOT (¬) operator do?" data-answer="It negates a proposition: ¬A is true if A is false." ></div>
+        <div class="flashcard" data-question="When is an implication (→) false?" data-answer="An implication A → B is false only if A is true and B is false." ></div>
+        <div class="flashcard" data-question="What is the XOR (⊕) operator?" data-answer="XOR is true if exactly one of A or B is true, but not both." ></div>
+        <div class="flashcard" data-question="What are De Morgan’s Laws?" data-answer="¬(A ∨ B) = ¬A ∧ ¬B and ¬(A ∧ B) = ¬A ∨ ¬B." ></div>
+        <div class="flashcard" data-question="What is Disjunctive Normal Form (DNF)?" data-answer="A logical expression written as an OR of AND clauses." ></div>
+        <div class="flashcard" data-question="What is a truth table used for?" data-answer="To determine the truth values of a logical formula for all possible inputs." ></div>
+        <div class="flashcard" data-question="What is Boolean algebra?" data-answer="A system of algebraic rules that govern logical operations." ></div>
+    </div>
+</section>
+
+    <!-- Revision Notes -->
+    <section id="revision-notes">
+        <h2>🟢 What is Propositional Logic?</h2>
+        <p>Propositional logic, also known as <strong>Boolean logic</strong>, is a formal system where <strong>statements</strong> (called <strong>propositions</strong>) are either <strong>true</strong> (1) or <strong>false</strong> (0).</p>
+        
+        <h2>🟢 Logical Operators</h2>
+        <h3>1. AND (∧) - "Both must be true"</h3>
+        <pre><code>A ∧ B = True only if both A and B are true</code></pre>
+        
+        <h3>2. OR (∨) - "At least one must be true"</h3>
+        <pre><code>A ∨ B = True if either A or B (or both) are true</code></pre>
+        
+        <h3>3. NOT (¬) - "Negation"</h3>
+        <pre><code>¬A = True if A is False, and vice versa</code></pre>
+        
+        <h3>4. IMPLIES (→) - "If A then B"</h3>
+        <pre><code>A → B = True unless A is true and B is false</code></pre>
+        
+        <h3>5. XOR (⊕) - "One or the other, but not both"</h3>
+        <pre><code>A ⊕ B = (A ∨ B) ∧ ¬(A ∧ B)</code></pre>
+    </section>
+
+    <section id="boolean-algebra">
+        <h2>🟢 Boolean Algebra: The Laws of Logic</h2>
+        <ul>
+            <li><strong>Identity Law:</strong> A ∨ 0 = A, A ∧ 1 = A</li>
+            <li><strong>Nullification Law:</strong> A ∨ 1 = 1, A ∧ 0 = 0</li>
+            <li><strong>Idempotent Law:</strong> A ∨ A = A, A ∧ A = A</li>
+            <li><strong>Commutative Law:</strong> A ∨ B = B ∨ A, A ∧ B = B ∧ A</li>
+            <li><strong>Associative Law:</strong> A ∨ (B ∨ C) = (A ∨ B) ∨ C</li>
+            <li><strong>Distributive Law:</strong> A ∨ (B ∧ C) = (A ∨ B) ∧ (A ∨ C)</li>
+        </ul>
+    </section>
+
+    <section id="dnf">
+        <h2>🟢 Disjunctive Normal Form (DNF)</h2>
+        <p>A Boolean formula is in <strong>Disjunctive Normal Form (DNF)</strong> if it is expressed as an <strong>OR-of-ANDs</strong>.</p>
+        <pre><code>(x₁ ∧ x₂) ∨ (x₁ ∧ x₃)</code></pre>
+    </section>
+
+    <section id="truth-tables">
+        <h2>🟢 Truth Tables and Satisfiability</h2>
+        <p>A <strong>truth table</strong> systematically evaluates all possible truth values of a formula.</p>
+        <pre><code>X  | Y  | X ∨ Y | ¬X  | X → Y
+0  | 0  |  0    |  1  |  1
+0  | 1  |  1    |  1  |  1
+1  | 0  |  1    |  0  |  0
+1  | 1  |  1    |  0  |  1</code></pre>
+    </section>
+
+    <section id="key-code">
+        <h2>🟢 Key Python Code</h2>
+        <h3>Truth Table Generation</h3>
+        <pre><code>from itertools import product
+
+def truth_table(variables, expression):
+    print(f"{' '.join(variables)} | {expression}")
+    print("-" * 20)
+    
+    for values in product([0, 1], repeat=len(variables)):
+        env = dict(zip(variables, values))
+        print("  ".join(str(env[var]) for var in variables), "|", eval(expression, {}, env))
+
+truth_table(["X", "Y"], "X or Y")</code></pre>
+    </section>
+    
+    <script src="flashcards.js"></script>
+</body>
+</html>

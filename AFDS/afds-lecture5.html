@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecture 5: Binary Number Representation</title>
+    <link rel="stylesheet" href="afds-styles.css">
+</head>
+<body>
+    <header>
+        <h1>Lecture 5: Binary Number Representation</h1>
+        <p>Understanding how numbers are represented in computers using binary.</p>
+        <a href="afds_index.html" class="home-button">⬅ Back to Module</a>
+    </header>
+
+    <!-- Key Learning Objectives -->
+    <section id="key-objectives">
+        <h2>📌 Key Learning Objectives</h2>
+        <ul>
+            <li>Understand <strong>how numbers are represented in computers</strong>.</li>
+            <li>Learn about <strong>binary numbers</strong> and how to <strong>convert between binary and decimal</strong>.</li>
+            <li>Perform <strong>binary addition and subtraction</strong>.</li>
+            <li>Understand <strong>negative number representation</strong> in <strong>sign-magnitude, one's complement, and two’s complement</strong>.</li>
+            <li>Learn about <strong>binary fractions</strong> and their conversion.</li>
+            <li>Understand the <strong>IEEE 754 floating point representation</strong>.</li>
+            <li>Be aware of <strong>special values, rounding errors, and floating-point arithmetic limitations</strong>.</li>
+        </ul>
+    </section>
+<!-- Flashcards Section -->
+<section id="flashcards">
+    <h2>Flashcards</h2>
+    <div class="flashcard-container">
+        <div class="flashcard" data-question="What number system do computers use internally?" data-answer="Binary (Base 2), which consists of only 0s and 1s."></div>
+        <div class="flashcard" data-question="How do you convert a decimal number to binary?" data-answer="Repeatedly divide the number by 2 and record the remainders, reading from bottom to top."></div>
+        <div class="flashcard" data-question="What is 1011₂ in decimal?" data-answer="11₁₀ (1×2³ + 0×2² + 1×2¹ + 1×2⁰)."></div>
+        <div class="flashcard" data-question="What is 23₁₀ in binary?" data-answer="10111₂"></div>
+        <div class="flashcard" data-question="What is the result of 101₂ + 11₂ in binary?" data-answer="1000₂ (5 + 3 = 8)."></div>
+        <div class="flashcard" data-question="What is Two’s Complement?" data-answer="A method for representing negative numbers in binary by inverting all bits and adding 1."></div>
+        <div class="flashcard" data-question="How does IEEE 754 represent floating-point numbers?" data-answer="Using Sign (1 bit), Exponent (8 bits), and Fraction (23 bits)."></div>
+        <div class="flashcard" data-question="What are the special values in IEEE 754 representation?" data-answer="Zero, Infinity (∞), and NaN (Not a Number)."></div>
+        <div class="flashcard" data-question="What is the binary representation of 16.625₁₀?" data-answer="10000.101₂"></div>
+        <div class="flashcard" data-question="What is an example of a rounding error in binary representation?" data-answer="Operations like 0.1 + 0.2 in floating-point arithmetic may not result in an exact 0.3 due to precision limits."></div>
+    </div>
+</section>
+
+    <!-- Revision Notes -->
+    <section id="revision-notes">
+        <h2>🟢 Why Do We Need to Know Binary Representation?</h2>
+        <p>Computers store and process all data using <strong>binary (0s and 1s)</strong>. Understanding <strong>how numbers are represented</strong> helps avoid <strong>rounding errors</strong> in calculations.</p>
+        <pre><code>Example: 
+101.1 - 101.2 + 0.1  → Expected result: 0
+Actual result: -8.52 × 10⁻¹⁵ (due to floating-point rounding errors)</code></pre>
+
+        <h2>🟢 Number Systems</h2>
+        <h3>1. Decimal (Base 10)</h3>
+        <p>Numbers in base 10 use digits 0-9, where each digit represents a power of 10.</p>
+        <pre><code>257₁₀ = 2 × 10² + 5 × 10¹ + 7 × 10⁰</code></pre>
+        
+        <h3>2. Binary (Base 2)</h3>
+        <p>Numbers in base 2 use only 0s and 1s, where each digit represents a power of 2.</p>
+        <pre><code>101₂ = 1 × 2² + 0 × 2¹ + 1 × 2⁰ = 5₁₀</code></pre>
+    </section>
+
+    <section id="conversion">
+        <h2>🟢 Converting Between Binary and Decimal</h2>
+        <h3>1. Converting Decimal to Binary</h3>
+        <p>Method:</p>
+        <ol>Divide the decimal number by 2.</ol>
+        <ol>Record the remainder</ol>
+        <ol>Repeat until the quotient is 0</ol>
+        <ol>Read the remainders from bottom to top</ol>
+        <pre><code>123₁₀ → 1111011₂ (by repeated division by 2)</code></pre>
+        
+        <h3>2. Converting Binary to Decimal</h3>
+        <p>Method:</p>
+        <p>Multiply each binary digit by its corresponding power of 2, then sum the results.</p>
+        <pre><code>1111011₂ = (1×2⁶) + (1×2⁵) + (1×2⁴) + (1×2³) + (0×2²) + (1×2¹) + (1×2⁰) = 123₁₀</code></pre>
+    </section>
+
+    <section id="binary-arithmetic">
+        <h2>🟢 Binary Arithmetic</h2>
+        <h3>Binary Addition</h3>
+        <p>Uses the same rules as decimal addition but follows:</p>
+
+<ul>0 + 0 = 0</ul>
+<ul>0 + 1 = 1</ul>
+<ul>1 + 0 = 1</ul>
+<ul>1 + 1 = 10 (carry 1)</ul>
+        <pre><code>  011
++ 101
+-------
+ 1000 (carry 1)</code></pre>
+        
+        <h3>Binary Subtraction</h3>
+        <p>Uses borrowing:</p>
+
+<ul>0 - 0 = 0</ul>
+<ul>1 - 0 = 1</ul>
+<ul>1 - 1 = 0</ul>
+<ul>0 - 1 = 1 (borrow 1)</ul>
+        <pre><code>  1000
+-  101
+-------
+   011</code></pre>
+    </section>
+
+    <section id="negative-numbers">
+        <h2>🟢 Negative Number Representation</h2>
+        <p>Since binary cannot represent negative signs directly, we use three main methods:</p>
+        <h3>1. Sign-Magnitude</h3>
+        
+        <ol>The left-most bit (MSB) represents the sign (0 = positive, 1 = negative)</ol>
+        <ol>The remaining bits represent the magnitude.</ol>
+        <ol>Issue: Two representations of zero (0000 = +0, 1000 = -0).</ol>
+        
+        <pre><code>+5 =  0101₂
+-5 =  1101₂</code></pre>
+        
+        <h3>2. One’s Complement</h3>
+        
+            <ol>Invert all bits to get the negative version.</ol>
+            <ol>Issue: Still has two zero representations.</ol>
+     
+        <pre><code>+5 =  0101₂
+-5 =  1010₂ (invert all bits)</code></pre>
+        
+        <h3>3. Two’s Complement</h3>
+        
+            <ol>Invert all bits, then add 1.</ol>
+            <ol>Fixes the issue of two zeroes</ol>
+            <ol>Easy subtraction: x - y = x + (-y)</ol>
+       
+        <pre><code>+5  =  0101₂
+-5  =  1011₂ (invert all bits and add 1)</code></pre>
+    </section>
+
+    <section id="binary-fractions">
+        <h2>🟢 Binary Fractions</h2>
+        <p>To represent fractions in binary, the <strong>right side</strong> of the decimal follows <strong>negative powers of 2</strong>.</p>
+        <pre><code>16.625₁₀ = 10000.101₂</code></pre>
+        <p>Breaking it down:</p>
+        <pre><code>= 1 × 2⁴ + 0 × 2³ + 0 × 2² + 0 × 2¹ + 0 × 2⁰
++ 1 × 2⁻¹ + 0 × 2⁻² + 1 × 2⁻³</code></pre>
+    </section>
+
+    <section id="ieee754">
+        <h2>🟢 IEEE 754 Floating Point Representation</h2>
+        <pre><code>Single Precision Format (32-bit)
+1 bit: Sign (S)
+8 bits: Exponent (E) (Stored with bias 127)
+23 bits: Fraction (F)</code></pre>
+
+<h2>🟢 Special Values in IEEE 754</h2>
+<pre><code>Zero: Exponent = 0, Fraction = 0.
+Infinity (∞): Exponent = 255, Fraction = 0.
+NaN (Not a Number): Exponent = 255, Fraction ≠ 0.</code></pre>
+    </section>
+
+    <section id="key-code">
+        <h2>🟢 Key Python Code</h2>
+        <h3>Binary to Decimal Conversion</h3>
+        <pre><code>def binary_to_decimal(binary):
+    return int(binary, 2)
+
+print(binary_to_decimal("1111011"))  # Output: 123</code></pre>
+
+        <h3>Decimal to Binary Conversion</h3>
+        <pre><code>def decimal_to_binary(n):
+    return bin(n).replace("0b", "")
+
+print(decimal_to_binary(123))  # Output: 1111011</code></pre>
+    </section>
+
+    <script src="flashcards.js"></script>
+</body>
+</html>
