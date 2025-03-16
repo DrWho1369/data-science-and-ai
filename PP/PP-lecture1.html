@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PP Lecture 1 - Introduction to Programming</title>
+    <link rel="stylesheet" href="PP_styles.css">
+</head>
+<body>
+    <header>
+        <h1>Introduction to Programming & Boolean Logic</h1>
+    </header>
+
+    <main>
+        <a href="PP_index.html" class="back-button">← Back to Homepage</a>
+
+        <section id="key-learning-objectives">
+            <h2>📌 Key Learning Objectives</h2>
+            <ul>
+                <li>Understand what a <strong>program</strong> is and how Python executes instructions.</li>
+                <li>Learn about <strong>basic data types, arithmetic operations, and variable assignments.</strong></li>
+                <li>Use <strong>Boolean expressions and relational operators</strong> to compare values.</li>
+                <li>Understand <strong>logical operators (and, or, not)</strong> for complex conditions.</li>
+                <li>Implement <strong>conditional execution</strong> with <code>if</code>, <code>if-else</code>, and <code>elif</code> statements.</li>
+                <li>Explore <strong>nested conditionals</strong> and the importance of code readability.</li>
+            </ul>
+        </section>
+
+        <section id="flashcards">
+            <h2>🃏 Flashcards</h2>
+            <div class="flashcard-container">
+                <div class="flashcard" data-question="What is a program?" data-answer="A sequence of instructions that tells a computer how to perform a computation."></div>
+                <div class="flashcard" data-question="What are the basic types of operations in Python?" data-answer="Input, output, arithmetic operations, conditional execution, and repetition."></div>
+                <div class="flashcard" data-question="What does the == operator do?" data-answer="It checks if two values are equal and returns True or False."></div>
+                <div class="flashcard" data-question="What is the difference between = and == in Python?" data-answer="= is an assignment operator, while == is a relational operator for checking equality."></div>
+                <div class="flashcard" data-question="What are the three logical operators in Python?" data-answer="and, or, and not."></div>
+                <div class="flashcard" data-question="How does an if statement work?" data-answer="It evaluates a condition and executes code only if the condition is True."></div>
+                <div class="flashcard" data-question="What is an elif statement?" data-answer="An 'else if' statement that allows multiple conditional branches in an if-else structure."></div>
+                <div class="flashcard" data-question="What is an example of a nested conditional?" data-answer="An if statement inside another if statement, allowing multiple layers of condition checking."></div>
+                <div class="flashcard" data-question="What does the pass statement do in Python?" data-answer="It acts as a placeholder for future code and does nothing when executed."></div>
+                <div class="flashcard" data-question="Why should you avoid deep nesting in conditionals?" data-answer="Deeply nested conditionals reduce readability and can make debugging harder."></div>
+            </div>
+        </section>
+
+        <section id="revision-notes">
+            <h2>📝 Revision Notes</h2>
+            <h3>🔹 What is a Program?</h3>
+            <p>A program is a set of instructions that a computer executes to perform a specific task. Programs consist of basic operations like input, output, arithmetic, conditional execution, and loops.</p>
+
+            <h3>🔹 Variables & Data Types</h3>
+            <ul>
+                <li><strong>int:</strong> Whole numbers (e.g., 42)</li>
+                <li><strong>float:</strong> Decimal numbers (e.g., 3.14)</li>
+                <li><strong>str:</strong> Text data (e.g., "Hello World!")</li>
+                <li><strong>bool:</strong> True/False values</li>
+            </ul>
+
+            <h3>🔹 Boolean Expressions & Logical Operators</h3>
+            <ul>
+                <li><code>==</code> (equals), <code>!=</code> (not equal), <code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code></li>
+                <li><code>and</code>: True only if both conditions are True</li>
+                <li><code>or</code>: True if at least one condition is True</li>
+                <li><code>not</code>: Negates a Boolean expression</li>
+            </ul>
+        </section>
+
+        <section id="key-code">
+            <h2>💻 Key Code / Functions</h2>
+
+            <h3>🔹 Assigning Variables</h3>
+            <pre><code># Assigning values to variables
+age = 25
+name = "Alice"
+pi = 3.1415</code></pre>
+
+            <h3>🔹 Boolean Expressions</h3>
+            <pre><code># Checking conditions
+x = 5
+print(x > 3)  # True
+print(x == 5) # True
+print(x != 10) # True</code></pre>
+
+            <h3>🔹 Logical Operators</h3>
+            <pre><code># Using and, or, not
+is_student = True
+has_pass = False
+
+print(is_student and has_pass)  # False
+print(is_student or has_pass)   # True
+print(not is_student)           # False</code></pre>
+
+            <h3>🔹 If Statements</h3>
+            <pre><code># Basic if statement
+if x > 0:
+    print("x is positive")</code></pre>
+
+            <h3>🔹 If-Else Statement</h3>
+            <pre><code># If-else example
+if x % 2 == 0:
+    print("Even number")
+else:
+    print("Odd number")</code></pre>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Thomas Baker - MSc Data Science & AI Revision</p>
+    </footer>
+
+    <script defer src="PP_flashcards.js"></script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PP Lecture 3 - Collections</title>
+    <link rel="stylesheet" href="PP_styles.css">
+</head>
+<body>
+    <header>
+        <h1>Collections: Lists, Dictionaries, Sets, Tuples & Strings</h1>
+        
+    </header>
+
+    <main>
+        <a href="PP_index.html" class="back-button">← Back to Homepage</a>
+
+        <section id="key-learning-objectives">
+            <h2>📌 Key Learning Objectives</h2>
+            <ul>
+                <li>Understand and use different types of <strong>collections</strong> in Python: lists, dictionaries, sets, tuples, and strings.</li>
+                <li>Learn how to <strong>store and retrieve data efficiently</strong> with Python’s built-in data structures.</li>
+                <li>Differentiate between <strong>mutable and immutable</strong> objects.</li>
+                <li>Choose the <strong>right data structure</strong> for solving different types of problems.</li>
+                <li>Gain hands-on experience by writing programs that use lists, dictionaries, sets, tuples, and strings.</li>
+            </ul>
+        </section>
+
+        <section id="flashcards">
+            <h2>🃏 Flashcards</h2>
+            <div class="flashcard-container">
+                <div class="flashcard" data-question="What is a list in Python?" data-answer="A collection that allows ordered, mutable sequences of items, which can be of different types."></div>
+                <div class="flashcard" data-question="What is a dictionary in Python?" data-answer="A collection of key-value pairs, where keys are unique and used to retrieve corresponding values."></div>
+                <div class="flashcard" data-question="What is a tuple in Python?" data-answer="An immutable sequence of elements, defined using parentheses ()."></div>
+                <div class="flashcard" data-question="What is a set in Python?" data-answer="An unordered collection of unique elements, defined using {}."></div>
+                <div class="flashcard" data-question="What is mutability in Python?" data-answer="Mutability refers to whether an object can be changed after creation. Lists are mutable, tuples are immutable."></div>
+                <div class="flashcard" data-question="How do you add an item to a list?" data-answer="Use the append() method: my_list.append(4)."></div>
+                <div class="flashcard" data-question="How do you access a dictionary value?" data-answer="Using a key: my_dict['name'] or my_dict.get('name')."></div>
+                <div class="flashcard" data-question="How do you remove a key from a dictionary?" data-answer="Using del my_dict['key'] or my_dict.pop('key')."></div>
+                <div class="flashcard" data-question="What is the difference between a dictionary and a set?" data-answer="A dictionary stores key-value pairs, while a set stores only unique values."></div>
+            </div>
+        </section>
+
+        <section id="revision-notes">
+            <h2>📝 Revision Notes</h2>
+
+            <h3>🔹 What Are Collections?</h3>
+            <p>Collections are used to <strong>store multiple pieces of data</strong> in a structured way. Different types of collections have different rules for <strong>order, mutability, and uniqueness</strong>.</p>
+
+            <h3>🔹 Lists (Ordered & Mutable)</h3>
+            <p>A <strong>list</strong> is a flexible collection that stores multiple elements in a <strong>specific order</strong>. You can <strong>modify</strong> lists after they are created.</p>
+            <pre><code>my_list = [1, 2, 3, "Python", True]
+print(my_list[0])  # Output: 1
+my_list.append(4)   # Adds 4 to the end</code></pre>
+
+            <h3>🔹 Dictionaries (Key-Value Pairs)</h3>
+            <p>A <strong>dictionary</strong> stores data using <strong>keys and values</strong>. Think of it like a <strong>real-life dictionary</strong> where each word (key) maps to a definition (value).</p>
+            <pre><code>my_dict = {"name": "Alice", "age": 25}
+print(my_dict["name"])  # Output: Alice
+my_dict["age"] = 26  # Updating a value</code></pre>
+
+            <h3>🔹 Tuples (Immutable & Ordered)</h3>
+            <p>A <strong>tuple</strong> is just like a list, but <strong>cannot be modified</strong> once created. This makes tuples <strong>faster and safer</strong> for storing fixed data.</p>
+            <pre><code>my_tuple = (10, 20, 30)
+print(my_tuple[1])  # Output: 20</code></pre>
+
+            <h3>🔹 Sets (Unordered & Unique)</h3>
+            <p>A <strong>set</strong> is a collection of unique items, meaning <strong>duplicates are automatically removed</strong>.</p>
+            <pre><code>my_set = {1, 2, 3, 4, 4, 5}
+print(my_set)  # Output: {1, 2, 3, 4, 5}</code></pre>
+
+            <h3>🔹 Strings (Text Sequences)</h3>
+            <p>A <strong>string</strong> is an <strong>immutable sequence of characters</strong>, used for storing text.</p>
+            <pre><code>my_string = "Hello, World!"
+print(my_string[0])  # Output: H</code></pre>
+        </section>
+
+        <section id="key-code">
+            <h2>💻 Key Code / Functions</h2>
+
+            <h3>🔹 Working with Lists</h3>
+            <p>Lists store multiple items in an ordered sequence.</p>
+            <pre><code>my_list = [1, 2, 3, 4]
+my_list.append(5)  # Adds 5 at the end
+my_list.remove(3)  # Removes value 3
+print(my_list)  # Output: [1, 2, 4, 5]</code></pre>
+
+            <h3>🔹 Using Dictionaries</h3>
+            <p>Dictionaries allow quick access to values using unique keys.</p>
+            <pre><code>my_dict = {"apple": 2, "banana": 5}
+print(my_dict["banana"])  # Output: 5</code></pre>
+
+            <h3>🔹 Using Sets</h3>
+            <p>Sets store unique values and remove duplicates automatically.</p>
+            <pre><code>my_set = {1, 2, 3, 3, 4}
+print(my_set)  # Output: {1, 2, 3, 4}</code></pre>
+
+            <h3>🔹 String Manipulation</h3>
+            <p>Strings allow easy text processing and manipulation.</p>
+            <pre><code>my_string = "Python"
+print(my_string.upper())  # Output: PYTHON
+print(my_string.lower())  # Output: python</code></pre>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Thomas Baker - MSc Data Science & AI Revision</p>
+    </footer>
+
+    <script defer src="PP_flashcards.js"></script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PP Lecture 2 - Loops & Functions</title>
+    <link rel="stylesheet" href="PP_styles.css">
+</head>
+<body>
+    <header>
+        <h1>Loops, Iteration & Functions</h1>
+    </header>
+
+    <main>
+        <a href="PP_index.html" class="back-button">← Back to Homepage</a>
+
+        <section id="key-learning-objectives">
+            <h2>📌 Key Learning Objectives</h2>
+            <ul>
+                <li>Understand <strong>iteration</strong> and why loops are important.</li>
+                <li>Learn how to use <strong>while loops</strong> and <strong>for loops</strong>.</li>
+                <li>Understand <strong>break statements</strong> for controlling loops.</li>
+                <li>Learn what <strong>functions</strong> are and why they are useful.</li>
+                <li>Understand <strong>parameters</strong> and <strong>return values</strong>.</li>
+                <li>Use <strong>incremental development</strong> to build functions step by step.</li>
+            </ul>
+        </section>
+
+        <section id="flashcards">
+            <h2>🃏 Flashcards</h2>
+            <div class="flashcard-container">
+                <div class="flashcard" data-question="What is a loop in programming?" data-answer="A loop is a way to repeat a block of code multiple times until a condition is met."></div>
+                <div class="flashcard" data-question="What are the two main types of loops in Python?" data-answer="The while loop and the for loop."></div>
+                <div class="flashcard" data-question="How does a while loop work?" data-answer="A while loop keeps running as long as its condition is True."></div>
+                <div class="flashcard" data-question="How does a for loop work?" data-answer="A for loop iterates over a sequence (like a list or range) and runs its code block for each item."></div>
+                <div class="flashcard" data-question="What is the purpose of a break statement?" data-answer="The break statement stops a loop immediately when a certain condition is met."></div>
+                <div class="flashcard" data-question="What is a function in Python?" data-answer="A function is a reusable block of code that performs a specific task."></div>
+                <div class="flashcard" data-question="How do you define a function in Python?" data-answer="You use the 'def' keyword followed by a function name and parentheses."></div>
+                <div class="flashcard" data-question="What is a return statement in a function?" data-answer="A return statement sends a value back to the part of the program that called the function."></div>
+                <div class="flashcard" data-question="What is incremental development?" data-answer="A programming approach where you write and test small sections of code step by step."></div>
+                <div class="flashcard" data-question="What is a stack diagram?" data-answer="A diagram that shows which function is calling which, useful for debugging."></div>
+            </div>
+        </section>
+
+        <section id="revision-notes">
+            <h2>📝 Revision Notes</h2>
+
+            <h3>🔹 What is Iteration?</h3>
+            <p>Iteration means <strong>repeating</strong> a set of instructions until a condition is met.</p>
+
+            <h3>🔹 While Loop</h3>
+            <p>A while loop runs as long as the condition is <code>True</code>:</p>
+            <pre><code>n = 5
+while n > 0:
+    print(n)
+    n -= 1
+print("Blastoff!")</code></pre>
+
+            <h3>🔹 For Loop</h3>
+            <p>A for loop iterates over a sequence:</p>
+            <pre><code>for i in range(1, 6):  
+    print(i)</code></pre>
+
+            <h3>🔹 Break Statement</h3>
+            <p>The break statement stops a loop early:</p>
+            <pre><code>while True:
+    name = input("Enter name (type 'exit' to stop): ")
+    if name == 'exit':
+        break
+    print("Hello, " + name + "!")</code></pre>
+
+            <h3>🔹 What Are Functions?</h3>
+            <p>A function is a named block of code that performs a task.</p>
+            <pre><code>def greet():
+    print("Hello!")</code></pre>
+
+            <h3>🔹 Functions with Parameters</h3>
+            <p>Functions can take input values:</p>
+            <pre><code>def greet(name):
+    print("Hello, " + name + "!")</code></pre>
+
+            <h3>🔹 Functions with Return Values</h3>
+            <p>Functions can return results:</p>
+            <pre><code>def square(n):
+    return n * n
+
+result = square(4)
+print(result)  # Output: 16</code></pre>
+        </section>
+
+        <section id="key-code">
+            <h2>💻 Key Code / Functions</h2>
+            <pre><code># While Loop Example
+n = 5
+while n > 0:
+    print(n)
+    n -= 1
+print("Blastoff!")
+
+# For Loop Example
+for i in range(1, 6):
+    print(i)
+
+# Function Definition
+def greet():
+    print("Hello!")
+
+greet()  # Call the function
+
+# Function with Parameter
+def greet(name):
+    print("Hello, " + name + "!")
+
+greet("Alice")
+
+# Function with Return Value
+def square(n):
+    return n * n
+
+result = square(4)  # result = 16
+print(result)</code></pre>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Thomas Baker - MSc Data Science & AI Revision</p>
+    </footer>
+
+    <script defer src="PP_flashcards.js"></script>
+</body>
+</html>

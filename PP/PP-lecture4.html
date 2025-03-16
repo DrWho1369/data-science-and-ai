@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PP Lecture 4 - Functions & Memory</title>
+    <link rel="stylesheet" href="PP_styles.css">
+</head>
+<body>
+    <header>
+        <h1>Functions, Memory Management, References, and Matrices</h1>
+    
+    </header>
+
+    <main>
+        <a href="PP_index.html" class="back-button">← Back to Homepage</a>
+
+        <section id="key-learning-objectives">
+            <h2>📌 Key Learning Objectives</h2>
+            <ul>
+                <li>Understand <strong>how functions work</strong> and why they are useful.</li>
+                <li>Learn about <strong>memory management</strong>, including <strong>stack vs. heap</strong> storage.</li>
+                <li>Understand <strong>references and aliasing</strong> and how they affect variables.</li>
+                <li>Differentiate between <strong>mutable and immutable objects</strong>.</li>
+                <li>Learn how <strong>matrices</strong> are stored in memory and how to process them.</li>
+            </ul>
+        </section>
+
+        <section id="flashcards">
+            <h2>🃏 Flashcards</h2>
+            <div class="flashcard-container">
+                <div class="flashcard" data-question="What is a function?" data-answer="A reusable block of code that performs a specific task and can be called multiple times."></div>
+                <div class="flashcard" data-question="What is the difference between stack and heap memory?" data-answer="Stack stores function calls and local variables, while heap stores complex objects that persist beyond function calls."></div>
+                <div class="flashcard" data-question="What is aliasing in Python?" data-answer="Aliasing occurs when two variables reference the same object in memory, meaning changes to one affect the other."></div>
+                <div class="flashcard" data-question="What is a reference in Python?" data-answer="A reference is a pointer to an object in memory, meaning multiple variables can point to the same object."></div>
+                <div class="flashcard" data-question="What happens when a function modifies a mutable object?" data-answer="The changes affect the original object because it is stored in the heap and referenced by the function."></div>
+                <div class="flashcard" data-question="What is a matrix?" data-answer="A two-dimensional data structure that stores values in rows and columns, often represented as a list of lists in Python."></div>
+                <div class="flashcard" data-question="What is garbage collection?" data-answer="A process in Python that automatically removes objects that are no longer referenced, freeing up memory."></div>
+            </div>
+        </section>
+
+        <section id="revision-notes">
+            <h2>📝 Revision Notes</h2>
+
+            <h3>🔹 What Are Functions?</h3>
+            <p>A <strong>function</strong> is a reusable block of code that performs a specific task. It prevents code duplication and makes programs easier to manage.</p>
+            <pre><code>def greet():
+    print("Hello, world!")</code></pre>
+            <p>When you call `greet()`, the function executes its code.</p>
+
+            <h3>🔹 Parameters & Return Values</h3>
+            <p>Functions can take <strong>parameters (inputs)</strong> and return values.</p>
+            <pre><code>def add(a, b):
+    return a + b
+
+result = add(3, 5)  # Output: 8</code></pre>
+            <p>✅ The function <strong>takes two values</strong>, <strong>adds them</strong>, and <strong>returns the result</strong>.</p>
+
+            <h3>🔹 Memory in Programming (Stack vs. Heap)</h3>
+            <p>Computers use <strong>two types of memory storage</strong>:</p>
+            <ul>
+                <li>🟢 <strong>Stack</strong> → Stores function calls, local variables, and primitive data types.</li>
+                <li>🔵 <strong>Heap</strong> → Stores complex objects (lists, dictionaries) that persist beyond function calls.</li>
+            </ul>
+
+            <h3>🔹 References & Aliasing</h3>
+            <p>When a variable stores <strong>a reference</strong>, it points to an object in memory. This means multiple variables can point to the same object.</p>
+            <pre><code>a = [1, 2, 3]  # Stored in heap memory
+b = a  # 'b' now refers to the same list as 'a'
+b.append(4)
+print(a)  # Output: [1, 2, 3, 4]</code></pre>
+            <p>✅ Since `b` and `a` <strong>both reference the same object</strong>, modifying `b` also changes `a`.</p>
+
+            <h3>🔹 Matrices</h3>
+            <p>A <strong>matrix</strong> is a two-dimensional structure used to store data in rows and columns. In Python, a matrix is often represented as a <strong>list of lists</strong>.</p>
+            <pre><code>matrix = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+]</code></pre>
+
+        </section>
+
+        <section id="key-code">
+            <h2>💻 Key Code / Functions</h2>
+
+            <h3>🔹 Function Basics</h3>
+            <pre><code>def multiply(a, b):
+    return a * b
+
+print(multiply(2, 3))  # Output: 6</code></pre>
+
+            <h3>🔹 Stack vs Heap Example</h3>
+            <pre><code>def function():
+    x = 5  # Stored in Stack
+    y = [10, 20, 30]  # Stored in Heap
+    return y</code></pre>
+
+            <h3>🔹 Understanding References</h3>
+            <pre><code>a = [1, 2, 3]
+b = a
+b.append(4)
+print(a)  # Output: [1, 2, 3, 4]</code></pre>
+
+            <h3>🔹 Matrices in Python</h3>
+            <pre><code>matrix = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+]
+
+print(matrix[1][2])  # Output: 6</code></pre>
+
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Thomas Baker - MSc Data Science & AI Revision</p>
+    </footer>
+
+    <script defer src="PP_flashcards.js"></script>
+</body>
+</html>

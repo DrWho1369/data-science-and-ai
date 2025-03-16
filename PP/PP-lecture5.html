@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PP Lecture 5 - Files, Modules, Exceptions & Type Hints</title>
+    <link rel="stylesheet" href="PP_styles.css">
+</head>
+<body>
+    <header>
+        <h1>Files, Modules, Exceptions, and Type Hints</h1>
+    </header>
+
+    <main>
+        <a href="PP_index.html" class="back-button">← Back to Homepage</a>
+
+        <section id="key-learning-objectives">
+            <h2>📌 Key Learning Objectives</h2>
+            <ul>
+                <li>Understand how to <strong>read and write files</strong> in Python.</li>
+                <li>Learn about <strong>modules and libraries</strong> and how to use them effectively.</li>
+                <li>Understand <strong>exceptions</strong> and how to handle errors in Python.</li>
+                <li>Learn about <strong>type hints</strong> and how they improve code readability.</li>
+            </ul>
+        </section>
+
+        <section id="flashcards">
+            <h2>🃏 Flashcards</h2>
+            <div class="flashcard-container">
+                <div class="flashcard" data-question="What is a module in Python?" data-answer="A module is a file that contains reusable functions and variables."></div>
+                <div class="flashcard" data-question="How do you import a module?" data-answer="Using the 'import' statement, e.g., 'import math'."></div>
+                <div class="flashcard" data-question="What is an exception in Python?" data-answer="An error that occurs during execution, which can be handled using try-except."></div>
+                <div class="flashcard" data-question="What is a type hint?" data-answer="A way to specify the expected data type of variables and function parameters."></div>
+                <div class="flashcard" data-question="How do you write to a file in Python?" data-answer="Using 'open()' with mode 'w' and then calling 'write()'."></div>
+                <div class="flashcard" data-question="What is a KeyError?" data-answer="An error that occurs when trying to access a dictionary key that does not exist."></div>
+                <div class="flashcard" data-question="What does os.path.exists() do?" data-answer="Checks if a file or directory exists."></div>
+                <div class="flashcard" data-question="How do you specify multiple types in a type hint?" data-answer="Using the '|' operator (Python 3.10+), e.g., 'x: int | float'."></div>
+            </div>
+        </section>
+
+        <section id="revision-notes">
+            <h2>📝 Revision Notes</h2>
+
+            <h3>🔹 Working with Files</h3>
+            <p>Programs often need to <strong>read from or write to files</strong> for data storage.</p>
+            <pre><code># Open a file in write mode ("w") and store text
+with open("example.txt", "w") as file:
+    file.write("Hello, world!")  # Writes this text into the file
+
+# Open the file in read mode ("r") and print its content
+with open("example.txt", "r") as file:
+    content = file.read()  # Reads the entire file
+    print(content)  # Output: Hello, world!</code></pre>
+            <p>✅ This code <strong>writes text to a file</strong> and then <strong>reads it back</strong>.</p>
+
+            <h3>🔹 Modules & Libraries</h3>
+            <p>A <strong>module</strong> is a file containing reusable <strong>functions and variables</strong>.</p>
+            <pre><code># Importing the math module to use mathematical functions
+import math
+print(math.sqrt(16))  # Output: 4.0 (Square root of 16)</code></pre>
+            <p>✅ This allows us to use <strong>pre-built functions</strong> instead of writing them ourselves.</p>
+
+            <h3>🔹 Handling Exceptions</h3>
+            <p><strong>Exceptions</strong> occur when an error happens during execution. Instead of crashing, we can <strong>handle the error</strong> gracefully.</p>
+            <pre><code>try:
+    result = 10 / 0  # This will cause a ZeroDivisionError
+except ZeroDivisionError:
+    print("Cannot divide by zero!")  # This message will be printed instead of crashing the program</code></pre>
+            <p>✅ The `try` block attempts code, and if an error occurs, the `except` block <strong>handles it</strong> instead of stopping the program.</p>
+
+            <h3>🔹 Type Hints</h3>
+            <p>Type hints <strong>help clarify what types of data</strong> functions and variables should use.</p>
+            <pre><code>def greet(name: str) -> str:
+    return "Hello, " + name
+
+print(greet("Alice"))  # Output: Hello, Alice</code></pre>
+            <p>✅ Here, `name: str` tells Python that `name` should be a <strong>string</strong>, and `-> str` means the function <strong>returns a string</strong>.</p>
+        </section>
+
+        <section id="key-code">
+            <h2>💻 Key Code / Functions</h2>
+
+            <h3>🔹 Opening & Writing to Files</h3>
+            <p>Use the `with open()` method to ensure proper file handling.</p>
+            <pre><code>with open("data.txt", "w") as f:
+    f.write("Hello, world!")  # Saves text to the file</code></pre>
+
+            <h3>🔹 Importing & Using Modules</h3>
+            <p>Python comes with <strong>built-in modules</strong> that help with various tasks.</p>
+            <pre><code>import random
+print(random.randint(1, 10))  # Generates a random number between 1 and 10</code></pre>
+
+            <h3>🔹 Exception Handling</h3>
+            <p>Always use exception handling when dealing with <strong>user input, files, or network connections</strong>.</p>
+            <pre><code>try:
+    value = int("abc")  # Raises ValueError because "abc" is not a number
+except ValueError:
+    print("Invalid number format!")  # The program continues running</code></pre>
+
+            <h3>🔹 Using Type Hints</h3>
+            <p>Type hints make functions more <strong>readable</strong> and <strong>maintainable</strong>.</p>
+            <pre><code>def add(x: int, y: int) -> int:
+    return x + y</code></pre>
+
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Thomas Baker - MSc Data Science & AI Revision</p>
+    </footer>
+
+    <script defer src="PP_flashcards.js"></script>
+</body>
+</html>

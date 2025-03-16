@@ -279,3 +279,19 @@ ul, ol {
     box-shadow: 0 0 15px rgba(0, 255, 234, 0.7);
 }
 
+/* Back Button */
+.back-button {
+    display: inline-block;
+    margin: 20px;
+    padding: 10px 15px;
+    background: #2575fc;
+    color: white;
+    text-decoration: none;
+    font-size: 1em;
+    border-radius: 6px;
+    transition: 0.3s;
+}
+
+.back-button:hover {
+    background: #5a0fc8;
+}
