@@ -78,14 +78,65 @@ C = A * B = | 4  18 |
         <pre><code>A = P D P⁻¹</code></pre>
         <p>Where:</p>
         <ul>
-            <li>The <strong>columns of P</strong> are the <strong>eigenvectors</strong> of A.</li>
-            <li>The <strong>diagonal entries of D</strong> are the <strong>eigenvalues</strong> of A.</li>
+            <li>P is the matrix of eigenvectors - The <strong>columns of P</strong> are the <strong>eigenvectors</strong> of A.</li>
+            <li>D is a diagonal matrix where the <strong>diagonal entries of D</strong> are the <strong>eigenvalues</strong> of A.</li>
         </ul>
         
         <h2>🟢 Spectral Decomposition</h2>
-        <p>For a <strong>symmetric matrix</strong>, eigendecomposition simplifies to:</p>
+        <p>For a <strong>symmetric matrix</strong>, (𝐴 = 𝐴<sup>𝑇</sup>), eigendecomposition simplifies to:</p>
         <pre><code>A = P D P<sup>T</sup></code></pre>
+        <h3>1. Why is This Important?</h3>
+        <p></p>In spectral decomposition, 𝑃 is an orthogonal matrix, meaning: 𝑃<sup>−1</sup> = 𝑃<sup>𝑇</sup> This makes computations simpler and more stable in numerical applications. Used in Principal Component Analysis (PCA) for reducing dimensions in machine learning.
+        <h2>🟢 Example of Spectral Decomposition</h2>
+        <p>Given a symmetric matrix:</p>
+        <pre><code>
+        A = | 2  -1 |
+            | -1  2 |
+        </code></pre>
         
+        <p>We find the eigenvalues and eigenvectors, then construct:</p>
+        <pre><code>
+        A = P D P<sup>𝑇</sup>
+        </code></pre>
+        
+        <p>where:</p>
+        <ul>
+            <li><strong>P</strong> contains orthonormal eigenvectors.</li>
+            <li><strong>D</strong> is a diagonal matrix of eigenvalues.</li>
+        </ul>
+    </section>
+
+    <!-- Summary Table -->
+<section id="eigendecomposition-summary">
+    <h2>📌 Summary of Eigendecomposition vs Spectral Decomposition</h2>
+    <table>
+        <tr>
+            <th>Eigendecomposition</th>
+            <th>Spectral Decomposition</th>
+        </tr>
+        <tr>
+            <td>Works for any square matrix A</td>
+            <td>Works only for symmetric matrices A = A<sup>T</sup></td>
+        </tr>
+        <tr>
+            <td>A = P D P<sup>-1</sup></td>
+            <td>A = P D P<sup>T</sup></td>
+        </tr>
+        <tr>
+            <td>P contains eigenvectors</td>
+            <td>P contains orthonormal eigenvectors</td>
+        </tr>
+        <tr>
+            <td>D contains eigenvalues</td>
+            <td>D contains eigenvalues</td>
+        </tr>
+        <tr>
+            <td>Used in solving systems, stability analysis</td>
+            <td>Used in PCA, statistics, physics</td>
+        </tr>
+    </table>
+</section>
+<section>
         <h2>🟢 Singular Value Decomposition (SVD)</h2>
         <p>Singular Value Decomposition (SVD) is a powerful technique used to decompose any matrix <code>A</code> into three matrices:</p>
         <pre><code>A = U Σ V<sup>T</sup></code></pre>
@@ -95,13 +146,95 @@ C = A * B = | 4  18 |
             <li><code>Σ</code> is a <strong>diagonal matrix</strong> (contains singular values).</li>
             <li><code>V<sup>T</sup></code> is an <strong>orthogonal matrix</strong> (contains right singular vectors).</li>
         </ul>
+        <p>This decomposition is extremely useful in:</p>
+        <ul>
+            <li><strong>Dimensionality reduction (PCA in Machine Learning)</strong></li>
+            <li><strong>Data compression (image and audio processing)</strong></li>
+            <li><strong>Solving linear systems & least squares problems</strong></li>
+            <li><strong>Noise reduction & signal processing</strong></li>
+        </ul>
+        <!-- Understanding the Components of SVD -->
+<section id="svd-components">
+    <h2>🟢 Understanding the Components of SVD</h2>
+    <p>Given an <strong>m × n</strong> matrix A, its SVD decomposition is:</p>
+    <pre><code>A = U Σ V^T</code></pre>
+    <p>Each component has a specific role:</p>
+
+    <h3>1. Matrix U (Left Singular Vectors)</h3>
+    <ul>
+        <li><strong>Size:</strong> m × m</li>
+        <li>Columns are <strong>orthonormal</strong> (U<sup>T</sup> U = I)</li>
+        <li>Represents the <strong>directions of variance</strong> in the row space of A</li>
+    </ul>
+
+    <h3>2. Matrix Σ (Singular Values)</h3>
+    <ul>
+        <li><strong>Size:</strong> m × n (Only diagonal values are nonzero)</li>
+        <li>Singular values <strong>σ₁, σ₂, ...</strong> are always <strong>non-negative</strong></li>
+        <li>They represent <strong>how much each singular vector contributes</strong> to the transformation</li>
+    </ul>
+
+    <h3>3. Matrix V<sup>T</sup> (Right Singular Vectors)</h3>
+    <ul>
+        <li><strong>Size:</strong> n × n</li>
+        <li>Columns are <strong>orthonormal</strong> (V<sup>T</sup> V = I)</li>
+        <li>Represents the <strong>directions of variance</strong> in the column space of A</li>
+    </ul>
+</section>
+<!-- Example of SVD -->
+<section id="svd-example">
+    <h2>🟢 Example of Singular Value Decomposition</h2>
+    <p>Let’s take a simple <strong>2 × 2</strong> matrix:</p>
+    <pre><code>A = | 3  2 |
+    | 2  3 |
+    </code></pre>
+
+    <p>1️⃣ <strong>Find U, Σ, V<sup>T</sup></strong>:</p>
+    <pre><code>U = |  0.707  -0.707 |
+    |  0.707   0.707 |
         
-        <h2>🟢 Applications of SVD</h2>
-        <h3>1. Data Compression</h3>
-        <p>SVD can be used to approximate matrices by keeping only the <strong>largest singular values</strong>, reducing storage while retaining essential structure.</p>
-        <h3>2. Principal Component Analysis (PCA)</h3>
-        <p>SVD helps in PCA by identifying the <strong>principal components</strong> of a dataset, reducing its dimensionality while preserving variance.</p>
-    </section>
+Σ = | 5  0 |
+    | 0  1 |
+
+V<sup>T</sup> = |  0.707   0.707 |
+    | -0.707   0.707 |
+    </code></pre>
+
+    <p>Now, we can reconstruct A using:</p>
+    <pre><code>A = U Σ V<sup>T</sup></code></pre>
+
+    <p><strong>Key Takeaway:</strong> The singular values <strong>(5 and 1)</strong> tell us how much of the original data is preserved in each principal direction.</p>
+</section>
+<!-- Why is A^T A Useful in SVD? -->
+<section id="svd-gram-matrix">
+    <h2>🟢 Why is A<sup>T</sup> A Useful in SVD?</h2>
+    <p>A key fact about <strong>SVD</strong> is that the <strong>singular values</strong> of A are related to the <strong>eigenvalues</strong> of A<sup>T</sup> A.</p>
+    <ol>
+        <li><strong>Compute eigenvalues of A<sup>T</sup> A:</strong>
+            <pre><code>A<sup>T</sup> A = V Σ² V<sup>T</sup></code></pre>
+        </li>
+        <li>The <strong>eigenvalues of A<sup>T</sup> A</strong> are the <strong>squared singular values</strong> of A.</li>
+    </ol>
+
+    <p>This connection helps <strong>find singular values efficiently</strong> and is used in <strong>Principal Component Analysis (PCA)</strong>.</p>
+</section>
+<!-- Applications of SVD -->
+<section id="svd-applications">
+    <h2>🟢 Applications of SVD</h2>
+
+    <h3>1. Data Compression</h3>
+    <p>SVD allows us to <strong>approximate images</strong> by keeping only the largest singular values, reducing storage while preserving quality.</p>
+
+    <h3>2. Principal Component Analysis (PCA)</h3>
+    <p>PCA uses <strong>SVD</strong> to find <strong>principal components</strong> of a dataset, helping in <strong>dimensionality reduction</strong>.</p>
+
+    <h3>3. Solving Linear Systems</h3>
+    <p>When a system <strong>Ax = b</strong> has no unique solution, SVD helps find the <strong>best least-squares approximation</strong>.</p>
+
+    <h3>4. Noise Reduction</h3>
+    <p>Removing smaller singular values <strong>filters out noise</strong> in signals and images.</p>
+</section>
+
 
     <!-- Key Code / Functions -->
     <section id="key-code">
@@ -113,14 +246,39 @@ B = np.array([[2, 0], [1, 3], [0, 4]])
 C = np.dot(A, B)
 print(C)</code></pre>
 
-        <h3>Computing SVD</h3>
-        <pre><code>import numpy as np
-A = np.array([[3, 2, 2], [2, 3, -2]])
+<h3>Computing SVD in Python</h3>
+<pre><code>import numpy as np
+
+A = np.array([[3, 2], [2, 3]])
+
+# Compute SVD
 U, S, Vt = np.linalg.svd(A)
-print("U:", U)
-print("Singular values:", S)
-print("V^T:", Vt)</code></pre>
-    </section>
+
+print("U:\n", U)
+print("Singular values:\n", S)
+print("V^T:\n", Vt)</code></pre>
+
+<h3>Image Compression Using SVD</h3>
+<pre><code>import numpy as np
+import matplotlib.pyplot as plt
+from scipy.linalg import svd
+
+# Load grayscale image
+image = plt.imread("image.jpg")
+gray = np.mean(image, axis=-1)
+
+# Compute SVD
+U, S, Vt = svd(gray)
+
+# Keep only top 50 singular values
+k = 50
+compressed = U[:, :k] @ np.diag(S[:k]) @ Vt[:k, :]
+
+# Show compressed image
+plt.imshow(compressed, cmap="gray")
+plt.title("Compressed Image with SVD")
+plt.show()</code></pre>
+</section>
     <script src="flashcards.js"></script>
 </body>
 </html>
