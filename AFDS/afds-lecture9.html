@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecture 9: Hypothesis Testing and Regression</title>
+    <link rel="stylesheet" href="afds-styles.css">
+</head>
+<body>
+    <header>
+        <h1>Lecture 9: Hypothesis Testing and Regression</h1>
+        <a href="afds_index.html" class="home-button">⬅ Back to Module</a>
+    </header>
+<!-- Key Learning Objectives -->
+<section id="key-objectives">
+    <h2>📌 Key Learning Objectives</h2>
+    <ul>
+        <li>Know the <strong>steps in hypothesis testing</strong> and define <strong>H₀</strong> (null hypothesis) and <strong>H₁</strong> (alternative hypothesis).</li>
+        <li>Define <strong>Type I error, Type II error, and statistical power</strong>.</li>
+        <li>Formulate a null and alternative hypothesis for <strong>population mean (μ) or proportion (π)</strong>.</li>
+        <li>Explain <strong>decision rules</strong>, <strong>critical values</strong>, and <strong>rejection regions</strong> in hypothesis testing.</li>
+        <li>Perform a <strong>hypothesis test for a mean</strong> with known standard deviation (σ) using the <strong>Z-test</strong>.</li>
+        <li>Use tables or Excel to find the <strong>p-value</strong> in hypothesis testing for population mean (μ).</li>
+        <li>Calculate and test a <strong>correlation coefficient</strong> for significance.</li>
+        <li>Interpret a <strong>regression equation</strong> and use it to make predictions.</li>
+        <li>Explain the form and assumptions of a <strong>simple regression model</strong>.</li>
+        <li>Explain the <strong>least squares method</strong>, apply formulas for coefficients, and interpret <strong>R² (coefficient of determination)</strong>.</li>
+    </ul>
+</section>
+<!-- Flashcards Section -->
+<section id="flashcards">
+    <h2>📌 Flashcards</h2>
+    <div class="flashcard-container">
+        <div class="flashcard" data-question="What is hypothesis testing?" data-answer="A statistical method used to test assumptions about a population."></div>
+        <div class="flashcard" data-question="What is the null hypothesis (H₀)?" data-answer="A statement that assumes no effect or no difference."></div>
+        <div class="flashcard" data-question="What is the alternative hypothesis (H₁)?" data-answer="A statement that suggests there is an effect or a difference."></div>
+        <div class="flashcard" data-question="What is a Type I error?" data-answer="Rejecting a true null hypothesis (False Positive)."></div>
+        <div class="flashcard" data-question="What is a Type II error?" data-answer="Failing to reject a false null hypothesis (False Negative)."></div>
+        <div class="flashcard" data-question="What does the p-value represent?" data-answer="The probability of observing the test results if H₀ is true."></div>
+        <div class="flashcard" data-question="What happens if p < α?" data-answer="We reject the null hypothesis (H₀)."></div>
+        <div class="flashcard" data-question="What is the significance level (α)?" data-answer="The threshold probability for rejecting H₀, typically 0.05 or 0.01."></div>
+        <div class="flashcard" data-question="When do you use a one-tailed test?" data-answer="When testing if a parameter is only greater or smaller than a value."></div>
+        <div class="flashcard" data-question="When do you use a two-tailed test?" data-answer="When testing if a parameter is simply different from a value."></div>
+        <div class="flashcard" data-question="What is the Z-test used for?" data-answer="Testing a mean when the population standard deviation (σ) is known."></div>
+        <div class="flashcard" data-question="What is the formula for the Z-score in hypothesis testing?" data-answer="Z = (X̄ - μ) / (σ / √n)"></div>
+        <div class="flashcard" data-question="What is regression analysis used for?" data-answer="To model relationships between variables and make predictions."></div>
+        <div class="flashcard" data-question="What does correlation measure?" data-answer="The strength and direction of the relationship between two variables."></div>
+        <div class="flashcard" data-question="What does r = 1 mean?" data-answer="A perfect positive correlation."></div>
+        <div class="flashcard" data-question="What is the least squares method?" data-answer="A technique for finding the best-fit line by minimizing the sum of squared errors."></div>
+        <div class="flashcard" data-question="What is the formula for the slope in a regression line?" data-answer="b₁ = Σ (Xᵢ - X̄)(Yᵢ - Ȳ) / Σ (Xᵢ - X̄)²"></div>
+        <div class="flashcard" data-question="What does R² (coefficient of determination) tell us?" data-answer="The proportion of variance in Y explained by X."></div>
+        <div class="flashcard" data-question="If R² = 0.85, what does that mean?" data-answer="85% of the variation in Y is explained by X."></div>
+        <div class="flashcard" data-question="What is the purpose of hypothesis testing in regression?" data-answer="To check if the relationship between X and Y is statistically significant."></div>
+    </div>
+</section>
+
+<!-- What is Hypothesis Testing? -->
+<section id="hypothesis-testing">
+    <h2>📌 What is Hypothesis Testing?</h2>
+    <p>Hypothesis testing is a <strong>statistical method</strong> used to test <strong>assumptions</strong> about a population. 
+    It helps us determine if our <strong>sample data</strong> provides enough evidence to <strong>support or reject</strong> a claim.</p>
+
+    <h3>🔹 Example in Business:</h3>
+    <p>A company claims its customer satisfaction score is <strong>above 80%</strong>. We can test this assumption using <strong>hypothesis testing</strong>.</p>
+</section>
+<!-- Steps in Hypothesis Testing -->
+<section id="hypothesis-steps">
+    <h2>📌 Steps in Hypothesis Testing</h2>
+    <ol>
+        <li><strong>State the Hypothesis</strong>
+            <ul>
+                <li>The <strong>Null Hypothesis (H₀)</strong>: Assumes no effect or no difference. (e.g., The mean is 80%)</li>
+                <li>The <strong>Alternative Hypothesis (H₁)</strong>: States what we seek to prove. (e.g., The mean is <strong>greater</strong> than 80%).</li>
+            </ul>
+        </li>
+        <li><strong>Specify the Decision Rule</strong>
+            <ul>
+                <li>Determine the <strong>significance level (α)</strong>, typically <strong>0.05</strong> or <strong>0.01</strong>.</li>
+                <li>Decide on a <strong>one-tailed</strong> or <strong>two-tailed</strong> test.</li>
+            </ul>
+        </li>
+        <li><strong>Collect Data & Calculate Test Statistic</strong>
+            <ul>
+                <li>Compute <strong>Z-score</strong> or <strong>T-score</strong> to compare the sample data with the null hypothesis.</li>
+            </ul>
+        </li>
+        <li><strong>Make a Decision</strong>
+            <ul>
+                <li>If test statistic falls in the <strong>rejection region</strong>, reject H₀.</li>
+                <li>Otherwise, fail to reject H₀.</li>
+            </ul>
+        </li>
+        <li><strong>Take Action</strong>
+            <ul>
+                <li>Based on the results, make a <strong>business or research decision</strong>.</li>
+            </ul>
+        </li>
+    </ol>
+</section>
+<!-- Null Hypothesis vs. Alternative Hypothesis -->
+<section id="null-vs-alternative">
+    <h2>📌 Null Hypothesis vs. Alternative Hypothesis</h2>
+    <table>
+        <tr>
+            <th>Scenario</th>
+            <th>Null Hypothesis (H₀)</th>
+            <th>Alternative Hypothesis (H₁)</th>
+        </tr>
+        <tr>
+            <td>Courtroom Trial</td>
+            <td>The defendant is <strong>innocent</strong></td>
+            <td>The defendant is <strong>guilty</strong></td>
+        </tr>
+        <tr>
+            <td>Medical Test</td>
+            <td>The drug has <strong>no effect</strong></td>
+            <td>The drug <strong>improves symptoms</strong></td>
+        </tr>
+        <tr>
+            <td>Factory Quality Check</td>
+            <td>The machine produces <strong>standard-sized parts</strong></td>
+            <td>The machine produces <strong>defective parts</strong></td>
+        </tr>
+    </table>
+</section>
+<!-- Type I and Type II Errors -->
+<section id="type-errors">
+    <h2>📌 Type I and Type II Errors</h2>
+    <table>
+        <tr>
+            <th>Decision</th>
+            <th>H₀ is True</th>
+            <th>H₀ is False</th>
+        </tr>
+        <tr>
+            <td>Reject H₀</td>
+            <td><strong>Type I Error</strong> (False Positive)</td>
+            <td><strong>Correct Decision</strong></td>
+        </tr>
+        <tr>
+            <td>Fail to Reject H₀</td>
+            <td><strong>Correct Decision</strong></td>
+            <td><strong>Type II Error</strong> (False Negative)</td>
+        </tr>
+    </table>
+
+    <h3>🔹 Example:</h3>
+    <ul>
+        <li><strong>Type I Error:</strong> Wrongly convicting an innocent person.</li>
+        <li><strong>Type II Error:</strong> Letting a guilty person go free.</li>
+    </ul>
+</section>
+<!-- The p-Value Approach -->
+<section id="p-value">
+    <h2>📌 The p-Value Approach</h2>
+    <p>The <strong>p-value</strong> tells us <strong>how strong the evidence is against H₀</strong>.</p>
+
+    <h3>Decision Rule:</h3>
+    <ul>
+        <li><strong>If p &lt; α</strong> → <strong>Reject H₀</strong> (Strong evidence against null hypothesis).</li>
+        <li><strong>If p &gt; α</strong> → <strong>Fail to reject H₀</strong> (Not enough evidence).</li>
+    </ul>
+
+    <h3>🔹 Example: Testing a New Marketing Strategy</h3>
+    <p><strong>H₀:</strong> The new strategy has no effect.</p>
+    <p>If <strong>p = 0.02</strong> (less than 0.05), we <strong>reject H₀</strong> and conclude the strategy <strong>works</strong>.</p>
+</section>
+<!-- One-Tailed vs. Two-Tailed Tests -->
+<section id="one-two-tailed-tests">
+    <h2>📌 One-Tailed vs. Two-Tailed Tests</h2>
+    <p>A <strong>one-tailed test</strong> checks if a parameter is <strong>greater or smaller</strong> than a specific value.</p>
+    <p>A <strong>two-tailed test</strong> checks if a parameter is <strong>different</strong> from a specific value.</p>
+
+    <table>
+        <tr>
+            <th>Test Type</th>
+            <th>Hypothesis</th>
+            <th>Used When…</th>
+        </tr>
+        <tr>
+            <td><strong>One-Tailed</strong></td>
+            <td>H₁: μ &gt; 80 OR H₁: μ &lt; 80</td>
+            <td>Checking if the mean is <strong>only higher or lower</strong>.</td>
+        </tr>
+        <tr>
+            <td><strong>Two-Tailed</strong></td>
+            <td>H₁: μ ≠ 80</td>
+            <td>Checking if the mean is <strong>simply different</strong>.</td>
+        </tr>
+    </table>
+
+    <h3>🔹 Example:</h3>
+    <ul>
+        <li><strong>One-Tailed:</strong> Checking if <strong>new sales training increases</strong> revenue.</li>
+        <li><strong>Two-Tailed:</strong> Checking if a <strong>new supplier affects</strong> product weight.</li>
+    </ul>
+</section>
+<!-- Hypothesis Testing for a Mean (Z-Test) -->
+<section id="z-test">
+    <h2>📌 Hypothesis Testing for a Mean (Z-Test)</h2>
+    <p><strong>Use Z-tests when:</strong></p>
+    <ul>
+        <li><strong>Population standard deviation (σ) is known</strong>.</li>
+        <li><strong>Sample size is large (n ≥ 30)</strong>.</li>
+    </ul>
+
+    <h3>🔹 Formula for Z-Score:</h3>
+    <pre><code>Z = (X̄ - μ) / (σ / √n)</code></pre>
+
+    <ul>
+        <li><strong>X̄</strong> = Sample Mean</li>
+        <li><strong>μ</strong> = Population Mean</li>
+        <li><strong>σ</strong> = Standard Deviation</li>
+        <li><strong>n</strong> = Sample Size</li>
+    </ul>
+</section>
+<!-- Introduction to Regression -->
+<section id="regression">
+    <h2>📌 Introduction to Regression</h2>
+    <p>Regression helps <strong>predict relationships</strong> between two variables.</p>
+
+    <h3>🔹 Example:</h3>
+    <p>A company studies the impact of <strong>advertising spending (X)</strong> on <strong>sales revenue (Y)</strong>.</p>
+
+    <h3>🔹 The Simple Regression Equation:</h3>
+    <pre><code>Y = b₀ + b₁X</code></pre>
+
+    <ul>
+        <li><strong>b₀</strong> = Intercept (where line crosses Y-axis).</li>
+        <li><strong>b₁</strong> = Slope (effect of X on Y).</li>
+    </ul>
+</section>
+<!-- Correlation & Regression -->
+<section id="correlation-regression">
+    <h2>📌 Correlation & Regression</h2>
+    <ul>
+        <li><strong>Correlation (r):</strong> Measures the <strong>strength</strong> of the relationship (between -1 and 1).</li>
+        <li><strong>Regression:</strong> Models the relationship and makes <strong>predictions</strong>.</li>
+    </ul>
+
+    <h3>🔹 Example: Correlation of Advertising and Sales</h3>
+    <ul>
+        <li><strong>r = 0.9</strong> → Strong positive correlation.</li>
+        <li><strong>r = -0.3</strong> → Weak negative correlation.</li>
+    </ul>
+</section>
+<!-- Least Squares Method -->
+<section id="least-squares">
+    <h2>📌 The Least Squares Method</h2>
+    <p>The <strong>least squares method</strong> finds the <strong>best-fit line</strong> by minimizing errors.</p>
+
+    <pre><code>b₁ = Σ (Xᵢ - X̄)(Yᵢ - Ȳ) / Σ (Xᵢ - X̄)²</code></pre>
+
+    <h3>🔹 Example:</h3>
+    <p>A company calculates that <strong>for every $100 spent on ads, sales increase by $500</strong>.</p>
+</section>
+<!-- Coefficient of Determination (R²) -->
+<section id="r-squared">
+    <h2>📌 Coefficient of Determination (R²)</h2>
+    <p><strong>R²</strong> tells us how much <strong>variation</strong> in Y is explained by X.</p>
+
+    <ul>
+        <li><strong>R² = 0.8</strong> → 80% of sales variation is due to advertising.</li>
+        <li><strong>R² = 0.2</strong> → Only 20% of variation is explained by advertising.</li>
+    </ul>
+
+    <h3>🔹 Example:</h3>
+    <p>If <strong>R² = 0.9</strong>, then <strong>90% of the variation</strong> in sales is explained by advertising.</p>
+</section>
+
+    <script src="flashcards.js"></script>
+</body>
+</html>

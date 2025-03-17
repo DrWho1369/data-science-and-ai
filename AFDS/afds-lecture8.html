@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecture 8: Probability Distributions</title>
+    <link rel="stylesheet" href="afds-styles.css">
+</head>
+<body>
+    <header>
+        <h1>Lecture 8: Probability Distributions</h1>
+        <a href="afds_index.html" class="home-button">⬅ Back to Module</a>
+    </header>
+<!-- Key Learning Objectives -->
+<section id="key-objectives">
+    <h2>📌 Key Learning Objectives</h2>
+    <ul>
+        <li>Define a <strong>discrete random variable</strong> and its probability distribution.</li>
+        <li>Solve problems using <strong>expected value and variance</strong>.</li>
+        <li>Define and apply the <strong>uniform discrete model</strong>.</li>
+        <li>Find <strong>binomial probabilities</strong> using tables, formulas, or Excel.</li>
+        <li>Define a <strong>continuous random variable</strong>.</li>
+        <li>Calculate <strong>uniform probabilities</strong> for continuous distributions.</li>
+        <li>Know the form and parameters of the <strong>normal distribution</strong> and find the normal probability for a given <strong>z-score</strong> or <strong>x-value</strong>.</li>
+        <li>Define <strong>sampling error, parameter, and estimator</strong>.</li>
+        <li>Explain the <strong>desirable properties of estimators</strong>.</li>
+        <li>State and apply the <strong>Central Limit Theorem</strong> for a mean.</li>
+        <li>Explain how <strong>sample size affects the standard error</strong>.</li>
+        <li>Interpret and apply <strong>probability mass functions (PMF) and cumulative distribution functions (CDF)</strong>.</li>
+        <li>Understand the relationship between the <strong>binomial distribution</strong> and the <strong>normal distribution</strong>.</li>
+        <li>Use probability models in <strong>real-world applications</strong>, such as risk assessment and statistics.</li>
+    </ul>
+</section>
+<!-- Flashcards Section -->
+<section id="flashcards">
+    <h2>📌 Flashcards</h2>
+    <div class="flashcard-container">
+        <div class="flashcard" data-question="What is a probability distribution?" data-answer="A function that assigns probabilities to all possible values of a random variable."></div>
+        <div class="flashcard" data-question="What is a discrete random variable?" data-answer="A variable that takes a finite or countably infinite set of values."></div>
+        <div class="flashcard" data-question="Give an example of a discrete probability distribution." data-answer="The number of heads obtained in 3 coin flips."></div>
+        <div class="flashcard" data-question="What are the two main types of probability distributions?" data-answer="Discrete and Continuous."></div>
+        <div class="flashcard" data-question="What is the expected value (E(X))?" data-answer="The weighted average of all possible values of a random variable."></div>
+        <div class="flashcard" data-question="How is variance calculated for a discrete probability distribution?" data-answer="Var(X) = Σ P(Xi) (Xi - E(X))²"></div>
+        <div class="flashcard" data-question="What is a uniform discrete probability distribution?" data-answer="A distribution where all outcomes are equally likely."></div>
+        <div class="flashcard" data-question="What are the four characteristics of a binomial experiment?" data-answer="1) Fixed number of trials, 2) Two outcomes per trial, 3) Constant success probability, 4) Independent trials."></div>
+        <div class="flashcard" data-question="What is the binomial probability formula?" data-answer="P(X = k) = (n choose k) p^k (1 - p)^(n - k)"></div>
+        <div class="flashcard" data-question="What is a continuous random variable?" data-answer="A variable that can take an infinite number of values in a range."></div>
+        <div class="flashcard" data-question="How do we calculate probabilities in a continuous distribution?" data-answer="By finding the area under the probability density function (PDF)."></div>
+        <div class="flashcard" data-question="What is the normal distribution?" data-answer="A bell-shaped curve that describes many natural phenomena."></div>
+        <div class="flashcard" data-question="What are the two parameters of a normal distribution?" data-answer="Mean (μ) and standard deviation (σ)."></div>
+        <div class="flashcard" data-question="How do we convert a normal value to a standard normal score?" data-answer="Using the z-score formula: Z = (X - μ) / σ"></div>
+        <div class="flashcard" data-question="What does a z-score represent?" data-answer="The number of standard deviations a value is from the mean."></div>
+        <div class="flashcard" data-question="What does the Central Limit Theorem state?" data-answer="For large samples (n ≥ 30), the sample mean follows a normal distribution, regardless of population shape."></div>
+        <div class="flashcard" data-question="What is sampling error?" data-answer="The difference between a sample statistic and the actual population parameter."></div>
+        <div class="flashcard" data-question="How does sample size affect standard error?" data-answer="Larger samples reduce standard error, making estimates more precise."></div>
+        <div class="flashcard" data-question="What real-world applications use probability distributions?" data-answer="Risk analysis, stock market predictions, medical statistics, and quality control."></div>
+    </div>
+</section>
+
+    <!-- What is a Probability Distribution? -->
+<section id="probability-distribution">
+    <h2>📌 What is a Probability Distribution?</h2>
+    <p>A <strong>probability distribution</strong> describes how probabilities are <strong>assigned</strong> to different values of a <strong>random variable</strong>.</p>
+    
+    <ul>
+        <li>A <strong>random variable (X)</strong> is a function that assigns <strong>numerical values</strong> to each outcome of a random experiment.</li>
+        <li>There are <strong>two types</strong> of probability distributions:</li>
+        <ul>
+            <li><strong>Discrete Probability Distributions</strong> (e.g., number of customer complaints per day).</li>
+            <li><strong>Continuous Probability Distributions</strong> (e.g., time taken to complete a task).</li>
+        </ul>
+    </ul>
+
+    <h3>🔹 Example:</h3>
+    <p>The outcome of flipping a fair coin 3 times gives the sample space:</p>
+    <pre><code>S = {HHH, HHT, HTH, THH, HTT, THT, TTH, TTT}</code></pre>
+    <p>The <strong>random variable (X)</strong> could represent <strong>the number of heads</strong>. The <strong>probability distribution</strong> would assign probabilities to <strong>each X value (0,1,2,3 heads)</strong>.</p>
+</section>
+
+<!-- Discrete Probability Distributions -->
+<section id="discrete-probability">
+    <h2>📌 Discrete Probability Distributions</h2>
+    <p>A <strong>discrete probability distribution</strong> assigns a probability to each <strong>possible value</strong> of a <strong>discrete random variable</strong>.</p>
+
+    <h3>🟢 1. Properties of a Discrete Probability Distribution</h3>
+    <ul>
+        <li>Probabilities must satisfy <strong>two conditions</strong>:</li>
+        <ul>
+            <li><code>0 ≤ P(X) ≤ 1</code> for each <code>X</code>.</li>
+            <li>The <strong>sum</strong> of all probabilities must equal <strong>1</strong>.</li>
+        </ul>
+    </ul>
+
+    <h3>🔹 Example: Rolling a Die</h3>
+    <p>Sample Space: <code>S = {1,2,3,4,5,6}</code></p>
+    <table>
+        <tr>
+            <th>X</th> <th>1</th> <th>2</th> <th>3</th> <th>4</th> <th>5</th> <th>6</th>
+        </tr>
+        <tr>
+            <td>P(X)</td> <td>1/6</td> <td>1/6</td> <td>1/6</td> <td>1/6</td> <td>1/6</td> <td>1/6</td>
+        </tr>
+    </table>
+</section>
+
+<!-- Probability Distribution Functions -->
+<section id="probability-functions">
+    <h2>📌 Probability Distribution Functions</h2>
+
+    <h3>1️⃣ Probability Mass Function (PMF) – For Discrete Variables</h3>
+    <p>The PMF gives the probability of <strong>each possible value</strong> for a discrete random variable.</p>
+    
+    <h3>🔹 Example: Number of Heads in 3 Coin Flips</h3>
+    <p>PMF:</p>
+    <pre><code>
+    P(X=0) = 1/8
+    P(X=1) = 3/8
+    P(X=2) = 3/8
+    P(X=3) = 1/8
+    </code></pre>
+    <p>The sum of all probabilities equals <strong>1</strong>.</p>
+
+    <h3>2️⃣ Cumulative Distribution Function (CDF)</h3>
+    <p>The CDF sums up <strong>all probabilities</strong> from <strong>smallest to largest X</strong>.</p>
+    <p>It helps answer probability questions, such as “What is the probability of getting <strong>at most 2 heads</strong>?”</p>
+</section>
+<!-- Expected Value & Variance -->
+<section id="expected-value-variance">
+    <h2>📌 Expected Value & Variance</h2>
+
+    <h3>1️⃣ Expected Value (E(X))</h3>
+    <p>The <strong>expected value (mean)</strong> of a discrete random variable is the <strong>sum of each value of X weighted by its probability</strong>.</p>
+    
+    <pre><code>E(X) = Σ Xᵢ P(Xᵢ)</code></pre>
+
+    <h3>🔹 Example: Emergency Calls</h3>
+    <p>A small appliance repair service receives <strong>0 to 5 emergency calls</strong> on Sundays. The expected number of calls is calculated as:</p>
+
+    <table>
+        <tr>
+            <th>X (Calls)</th> <th>0</th> <th>1</th> <th>2</th> <th>3</th> <th>4</th> <th>5</th>
+        </tr>
+        <tr>
+            <td>P(X)</td> <td>0.05</td> <td>0.10</td> <td>0.30</td> <td>0.25</td> <td>0.20</td> <td>0.10</td>
+        </tr>
+        <tr>
+            <td>X × P(X)</td> <td>0</td> <td>0.10</td> <td>0.60</td> <td>0.75</td> <td>0.80</td> <td>0.50</td>
+        </tr>
+    </table>
+
+    <pre><code>E(X) = 0 + 0.10 + 0.60 + 0.75 + 0.80 + 0.50 = 2.75</code></pre>
+
+    <h3>2️⃣ Variance & Standard Deviation</h3>
+    <p>Variance measures the <strong>spread</strong> of data:</p>
+    <pre><code>Var(X) = Σ P(Xᵢ) (Xᵢ - E(X))²</code></pre>
+    <p>The <strong>standard deviation</strong> is the square root of the variance.</p>
+</section>
+
+<!-- Uniform Distribution -->
+<section id="uniform-distribution">
+    <h2>📌 Uniform Distribution</h2>
+    <p>The <strong>uniform discrete distribution</strong> assigns <strong>equal probability</strong> to a <strong>finite set</strong> of values.</p>
+
+    <h3>🔹 Example: Rolling a Die</h3>
+    <p>Since each outcome is equally likely:</p>
+    
+    <pre><code>P(X=x) = 1/6,  ∀ X ∈ {1,2,3,4,5,6}</code></pre>
+</section>
+
+<!-- Binomial Distribution -->
+<section id="binomial-distribution">
+    <h2>📌 Binomial Distribution</h2>
+    <p>The <strong>binomial distribution</strong> models the number of <strong>successes</strong> in <strong>n</strong> independent Bernoulli trials.</p>
+
+    <h3>1️⃣ Characteristics of a Binomial Experiment</h3>
+    <ul>
+        <li><strong>Fixed number of trials (n)</strong>.</li>
+        <li>Each trial has only <strong>two possible outcomes</strong> (Success or Failure).</li>
+        <li>The probability of success (<strong>p</strong>) remains constant.</li>
+        <li>Trials are <strong>independent</strong>.</li>
+    </ul>
+
+    <h3>2️⃣ Binomial Probability Formula</h3>
+    <pre><code>P(X = k) = (n choose k) p^k (1 - p)^(n - k)</code></pre>
+
+    <ul>
+        <li><strong>n</strong> = number of trials</li>
+        <li><strong>k</strong> = number of successes</li>
+        <li><strong>p</strong> = probability of success</li>
+        <li><strong>(n choose k)</strong> = "n choose k" (binomial coefficient)</li>
+    </ul>
+
+    <h3>🔹 Example: Probability of getting 2 heads in 4 coin flips</h3>
+    <pre><code>P(X=2) = (4 choose 2) (0.5)^2 (0.5)^2 = 6 × 0.0625 = 0.375</code></pre>
+</section>
+<!-- Continuous Probability Distributions -->
+<section id="continuous-distribution">
+    <h2>📌 Continuous Probability Distributions</h2>
+    <p>A <strong>continuous random variable</strong> can take <strong>infinite</strong> values.</p>
+
+    <h3>1️⃣ Probability Density Function (PDF)</h3>
+    <ul>
+        <li>Instead of summing probabilities, we calculate <strong>areas under a curve</strong>.</li>
+        <li>Probability of <strong>any exact value</strong> is <strong>zero</strong> (e.g., P(X=3.2) = 0).</li>
+        <li>Probabilities are calculated over <strong>intervals</strong>.</li>
+    </ul>
+</section>
+<!-- Normal Distribution -->
+<section id="normal-distribution">
+    <h2>📌 The Normal Distribution</h2>
+    <p>The <strong>normal distribution</strong> is a <strong>bell-shaped curve</strong> described by:</p>
+    <ul>
+        <li><strong>Mean (μ)</strong> → Center of the distribution.</li>
+        <li><strong>Standard Deviation (σ)</strong> → Measures spread.</li>
+    </ul>
+
+    <h3>1️⃣ Standard Normal Distribution (Z-Scores)</h3>
+    <p>A normal distribution can be <strong>converted</strong> to a standard normal distribution using:</p>
+    <pre><code>Z = (X - μ) / σ</code></pre>
+
+    <h3>🔹 Example:</h3>
+    <p>A student scores <strong>86</strong> on an exam with a <strong>mean of 75</strong> and <strong>standard deviation of 7</strong>.</p>
+    <pre><code>Z = (86 - 75) / 7 = 1.57</code></pre>
+    <p>Using a <strong>Z-table</strong>, we find that <strong>John scored higher than 94% of students</strong>.</p>
+</section>
+<!-- Central Limit Theorem -->
+<section id="clt">
+    <h2>📌 Central Limit Theorem (CLT)</h2>
+    <p>The <strong>Central Limit Theorem</strong> states that <strong>for large samples (n ≥ 30), the sample mean follows a normal distribution</strong>, regardless of the population distribution.</p>
+
+    <h3>🔹 Key Idea:</h3>
+    <p>If we repeatedly <strong>sample</strong> from <strong>any population</strong>, the <strong>average</strong> of those samples will form a normal distribution.</p>
+</section>
+
+    <script src="flashcards.js"></script>
+</body>
+</html>

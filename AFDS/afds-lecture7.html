@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecture 7: Probability</title>
+    <link rel="stylesheet" href="afds-styles.css">
+</head>
+<body>
+    <header>
+        <h1>Lecture 7: Probability</h1>
+        <a href="afds_index.html" class="home-button">⬅ Back to Module</a>
+    </header>
+<!-- Key Learning Objectives -->
+<section id="key-objectives">
+    <h2>📌 Key Learning Objectives</h2>
+    <ul>
+        <li>Describe the <strong>sample space</strong> of a random experiment.</li>
+        <li>Distinguish among the <strong>three views of probability</strong>: Empirical, Classical, and Subjective.</li>
+        <li>Apply the <strong>definitions and rules of probability</strong> to solve problems.</li>
+        <li>Calculate <strong>odds</strong> from given probabilities.</li>
+        <li>Determine when <strong>events are independent</strong> or dependent.</li>
+        <li>Apply probability concepts to <strong>contingency tables</strong>.</li>
+        <li>Interpret <strong>tree diagrams</strong> to analyze sequential events.</li>
+        <li>Use <strong>Bayes’ Theorem</strong> to calculate revised probabilities given new information.</li>
+        <li>Understand and apply the <strong>addition rule</strong> for OR events.</li>
+        <li>Understand and apply the <strong>multiplication rule</strong> for AND events.</li>
+        <li>Calculate <strong>conditional probability</strong> using formulas.</li>
+        <li>Recognize the difference between <strong>mutually exclusive and non-mutually exclusive events</strong>.</li>
+        <li>Understand the total probability rule: <strong>P(A) + P(Aᶜ) = 1</strong>.</li>
+        <li>Explain the concept of <strong>probability distributions</strong> and their significance.</li>
+        <li>Apply <strong>counting rules</strong> to calculate possible event arrangements.</li>
+        <li>Differentiate between <strong>permutations and combinations</strong>.</li>
+        <li>Compute the probability of multiple events using the <strong>law of total probability</strong>.</li>
+        <li>Interpret <strong>Venn diagrams</strong> in probability problems.</li>
+        <li>Recognize real-world applications of probability, such as <strong>insurance, risk assessment, and decision-making</strong>.</li>
+        <li>Apply probability concepts to everyday situations, such as <strong>games, medical testing, and sports statistics</strong>.</li>
+    </ul>
+</section>
+<!-- Flashcards Section -->
+<section id="flashcards">
+    <h2>📌 Flashcards</h2>
+    <div class="flashcard-container">
+        <div class="flashcard" data-question="What is a sample space in probability?" data-answer="The set of all possible outcomes of an experiment."></div>
+        <div class="flashcard" data-question="What are the three types of probability?" data-answer="Empirical (Experimental), Classical (Theoretical), and Subjective."></div>
+        <div class="flashcard" data-question="How is empirical probability calculated?" data-answer="By dividing the number of times an event occurs by the total number of trials."></div>
+        <div class="flashcard" data-question="What is classical probability used for?" data-answer="When all outcomes are equally likely, such as rolling a fair die."></div>
+        <div class="flashcard" data-question="What is subjective probability?" data-answer="Probability based on personal judgment or expert opinion."></div>
+        <div class="flashcard" data-question="What is the probability of any event A?" data-answer="0 ≤ P(A) ≤ 1"></div>
+        <div class="flashcard" data-question="What is the complement rule in probability?" data-answer="P(Aᶜ) = 1 - P(A)"></div>
+        <div class="flashcard" data-question="What is the general addition rule?" data-answer="P(A ∪ B) = P(A) + P(B) - P(A ∩ B)"></div>
+        <div class="flashcard" data-question="When do you use the special addition rule?" data-answer="When A and B are mutually exclusive, so P(A ∩ B) = 0."></div>
+        <div class="flashcard" data-question="What is the general multiplication rule?" data-answer="P(A ∩ B) = P(A) × P(B | A)"></div>
+        <div class="flashcard" data-question="When do you use the special multiplication rule?" data-answer="When A and B are independent, so P(A ∩ B) = P(A) × P(B)."></div>
+        <div class="flashcard" data-question="How do you calculate conditional probability?" data-answer="P(A | B) = P(A ∩ B) / P(B)"></div>
+        <div class="flashcard" data-question="What does Bayes' Theorem help with?" data-answer="Updating probabilities based on new information."></div>
+        <div class="flashcard" data-question="What is an example of dependent events?" data-answer="Drawing cards without replacement from a deck."></div>
+        <div class="flashcard" data-question="What is an example of independent events?" data-answer="Flipping a coin and rolling a die."></div>
+        <div class="flashcard" data-question="What is the probability of rolling a 6 twice in a row?" data-answer="(1/6) × (1/6) = 1/36"></div>
+        <div class="flashcard" data-question="What does a tree diagram show in probability?" data-answer="It represents all possible outcomes in a sequential experiment."></div>
+        <div class="flashcard" data-question="What is the difference between permutations and combinations?" data-answer="Permutations consider order; combinations do not."></div>
+        <div class="flashcard" data-question="How does probability apply to real life?" data-answer="It is used in medical testing, weather forecasts, insurance, and decision-making."></div>
+    </div>
+</section>
+
+    <!-- What is Probability? -->
+<section id="probability-introduction">
+    <h2>📌 What is Probability?</h2>
+    <p>Probability is a <strong>branch of mathematics</strong> that quantifies uncertainty. It allows us to <strong>analyze random events</strong> and estimate the <strong>likelihood</strong> of different outcomes occurring.</p>
+
+    <h3>🔹 Example:</h3>
+    <ul>
+        <li>A <strong>coin flip</strong> has two possible outcomes: <strong>Heads or Tails</strong>.</li>
+        <li>Probability helps us understand how often each outcome <strong>should</strong> occur over many trials.</li>
+    </ul>
+
+    <p>Probability <strong>bridges the gap</strong> between what we <strong>know</strong> and what is <strong>unknown about the future</strong>.</p>
+</section>
+
+<!-- Sample Space & Events -->
+<section id="sample-space">
+    <h2>📌 Sample Space & Events</h2>
+
+    <h3>🟢 1. Sample Space (S)</h3>
+    <p>The <strong>sample space</strong> is the set of <strong>all possible outcomes</strong> of a random experiment.</p>
+
+    <table>
+        <tr>
+            <th>Experiment</th>
+            <th>Sample Space (S)</th>
+        </tr>
+        <tr>
+            <td>Flip a coin</td>
+            <td>S = {Heads, Tails}</td>
+        </tr>
+        <tr>
+            <td>Roll a die</td>
+            <td>S = {1,2,3,4,5,6}</td>
+        </tr>
+        <tr>
+            <td>Draw a card</td>
+            <td>S = (all 52 cards in a deck)</td>
+        </tr>
+        <tr>
+            <td>Customer payment method</td>
+            <td>S = {Credit, Debit, Cash, Check}</td>
+        </tr>
+    </table>
+
+    <h3>🟢 2. Events & Simple vs. Compound Events</h3>
+    <ul>
+        <li><strong>An event</strong> is any <strong>subset of outcomes</strong> in the sample space.</li>
+        <li><strong>Simple Event:</strong> An event that consists of <strong>only one outcome</strong> (e.g., Rolling a 4).</li>
+        <li><strong>Compound Event:</strong> An event that consists of <strong>multiple outcomes</strong> (e.g., Rolling an even number: {2, 4, 6}).</li>
+    </ul>
+</section>
+
+<!-- Three Types of Probability -->
+<section id="types-of-probability">
+    <h2>📌 Three Types of Probability</h2>
+    <p>Probability can be assigned in <strong>three distinct ways</strong>:</p>
+
+    <h3>1️⃣ Empirical Probability (Experimental Approach)</h3>
+    <ul>
+        <li>Based on <strong>observed data</strong> from experiments.</li>
+        <li><strong>Formula:</strong></li>
+    </ul>
+    <pre><code>P(A) = (Number of times event A occurred) / (Total number of trials)</code></pre>
+    <p><strong>Example:</strong> A company surveys 500 customers. If <strong>200</strong> prefer Brand X, then:</p>
+    <pre><code>P(Brand X) = 200 / 500 = 0.4</code></pre>
+
+    <h3>2️⃣ Classical Probability (Theoretical Approach)</h3>
+    <ul>
+        <li>Used when all outcomes are <strong>equally likely</strong>.</li>
+        <li><strong>Formula:</strong></li>
+    </ul>
+    <pre><code>P(A) = (Number of favorable outcomes) / (Total number of outcomes in S)</code></pre>
+    <p><strong>Example:</strong> Rolling a die → Probability of rolling a 3:</p>
+    <pre><code>P(3) = 1 / 6</code></pre>
+
+    <h3>3️⃣ Subjective Probability</h3>
+    <ul>
+        <li>Based on <strong>personal judgment or expert opinion</strong>.</li>
+    </ul>
+    <p><strong>Example:</strong> A doctor estimates a <strong>70% chance</strong> of recovery based on experience.</p>
+</section>
+<!-- Probability Rules -->
+<section id="probability-rules">
+    <h2>📌 Probability Rules</h2>
+
+    <h3>1️⃣ Rule 1: Probability Values</h3>
+    <ul>
+        <li>Probability of any event <strong>P(A)</strong> must be between <strong>0 and 1</strong>:</li>
+    </ul>
+    <pre><code>0 ≤ P(A) ≤ 1</code></pre>
+    <ul>
+        <li><strong>P(A) = 0</strong> → Impossible event (e.g., Rolling a 7 on a six-sided die).</li>
+        <li><strong>P(A) = 1</strong> → Certain event (e.g., Rolling a number between 1 and 6).</li>
+    </ul>
+
+    <h3>2️⃣ Rule 2: The Sum of Probabilities</h3>
+    <ul>
+        <li>The <strong>sum</strong> of probabilities of all possible outcomes must be <strong>1</strong>.</li>
+    </ul>
+    <pre><code>P(A) + P(Aᶜ) = 1</code></pre>
+    <p><strong>Example:</strong> If the probability of rain is 0.3, then:</p>
+    <pre><code>P(No Rain) = 1 - 0.3 = 0.7</code></pre>
+</section>
+<!-- Addition Rule -->
+<section id="addition-rule">
+    <h2>📌 Rule 3: Addition Rule for “OR” Events</h2>
+
+    <h3>General Addition Rule:</h3>
+    <pre><code>P(A ∪ B) = P(A) + P(B) - P(A ∩ B)</code></pre>
+    <p>Used when <strong>A and B are not mutually exclusive</strong>.</p>
+
+    <h3>Special Addition Rule (Mutually Exclusive Events):</h3>
+    <pre><code>P(A ∪ B) = P(A) + P(B)</code></pre>
+    <p>Used when <strong>A and B cannot occur together</strong>.</p>
+
+    <h3>🔹 Example:</h3>
+    <ul>
+        <li><strong>Event A:</strong> Rolling an even number (2,4,6) → <code>P(A) = 3/6</code></li>
+        <li><strong>Event B:</strong> Rolling a number >4 (5,6) → <code>P(B) = 2/6</code></li>
+        <li><strong>Event A ∩ B:</strong> Rolling a 6 → <code>P(A ∩ B) = 1/6</code></li>
+        <li><strong>Total Probability:</strong></li>
+    </ul>
+    <pre><code>P(A ∪ B) = 3/6 + 2/6 - 1/6 = 4/6</code></pre>
+</section>
+<!-- Multiplication Rule -->
+<section id="multiplication-rule">
+    <h2>📌 Rule 4: Multiplication Rule for “AND” Events</h2>
+
+    <h3>General Multiplication Rule:</h3>
+    <pre><code>P(A ∩ B) = P(A) × P(B | A)</code></pre>
+    <p>Used when <strong>A and B are dependent</strong>.</p>
+
+    <h3>Special Multiplication Rule (Independent Events):</h3>
+    <pre><code>P(A ∩ B) = P(A) × P(B)</code></pre>
+    <p>Used when <strong>A and B do not affect each other</strong>.</p>
+
+    <h3>🔹 Example:</h3>
+    <p>Probability of rolling a 6 twice in a row:</p>
+    <pre><code>P(6 ∩ 6) = (1/6) × (1/6) = 1/36</code></pre>
+</section>
+<!-- Conditional Probability -->
+<section id="conditional-probability">
+    <h2>📌 Conditional Probability</h2>
+    <p>Conditional probability tells us the probability of event <strong>A occurring given that B has already occurred</strong>.</p>
+
+    <h3>Formula:</h3>
+    <pre><code>P(A | B) = P(A ∩ B) / P(B)</code></pre>
+
+    <h3>🔹 Example:</h3>
+    <p>If <strong>5%</strong> of students at a university are in the math club, and <strong>2%</strong> are in both the math and chess club, then the probability that a <strong>random math club student</strong> is also in the chess club is:</p>
+    <pre><code>P(Chess | Math) = P(Math ∩ Chess) / P(Math) = 0.02 / 0.05 = 0.4</code></pre>
+</section>
+<!-- Bayes' Theorem -->
+<section id="bayes-theorem">
+    <h2>📌 Bayes' Theorem</h2>
+    <p>Bayes' Theorem is used to <strong>update probabilities</strong> when given new information.</p>
+
+    <h3>Formula:</h3>
+    <pre><code>P(B | A) = (P(A | B) × P(B)) / P(A)</code></pre>
+
+    <h3>🔹 Example:</h3>
+    <p>A medical test is <strong>90% accurate</strong>, meaning:</p>
+    <ul>
+        <li><strong>If sick:</strong> Tests positive <strong>90% of the time</strong>.</li>
+        <li><strong>If healthy:</strong> Tests positive <strong>5% of the time</strong>.</li>
+    </ul>
+    <p>If <strong>1% of people are actually sick</strong>, then:</p>
+    <pre><code>P(Sick | Positive) = (0.9 × 0.01) / ((0.9 × 0.01) + (0.05 × 0.99)) = 0.16</code></pre>
+    <p>Even if a test is positive, there’s only a <strong>16% chance</strong> the person is actually sick!</p>
+</section>
+
+    <script src="flashcards.js"></script>
+</body>
+</html>

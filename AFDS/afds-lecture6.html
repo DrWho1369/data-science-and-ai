@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecture 6: Introuduction to Statistics</title>
+    <link rel="stylesheet" href="afds-styles.css">
+</head>
+<body>
+    <header>
+        <h1>Lecture 6: Introduction to Statistics</h1>
+        <a href="afds_index.html" class="home-button">⬅ Back to Module</a>
+    </header>
+
+    <!-- Key Learning Objectives -->
+<section id="key-objectives">
+    <h2>📌 Key Learning Objectives</h2>
+    <ul>
+        <li>Define <strong>statistics</strong> and its importance in data analysis.</li>
+        <li>Understand and use <strong>basic terminology</strong> for describing data and samples.</li>
+        <li>Explain the difference between <strong>categorical and numerical data</strong>.</li>
+        <li>Differentiate between <strong>discrete and continuous variables</strong>.</li>
+        <li>Understand and apply <strong>measurement scales</strong> (Nominal, Ordinal, Interval, Ratio).</li>
+        <li>Make and interpret <strong>histograms, scatter plots, and box plots</strong>.</li>
+        <li>Recognize <strong>deceptive graphing techniques</strong> and how they mislead.</li>
+        <li>Compute and interpret <strong>measures of central tendency</strong> (Mean, Median, Mode).</li>
+        <li>Compute and interpret <strong>measures of variability</strong> (Range, Variance, Standard Deviation, IQR).</li>
+        <li>Apply the <strong>Empirical Rule</strong> for normal distributions.</li>
+        <li>Recognize and calculate <strong>outliers</strong> using quartiles and IQR.</li>
+        <li>Understand the concept of <strong>percentiles</strong> and how to calculate them.</li>
+        <li>Make and interpret <strong>box plots</strong> to visualize data spread.</li>
+        <li>Compute and interpret <strong>correlation coefficients</strong> to measure relationships between variables.</li>
+        <li>Understand the meaning of <strong>covariance</strong> and how it relates to correlation.</li>
+        <li>Differentiate between <strong>time series, cross-sectional, and pooled data</strong>.</li>
+        <li>Create <strong>simple tables and pivot tables</strong> for organizing data.</li>
+        <li>Recognize common <strong>data visualization pitfalls</strong> and how to avoid them.</li>
+        <li>Apply <strong>descriptive statistics</strong> to summarize datasets effectively.</li>
+        <li>Use statistics to <strong>interpret real-world problems</strong> and make informed decisions.</li>
+    </ul>
+</section>
+<!-- Flashcards Section -->
+<section id="flashcards">
+    <h2>📌 Flashcards</h2>
+    <div class="flashcard-container">
+        <div class="flashcard" data-question="What are the two main types of statistics?" data-answer="Descriptive Statistics and Inferential Statistics."></div>
+        <div class="flashcard" data-question="What is an observation in statistics?" data-answer="A single unit of data (e.g., a person, company, or event)."></div>
+        <div class="flashcard" data-question="What are the two main types of numerical data?" data-answer="Discrete (whole numbers) and Continuous (can take any value)."></div>
+        <div class="flashcard" data-question="Give an example of categorical data." data-answer="Hair color, Car brand, Gender."></div>
+        <div class="flashcard" data-question="What is the difference between cross-sectional and time series data?" data-answer="Cross-sectional data is collected at a single point in time, while time series data is collected over time."></div>
+        <div class="flashcard" data-question="What are the four levels of measurement?" data-answer="Nominal, Ordinal, Interval, and Ratio."></div>
+        <div class="flashcard" data-question="Which level of measurement has a true zero?" data-answer="Ratio scale."></div>
+        <div class="flashcard" data-question="What is a histogram used for?" data-answer="To show the distribution of continuous data."></div>
+        <div class="flashcard" data-question="How can graphs be misleading?" data-answer="By using non-zero axes, stretched scales, skipping intervals, or adding 3D effects."></div>
+        <div class="flashcard" data-question="What are the three measures of central tendency?" data-answer="Mean, Median, and Mode."></div>
+        <div class="flashcard" data-question="Which measure of central tendency is most affected by outliers?" data-answer="The Mean."></div>
+        <div class="flashcard" data-question="What is the formula for variance?" data-answer="Variance (s²) = Σ (Xᵢ - x̄ )² / (n-1)."></div>
+        <div class="flashcard" data-question="What is standard deviation?" data-answer="The square root of variance, representing the spread of data."></div>
+        <div class="flashcard" data-question="What does the empirical rule state?" data-answer="68% of data is within 1 SD, 95% within 2 SD, and 99.7% within 3 SD in a normal distribution."></div>
+        <div class="flashcard" data-question="What is an outlier?" data-answer="A data point that lies far outside the rest of the dataset."></div>
+        <div class="flashcard" data-question="How is an outlier detected using the interquartile range (IQR)?" data-answer="Outliers are values outside Q1 - 1.5*IQR or Q3 + 1.5*IQR."></div>
+        <div class="flashcard" data-question="What is the correlation coefficient (r)?" data-answer="A measure between -1 and 1 that shows the strength and direction of a relationship between two variables."></div>
+        <div class="flashcard" data-question="What does r = -1 mean?" data-answer="Perfect negative correlation (one variable increases while the other decreases)."></div>
+        <div class="flashcard" data-question="What is covariance?" data-answer="A measure of how two variables change together."></div>
+    </div>
+</section>
+
+<!-- What is Statistics? -->
+    <section id="statistics-introduction">
+        <h2>📌 What is Statistics?</h2>
+        <p>Statistics is a <strong>branch of mathematics</strong> that deals with <strong>collecting, organizing, analyzing, interpreting, and presenting data</strong>. It helps us make sense of raw data and <strong>draw conclusions</strong> from it.</p>
+
+        <h3>📊 Two Main Types of Statistics:</h3>
+        <ul>
+            <li><strong>Descriptive Statistics</strong> → Organizing and summarizing data (e.g., using graphs, tables, or numerical summaries like mean and standard deviation).</li>
+            <li><strong>Inferential Statistics</strong> → Making predictions or generalizations about a population based on a sample of data (e.g., estimating average income based on a survey).</li>
+        </ul>
+
+        <h3>🔹 Example:</h3>
+        <ul>
+            <li>If a clothing company wants to design <strong>graduation gowns</strong>, they might use statistics to calculate the <strong>average height</strong> of students.</li>
+            <li>If an <strong>architect</strong> wants to design doors for a university, they may use <strong>maximum height</strong> data.</li>
+        </ul>
+    </section>
+    <!-- Variables & Data -->
+    <section id="variables-data">
+        <h2>📌 Variables & Data</h2>
+
+        <h3>🟢 1. Understanding Data Terminology</h3>
+        <ul>
+            <li><strong>Observation</strong> → A single member of a dataset (e.g., a person, company, or event).</li>
+            <li><strong>Variable</strong> → A characteristic of an observation (e.g., age, height, income).</li>
+            <li><strong>Dataset</strong> → A collection of observations with variables recorded for each.</li>
+        </ul>
+
+        <h3>🟢 2. Types of Data</h3>
+        <table>
+            <tr>
+                <th>Data Type</th>
+                <th>Definition</th>
+                <th>Example</th>
+            </tr>
+            <tr>
+                <td><strong>Categorical (Qualitative)</strong></td>
+                <td>Data grouped into categories</td>
+                <td>Gender (Male/Female), Car Brand (Toyota, Ford)</td>
+            </tr>
+            <tr>
+                <td><strong>Numerical (Quantitative)</strong></td>
+                <td>Data measured with numbers</td>
+                <td>Height (cm), Age (years), Salary (£)</td>
+            </tr>
+        </table>
+
+        <h4>🔹 Numerical Data Can Be Further Divided Into:</h4>
+        <ul>
+            <li><strong>Discrete Data</strong> → Can only take whole number values (e.g., Number of siblings, number of students in a class).</li>
+            <li><strong>Continuous Data</strong> → Can take any value within a range (e.g., Weight, Temperature, Time).</li>
+        </ul>
+    </section>
+    <!-- Different Ways to Collect Data -->
+    <section id="data-collection">
+        <h2>📌 Different Ways to Collect Data</h2>
+        <ul>
+            <li><strong>Time Series Data</strong> → Data collected <strong>over time</strong> (e.g., UK inflation rate from 2000-2024).</li>
+            <li><strong>Cross-Sectional Data</strong> → Data collected <strong>at a single point in time</strong> (e.g., Comparing customer satisfaction levels in 50 stores <strong>in 2024</strong>).</li>
+            <li><strong>Pooled Data</strong> → A combination of <strong>both time series and cross-sectional data</strong>.</li>
+        </ul>
+    </section>
+<!-- Levels of Measurement -->
+    <section id="measurement-scales">
+        <h2>📌 Levels of Measurement (Measurement Scales)</h2>
+        <table>
+            <tr>
+                <th>Level</th>
+                <th>Definition</th>
+                <th>Example</th>
+                <th>Mathematical Operations Allowed</th>
+            </tr>
+            <tr>
+                <td><strong>Nominal</strong></td>
+                <td>Categories only (no order)</td>
+                <td>Hair color (Black, Brown, Blonde)</td>
+                <td>Counting (Mode)</td>
+            </tr>
+            <tr>
+                <td><strong>Ordinal</strong></td>
+                <td>Ordered categories, but differences are not meaningful</td>
+                <td>Customer Satisfaction (1=Poor, 5=Excellent)</td>
+                <td>Ranking, Median</td>
+            </tr>
+            <tr>
+                <td><strong>Interval</strong></td>
+                <td>Ordered with meaningful differences, but <strong>no true zero</strong></td>
+                <td>Temperature in °C (20°C is not twice as hot as 10°C)</td>
+                <td>Addition, Subtraction</td>
+            </tr>
+            <tr>
+                <td><strong>Ratio</strong></td>
+                <td>Ordered with meaningful differences and <strong>a true zero</strong></td>
+                <td>Height (cm), Salary (£)</td>
+                <td>Multiplication, Division</td>
+            </tr>
+        </table>
+    </section>
+    <!-- Describing Data Visually -->
+    <section id="describing-data">
+        <h2>📌 Describing Data Visually</h2>
+        <p>Visual representation <strong>makes data easier to understand</strong>. Here are some key methods:</p>
+        <ul>
+            <li><strong>Histograms</strong> → Used to show the distribution of <strong>continuous data</strong>.</li>
+            <li><strong>Scatter Plots</strong> → Show relationships between <strong>two numerical variables</strong> (e.g., Hours Studied vs. Exam Score).</li>
+            <li><strong>Box Plots</strong> → Used to visualize the <strong>spread</strong> and <strong>outliers</strong> in data.</li>
+            <li><strong>Stem-and-Leaf Plots</strong> → Display individual data values while showing the <strong>shape</strong> of the distribution.</li>
+        </ul>
+
+        <h3>🔹 Recognizing Deceptive Graphing Techniques</h3>
+        <p>Graphs can <strong>mislead people</strong> by:</p>
+        <ul>
+            <li><strong>Non-zero axes</strong> (Exaggerates trends).</li>
+            <li><strong>Stretching or shrinking axes</strong> (Alters visual impact).</li>
+            <li><strong>Using 3D effects</strong> (Can distort perception).</li>
+            <li><strong>Skipping intervals on the axis</strong> (Hides real differences).</li>
+        </ul>
+    </section>
+
+<!-- Measures of Central Tendency -->
+    <section id="central-tendency">
+        <h2>📌 Measures of Central Tendency (The "Center" of Data)</h2>
+        <p>These measures <strong>summarize data</strong> using a <strong>single value</strong> that represents the dataset.</p>
+
+        <h3>1️⃣ Mean (Average)</h3>
+        <pre><code>Mean ( x̄ ) = (ΣXᵢ) / n</code></pre>
+        <ul>
+            <li><strong>Strengths:</strong> Simple to calculate.</li>
+            <li><strong>Weaknesses:</strong> Affected by outliers.</li>
+        </ul>
+
+        <h3>2️⃣ Median</h3>
+        <ul>
+            <li>The <strong>middle value</strong> when the data is ordered.</li>
+            <li><strong>Not affected by extreme values (outliers).</strong></li>
+            <li>Best for <strong>skewed data</strong> (e.g., house prices).</li>
+        </ul>
+
+        <h3>3️⃣ Mode</h3>
+        <ul>
+            <li>The most <strong>frequent value</strong> in the dataset.</li>
+            <li>Can have <strong>no mode</strong> or <strong>multiple modes</strong>.</li>
+        </ul>
+
+        <h3>🔹 Example:</h3>
+        <pre><code>Salaries in a Company:
+    Mean = £50,000
+    Median = £40,000
+    Mode = £35,000</code></pre>
+        <p>A few <strong>high-paid executives</strong> make the <strong>mean larger than the median</strong>!</p>
+    </section>
+<!-- Measures of Variability -->
+<section id="variability">
+    <h2>📌 Measures of Variability (The "Spread" of Data)</h2>
+    <p>These measures <strong>tell us how dispersed</strong> the data is.</p>
+
+    <h3>1️⃣ Range</h3>
+    <pre><code>Range = Max Value - Min Value</code></pre>
+    <p><strong>Simple but unreliable</strong> (sensitive to outliers).</p>
+
+    <h3>2️⃣ Variance & Standard Deviation</h3>
+    <pre><code>Variance (s²) = Σ (Xᵢ - x̄ )² / (n-1)
+Standard Deviation (s) = √Variance</code></pre>
+    <ul>
+        <li><strong>Variance</strong> → Measures spread <strong>in squared units</strong>.</li>
+        <li><strong>Standard Deviation</strong> → <strong>Square root</strong> of variance (easier to interpret).</li>
+    </ul>
+
+    <h3>3️⃣ Interquartile Range (IQR)</h3>
+    <pre><code>IQR = Q₃ - Q₁</code></pre>
+    <p>Measures <strong>spread of the middle 50% of data</strong>.</p>
+</section>
+<!-- Empirical Rule -->
+<section id="empirical-rule">
+    <h2>📌 Empirical Rule (For Normal Distributions)</h2>
+    <p>For <strong>bell-shaped distributions</strong>, the Empirical Rule states:</p>
+    <ul>
+        <li><strong>68%</strong> of data lies <strong>within 1 standard deviation</strong> from the mean.</li>
+        <li><strong>95%</strong> of data lies <strong>within 2 standard deviations</strong>.</li>
+        <li><strong>99.7%</strong> of data lies <strong>within 3 standard deviations</strong>.</li>
+    </ul>
+
+    <h3>🔹 Application:</h3>
+    <p>If a <strong>university entrance test</strong> has a <strong>mean score of 70</strong> and <strong>SD of 10</strong>, then:</p>
+    <ul>
+        <li><strong>68%</strong> of students score between <strong>60 and 80</strong>.</li>
+        <li><strong>95%</strong> score between <strong>50 and 90</strong>.</li>
+        <li><strong>99.7%</strong> score between <strong>40 and 100</strong>.</li>
+    </ul>
+</section>
+<!-- Correlation & Covariance -->
+<section id="correlation-covariance">
+    <h2>📌 Correlation & Covariance</h2>
+
+    <h3>1️⃣ Covariance (How Two Variables Change Together)</h3>
+    <pre><code>Cov(X, Y) = Σ (Xᵢ - x̄ )(Yᵢ - ȳ) / (n-1)</code></pre>
+    <ul>
+        <li><strong>Positive Covariance</strong> → As one variable increases, so does the other.</li>
+        <li><strong>Negative Covariance</strong> → As one increases, the other decreases.</li>
+    </ul>
+
+    <h3>2️⃣ Correlation (Standardized Measure of Relationship)</h3>
+    <pre><code>r = Cov(X,Y) / (sₓ sᵧ)</code></pre>
+    <ul>
+        <li><strong>Range:</strong> -1 ≤ r ≤ 1.</li>
+        <li><strong>r = 1</strong> → Perfect positive correlation.</li>
+        <li><strong>r = -1</strong> → Perfect negative correlation.</li>
+        <li><strong>r = 0</strong> → No correlation.</li>
+    </ul>
+</section>
+
+
+    <script src="flashcards.js"></script>
+</body>
+</html>
