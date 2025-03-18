@@ -14,6 +14,7 @@
             margin: 0;
             padding: 0;
             overflow-x: hidden;
+            scroll-snap-type: y mandatory;
         }
 
         .container {
@@ -21,6 +22,11 @@
             margin: 0 auto;
             padding: 50px 20px;
             text-align: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            scroll-snap-align: start;
         }
 
         .header-title {
@@ -40,6 +46,32 @@
             box-shadow: 0 4px 10px rgba(0, 255, 234, 0.3);
         }
 
+        .glow-text {
+            transition: color 1s ease-in-out, text-shadow 0.5s ease-in-out;
+        }
+
+        .glow-text.visible {
+            color: #00ffea;
+            text-shadow: 0 0 10px #00ffea, 0 0 20px rgba(0, 255, 234, 0.6);
+            animation: glow-fade 6s ease-in-out forwards;
+        }
+
+        @keyframes glow-fade {
+            0% { text-shadow: none; }
+            30% { text-shadow: 0 0 10px #00ffea, 0 0 20px rgba(0, 255, 234, 0.6); }
+            100% { text-shadow: none; }
+        }
+
+
+        .float-text {
+            animation: float 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes float {
+            from { transform: translateY(0px); }
+            to { transform: translateY(-10px); }
+        }
+
         .section-title {
             font-size: 2rem;
             font-weight: 500;
@@ -48,6 +80,9 @@
             position: relative;
             display: inline-block;
             padding-bottom: 5px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out, text-shadow 0.5s ease-out;
         }
 
         .section-title::after {
@@ -60,6 +95,12 @@
             height: 3px;
             background-color: #00ffea;
             border-radius: 5px;
+        }
+
+        .section-title.visible {
+            opacity: 1;
+            transform: translateY(0);
+            text-shadow: 0 0 15px #00ffea, 0 0 30px rgba(0, 255, 234, 0.5);
         }
 
         .grid {
@@ -77,6 +118,15 @@
             width: 250px;
             cursor: pointer;
             padding: 25px 15px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+
+        .card.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .card:hover {
@@ -97,6 +147,14 @@
         a {
             text-decoration: none;
             color: inherit;
+        }
+
+        .grid.upcoming-modules {
+            display: flex;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            padding-bottom: 20px;
         }
 
         
@@ -120,22 +178,16 @@
 
 <body>
     <div class="container">
+        <section>
         <div class="header-title">Project Portfolio | MSc Data Science & AI | Revision Hub</div>
         <img src="profile.jpg" alt="Thomas Baker" class="profile-image">
-        <p style="max-width: 800px; margin: 0 auto; font-size: 1.2rem; color: #ccc; line-height: 1.6;">
+        <p class="glow-text float-text" style="max-width: 800px; margin: 0 auto; font-size: 1.2rem; color: #ccc; line-height: 1.6;">
             Hi, I’m <strong>Thomas</strong>, and this website is my personal knowledge hub for my MSc in Data Science & AI.
             Here, I document my learning journey across various modules, breaking down complex topics into structured
             revision notes, interactive exercises, and key takeaways.
         </p>
-        <p style="max-width: 800px; margin: 20px auto 40px; font-size: 1.2rem; color: #ccc; line-height: 1.6;">
-            This site is designed as a <strong>centralized resource</strong> for my studies, covering topics like <strong>Machine Learning, Programming,
-            Data Analytics, and AI techniques</strong>. It also features a dedicated section for my <strong>independent projects</strong>, where I experiment
-            with real-world applications of data science concepts.
-        </p>
-        <p style="max-width: 800px; margin: 0 auto 60px; font-size: 1.2rem; color: #ccc; line-height: 1.6;">
-            Whether you're studying a similar field or just curious about <strong>data science and AI</strong>, feel free to explore and learn along with me! 🚀
-        </p>
-
+    </section>
+<section>
         <div class="section-title">Current Modules</div>
         <div class="grid">
             <a href="DAR/DAR-homepage.html">
@@ -159,7 +211,18 @@
                 </div>
             </a>
         </div>
-
+    </section>
+    <section>
+        <p class="glow-text float-text" style="max-width: 800px; margin: 20px auto 40px; font-size: 1.2rem; color: #ccc; line-height: 1.6;">
+            This site is designed as a <strong>centralized resource</strong> for my studies, covering topics like <strong>Machine Learning, Programming,
+            Data Analytics, and AI techniques</strong>. It also features a dedicated section for my <strong>independent projects</strong>, where I experiment
+            with real-world applications of data science concepts.
+        </p>
+        <p class="glow-text float-text" style="max-width: 800px; margin: 0 auto 60px; font-size: 1.2rem; color: #ccc; line-height: 1.6;">
+            Whether you're studying a similar field or just curious about <strong>data science and AI</strong>, feel free to explore and learn along with me! 🚀
+        </p>
+    </section>
+    <section>
         <div class="section-title">Upcoming Modules</div>
         <div class="grid">
             <div class="card">
@@ -181,7 +244,8 @@
                 <div class="card-title">Data Science MSc Project</div>
             </div>
         </div>
-
+    </section>
+    <section>
         <div class="section-title">Independent Projects</div>
         <div class="grid">
             <div class="card">
@@ -189,6 +253,21 @@
             </div>
         </div>
     </div>
+</section>
+
+     <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const elements = document.querySelectorAll(".section-title, .card, .section-title, .glow-text");
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("visible");
+                    }
+                });
+            });
+            elements.forEach(el => observer.observe(el));
+        });
+    </script>
 </body>
 
 </html>
