@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Applied Machine Learning Quiz</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #121212;
+      color: #f5f5f5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      min-height: 100vh;
+    }
+
+    .quiz-container {
+      background: #1e1e1e;
+      border-radius: 10px;
+      padding: 2rem;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
+
+    h2 {
+      margin-bottom: 1rem;
+    }
+
+    .option {
+      background: #2c2c2c;
+      margin: 0.5rem 0;
+      padding: 1rem;
+      border-radius: 5px;
+      /* display: block; */
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .option:hover {
+      background: #03dac5;
+      color: black;
+    }
+
+    .option.correct {
+      background: #388e3c !important;
+      color: #fff;
+    }
+
+    .option.incorrect {
+      background: #d32f2f !important;
+      color: #fff;
+    }
+
+    button {
+      margin-top: 1rem;
+      padding: 0.75rem 1.5rem;
+      background: #03dac5;
+      color: black;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      display: none;
+    }
+    /* Back Button */
+    .back-button {
+        display: inline-block;
+        margin: 20px;
+        padding: 10px 15px;
+        background: #2575fc;
+        color: white;
+        text-decoration: none;
+        font-size: 1em;
+        border-radius: 6px;
+        transition: 0.3s;
+    }
+
+    .back-button:hover {
+        background: #5a0fc8;
+    }
+    #score {
+      margin-top: 2rem;
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+    <a href="AML-homepage.html" class="back-button">← Back to Homepage</a>
+
+<div class="quiz-container">
+    <div id="progress-container" style="width: 100%; margin-bottom: 1rem;">
+        <div id="progress-bar" style="height: 10px; background: #03dac5; width: 0%; transition: width 0.4s;"></div>
+      </div>
+      <p id="live-score" style="text-align: right; font-size: 0.9rem; margin-top: 0.5rem;">Score: 0%</p>
+      
+  <h2 id="question">Loading question...</h2>
+  <div id="options"></div>
+  <button id="submit-btn">Submit Answer</button>
+  <button id="next-btn" style="display:none;">Next Question</button>
+  <div id="score"></div>
+</div>
+
+<script>
+  const questions = [
+  {
+    question: "What distinguishes a Stacked Autoencoder from a basic Autoencoder?",
+    options: [
+      "It maps inputs to a probability distribution instead of a vector.",
+      "It consists of multiple hidden layers and may introduce sparsity.",
+      "It uses recurrent feedback instead of feedforward architecture.",
+      "It eliminates reconstruction loss entirely."
+    ],
+    answer: 1
+  },
+  {
+    question: "Which of the following is a benefit of parameter sharing in RNNs?",
+    options: [
+      "It increases the model size without increasing computation.",
+      "It allows different time steps to have different weight sets.",
+      "It enables generalisation across time and reduces model complexity.",
+      "It improves interpretability through attention mechanisms."
+    ],
+    answer: 2
+  },
+  {
+    question: "In an LSTM, which gate controls how much new information flows into the cell state?",
+    options: [
+      "Forget gate",
+      "Output gate",
+      "Input gate",
+      "Reset gate"
+    ],
+    answer: 2
+  },
+  {
+    question: "Which type of RNN is typically preferred when working with shorter sequences and faster inference is needed?",
+    options: [
+      "Vanilla RNN",
+      "LSTM",
+      "GRU",
+      "Autoencoder"
+    ],
+    answer: 2
+  },
+  {
+    question: "Why can RNNs be difficult to interpret?",
+    options: [
+      "They require image data for training.",
+      "Their internal hidden state transitions are not easily visualised.",
+      "They use fixed-size input vectors with no memory.",
+      "They only support binary classification problems."
+    ],
+    answer: 1
+  },
+  {
+    question: "Which of the following is TRUE about a Variational Autoencoder (VAE)?",
+    options: [
+      "It uses a fixed vector as a latent representation of input data.",
+      "It maps input data to a distribution by learning a mean and standard deviation.",
+      "It replaces all hidden layers with dropout for regularisation.",
+      "It only works with labelled data."
+    ],
+    answer: 1
+  },
+  {
+    question: "Which RNN variant uses a simplified gating mechanism with fewer gates than LSTM?",
+    options: [
+      "Stacked Autoencoder",
+      "Gated Recurrent Unit (GRU)",
+      "Bidirectional RNN",
+      "Vanilla RNN"
+    ],
+    answer: 1
+  },
+  {
+    question: "Which neural network architecture is most appropriate for predicting the next few notes in a music sequence?",
+    options: [
+      "Convolutional Neural Network (CNN)",
+      "Recurrent Neural Network (RNN)",
+      "Support Vector Machine (SVM)",
+      "Autoencoder"
+    ],
+    answer: 1
+  },
+  {
+    question: "Why are attention mechanisms used in sequence-to-sequence models?",
+    options: [
+      "To store all output vectors in a memory cell.",
+      "To remove the need for backpropagation.",
+      "To focus on relevant parts of the input sequence during decoding.",
+      "To compress inputs using dropout layers."
+    ],
+    answer: 2
+  },
+  {
+    question: "Which component of an LSTM is primarily responsible for long-term memory?",
+    options: [
+      "Hidden state",
+      "Output gate",
+      "Input gate",
+      "Cell state"
+    ],
+    answer: 3
+  }
+    ,
+  {
+    question: "What is the main advantage of using RNNs over traditional neural networks for language modelling?",
+    options: [
+      "They can process 2D spatial data more efficiently.",
+      "They allow information to persist across sequence steps using hidden states.",
+      "They use convolution layers to extract hierarchical features.",
+      "They eliminate the need for activation functions."
+    ],
+    answer: 1
+  },
+  {
+    question: "What problem is most associated with training standard (vanilla) RNNs on long sequences?",
+    options: [
+      "Exploding batch size",
+      "High dropout rate",
+      "Vanishing gradients",
+      "Slow learning rate decay"
+    ],
+    answer: 2
+  },
+  {
+    question: "Which gate in an LSTM decides what previous information should be discarded from the cell state?",
+    options: [
+      "Input gate",
+      "Forget gate",
+      "Output gate",
+      "Reset gate"
+    ],
+    answer: 1
+  },
+  {
+    question: "Why do RNNs share parameters across time steps?",
+    options: [
+      "To increase the number of trainable parameters",
+      "To make the network overfit intentionally",
+      "To reduce model complexity and generalise patterns across time",
+      "To allow each time step to use a unique function"
+    ],
+    answer: 2
+  },
+  {
+    question: "What is the role of the output gate in an LSTM cell?",
+    options: [
+      "To regulate how much of the input should be added to the cell state",
+      "To determine which parts of the cell state are visible as output",
+      "To reset the entire memory of the LSTM",
+      "To discard all irrelevant features from the input"
+    ],
+    answer: 1
+  }
+,
+    {
+      question: "What is the main objective of supervised learning?",
+      options: [
+        "To cluster data points based on similarity.",
+        "To learn a mapping from inputs to outputs using labeled data.",
+        "To reduce dimensionality of the dataset.",
+        "To discover hidden patterns in data without labels."
+      ],
+      answer: 1
+    },
+    {
+      question: "Which algorithm is typically used for classification tasks?",
+      options: [
+        "K-Means",
+        "Principal Component Analysis",
+        "Support Vector Machines",
+        "Apriori Algorithm"
+      ],
+      answer: 2
+    },
+    {
+      question: "What does overfitting mean in machine learning?",
+      options: [
+        "The model underperforms on training data.",
+        "The model generalizes well.",
+        "The model performs well on unseen data.",
+        "The model performs well on training data but poorly on unseen data."
+      ],
+      answer: 3
+    },
+    {
+      question: "Which evaluation metric is best for imbalanced classification?",
+      options: [
+        "Accuracy",
+        "F1-score",
+        "Mean Squared Error",
+        "R-squared"
+      ],
+      answer: 1
+    },
+    {
+      question: "What is the purpose of cross-validation?",
+      options: [
+        "To reduce the number of features.",
+        "To improve training speed.",
+        "To assess model performance using multiple train/test splits.",
+        "To visualize model predictions."
+      ],
+      answer: 2
+    },
+    {
+      question: "Which of the following capabilities is NOT provided by the pooling process in a CNN? Select all that apply.",
+      options: [
+        "Reduces overfitting",
+        "Classification",
+        "Prevents loss of valuable edge information",
+        "Translation equivariance",
+        "Speeds up computation",
+        "Translation invariance"
+      ],
+      answers: [1, 2, 3]
+    },
+    {
+      question: "What operation introduces non-linearity into a neural network, enabling it to learn complex patterns and representations?",
+      options: [
+        "Pooling layers",
+        "Activation functions",
+        "Weight initialization",
+        "Batch normalization"
+      ],
+      answer: 1
+    },
+    {
+        question: "What are other uses of convolution matrices?",
+        options: [
+            "They are used in image processing for tasks such as blurring, sharpening, and edge detection.",
+            "They are used to train recurrent neural networks in sequence modeling tasks.",
+            "They are only used in neural networks and have no applications elsewhere.",
+            "They are primarily used to generate synthetic data from random noise."
+        ],
+        answer: 0
+    },
+    {
+        question: "In convolutional neural networks, why do we aim to reduce the input image to its essential features?",
+        options: [
+            "To increase the size of the input and allow for more complex models.",
+            "To ensure the original image is preserved in its entirety throughout the network.",
+            "To improve model performance by focusing on the most relevant patterns while reducing computational load.",
+            "To randomly discard pixels and add noise for robustness."
+        ],
+        answer: 2
+    },
+    {
+        question: "Do we lose information when using a feature detector?",
+        options: [
+            "No – feature detectors preserve the full spatial resolution of the input image.",
+            "Yes – the feature map that we end up with has fewer cells and therefore less information than the original input image.",
+            "No – feature detectors are designed to increase the amount of detail captured.",
+            "Only when using non-linear activation functions alongside the feature detector."
+        ],
+        answer: 1
+    },
+    {
+        question: `
+<p>A 3×3 convolutional filter is applied to the 5×5 input matrix below (stride = 1, no padding).<br>
+What is the output value at the center (row 2, col 2)?</p>
+
+<p><strong>Input Matrix (5×5):</strong></p>
+<pre>[
+[1, 2, 0, 3, 1],  
+[0, 1, 2, 3, 1],  
+[1, 2, 1, 0, 0],  
+[2, 1, 0, 1, 1],  
+[0, 1, 2, 1, 2]  
+]</pre>
+
+<p><strong>Filter (3×3):</strong></p>
+<pre>[
+[0, 1, 2],  
+[2, 2, 0],  
+[0, 1, 2]  
+]</pre>
+`,
+    options: [
+            "12",
+            "16",
+            "18",
+            "20"
+        ],
+        answer: 1 // "16"
+    },
+    {
+        question:`
+<p>Given below is an input matrix <strong>I</strong>, a kernel <strong>F</strong>, and a stride of 2,<br>
+which of the following is the correct output matrix <strong>C</strong> after performing the convolution?</p>
+
+<p><strong>Input Matrix (I):</strong></p>
+<pre>[
+[1, 2, 3, 0],
+[0, 1, 2, 3],
+[1, 2, 1, 0],
+[0, 1, 2, 1]
+]</pre>
+
+<p><strong>Filter (F):</strong></p>
+<pre>[
+[1, 0],
+[0, 1]
+]</pre>
+
+<p><strong>Stride = 2</strong></p>
+
+<p>What is the output matrix C?</p>
+`
+,
+        options: [
+            "[[2, 6], [2, 2]]",
+            "[[2, 3], [1, 2]]",
+            "[[1, 2], [3, 0]]",
+            "[[3, 3], [2, 2]]"
+        ],
+        answer: 0
+    },
+    {
+        question: "Which of the following gives non-linearity to a CNN?",
+        options: [
+            "Convolution function",
+            "None of the above",
+            "Rectified Linear Unit",
+            "Stochastic Gradient Descent"
+        ],
+        answer: 2
+    }, 
+    {
+        question: "Which of the following statements is true when you use 1×1 convolutions in a CNN?",
+        options: [
+            "It suffers less overfitting",
+            "It can help in dimensionality reduction",
+            "Activation map can be used for pooling",
+            "All of the above"
+        ],
+        answer: 3
+    },
+    {
+        question: "An input image has been converted into a matrix of size 28×28 and a kernel/filter of size 7×7 is applied with a stride of 1. What will be the size of the convoluted matrix?",
+        options: [
+            "28 X 28",
+            "22 X 22",
+            "7 X 7",
+            "21 X 21"
+        ],
+        answer: 1
+    },
+    {
+        question: "Which of the following activation functions can’t be used at the output layer to classify an image?",
+        options: [
+            "Tanh",
+            "Sigmoid",
+            "ReLU",
+            "Softmax",
+            "None of the above"
+        ],
+        answer: 2
+    },
+    {
+        question: "Which of the following is the main contribution of VGG16?",
+        options: [
+            "Depth of the network is a critical component for good performance.",
+            "First use of GPU",
+            "Use of ReLU as non-linearities and Dropout to avoid overfitting",
+            "Four building blocks of CNN (Convolution, Non-linearity, Pooling and classification)",
+            "None of the above"
+        ],
+        answer: 0
+    },
+        {
+        question: "Which of the below is an unsupervised learning example?",
+        options: [
+            "Semantic segmentation",
+            "Object detection",
+            "Autoencoder",
+            "All of the above",
+            "Handwritten digit recognition"
+        ],
+        answer: 2
+    }
+    ,{
+        question: "Which of the below is a property of an autoencoder?",
+        options: [
+            "Data specific",
+            "All of the above",
+            "Self-learning",
+            "Lossy",
+            "Unsupervised"
+        ],
+        answer: 1
+    },
+
+{
+  question: "A stacked autoencoder is a neural network consisting of several layers of sparse autoencoders. Which of the following explain sparsity? Select all that apply.",
+  options: [
+    "Only a few (hidden) nodes are activated",
+    "K-sparse autoencoder",
+    "None of the above",
+    "All nodes are activated",
+    "No nodes are activated"
+  ],
+  answers: [0, 1]
+},
+{
+  question: "How is an autoencoder modified to generate variations of the input? Select all that apply.",
+  options: [
+    "Mapping an input to a distribution",
+    "Sparse autoencoder",
+    "Mapping an input to a fixed vector",
+    "Bottleneck is replaced with two different vectors (mean and std).",
+    "None of the above"
+  ],
+  answers: [0, 3]
+}, {
+  question: "Which of the below ML algorithms make the most money? Select all that apply.",
+  options: [
+    "Bayesian Network",
+    "Recurrent Neural Network",
+    "Support Vector Machine",
+    "Convolutional Neural Network",
+    "Multi-layered Perceptron",
+    "None of the above",
+    "Logistic Regression"
+  ],
+  answers: [1, 3]
+},
+{
+  question: "Which predictive modelling application is most associated with a *ranking* decision type?",
+  options: [
+    "Cyber intrusion detection",
+    "Stock price prediction",
+    "Product ranking (e-commerce)",
+    "Feature learning in autoencoder"
+  ],
+  answer: 2
+}
+,{
+  question: "What is the purpose of concept hierarchy generation in data pre-processing?",
+  options: [
+    "To add noise to the dataset and test model robustness",
+    "To visualise categorical relationships across datasets",
+    "To reduce complexity by grouping values into higher-level categories",
+    "To perform feature selection on continuous variables"
+  ],
+  answer: 2
+}
+, 
+{
+  question: "Which of the following are classes of feature selection methods?",
+  options: [
+    "Supervised, unsupervised, and hybrid",
+    "Filter, wrapper, and embedded methods",
+    "L1, L2, and dropout-based selection",
+    "Forward, backward, and recursive pruning"
+  ],
+  answer: 1
+}
+, {
+  question: "Why is it important to specify a random seed in machine learning experiments?",
+  options: [
+    "To maximise randomness and prevent overfitting",
+    "To increase learning rate convergence",
+    "To ensure reproducibility and consistency of results",
+    "To control the number of training epochs"
+  ],
+  answer: 2
+}, {
+  question: "Why is standard deviation a useful metric when evaluating machine learning model performance?",
+  options: [
+    "It detects multicollinearity in features",
+    "It measures the number of training epochs needed",
+    "It indicates the consistency and robustness of model performance",
+    "It prevents vanishing gradient problems"
+  ],
+  answer: 2
+}
+, {
+  question: "Which of the following best describes a Type I error in intrusion detection systems?",
+  options: [
+    "The system fails to detect an intrusion, classifying it as normal.",
+    "The system correctly identifies a real intrusion.",
+    "The system incorrectly identifies normal activity as an intrusion.",
+    "The system fails to classify unknown activity."
+  ],
+  answer: 2
+}
+, {
+  question: "What is the greatest advantage of using a decision tree in machine learning?",
+  options: [
+    "It handles image data better than CNNs.",
+    "It visualises decisions and logic in a highly interpretable format.",
+    "It always provides the highest accuracy in classification.",
+    "It requires deep neural network structures to operate."
+  ],
+  answer: 1
+}
+, {
+  question: "How does bagging help reduce the ‘memorisation’ (overfitting) effect in model training?",
+  options: [
+    "It trains on a fixed dataset repeatedly to reinforce memory.",
+    "It prunes redundant neurons in deep neural networks.",
+    "It trains multiple models on different bootstrap samples and aggregates their predictions.",
+    "It increases the dropout rate during training."
+  ],
+  answer: 2
+}
+, {
+  question: "True or False: In a random forest, each individual tree is trained on the full dataset and all available features.",
+  options: [
+    "True",
+    "False"
+  ],
+  answer: 1
+}
+
+, {
+  question: "True or False: Increasing the number of hidden layers in a neural network generally increases its capacity to approximate complex functions.",
+  options: [
+    "False",
+    "True"
+  ],
+  answer: 1
+}
+, {
+  question: "What is a potential drawback of using zero-padding in convolutional neural networks?",
+  options: [
+    "It eliminates edge features completely.",
+    "It creates artificial edges that may be falsely detected as features.",
+    "It reduces the dimensionality of the feature maps significantly.",
+    "It guarantees better generalisation on test data."
+  ],
+  answer: 1
+}
+, 
+{
+  question: "What is parameter sharing in a convolutional neural network?",
+  options: [
+    "Every neuron uses its own set of weights for each position in the input.",
+    "The same weights (kernel) are applied across different spatial regions of the input.",
+    "Weights are updated independently for each filter location.",
+    "Weights are randomly sampled for each convolution step."
+  ],
+  answer: 1
+}
+, {
+  question: "What is the difference between translation invariance and translation equivariance in CNNs?",
+  options: [
+    "Translation invariance means the output changes in proportion to input translations.",
+    "Translation equivariance means the output is identical regardless of the input position.",
+    "Translation equivariance means output shifts with input; invariance means output remains unchanged.",
+    "They refer to different data augmentation techniques."
+  ],
+  answer: 2
+}
+, {
+  question: "What was the main contribution of the VGG16 architecture?",
+  options: [
+    "It was the first model to introduce convolutional layers.",
+    "It proved that deeper networks with small filters can improve performance significantly.",
+    "It introduced ReLU for the first time in CNNs.",
+    "It enabled CNNs to process video data in real-time."
+  ],
+  answer: 1
+}
+, {
+  question: "When would you choose an RNN over an MLP or CNN?",
+  options: [
+    "When dealing with 2D spatial data like images.",
+    "When performing classification on tabular data.",
+    "When modelling sequences or time series with temporal dependencies.",
+    "When reducing dimensionality of feature vectors."
+  ],
+  answer: 2
+}
+, {
+  question: "Which type of neural network has feedback connections where the output of a neuron can influence itself or earlier layers?",
+  options: [
+    "Recurrent Neural Network (RNN)",
+    "Multi-layer Perceptron (MLP)",
+    "Convolutional Neural Network (CNN)",
+    "Autoencoder"
+  ],
+  answer: 0
+}
+, {
+  question: "What is a key challenge when training Recurrent Neural Networks (RNNs)?",
+  options: [
+    "Overfitting due to excessive dropout",
+    "Vanishing and exploding gradients during backpropagation through time",
+    "Difficulty in parallelising convolutions across GPUs",
+    "Too few model parameters to learn patterns"
+  ],
+  answer: 1
+}
+, {
+  question: "In an LSTM network, which components represent short-term and long-term memory?",
+  options: [
+    "Hidden state (short-term), cell state (long-term)",
+    "Forget gate (short-term), output gate (long-term)",
+    "Cell state (short-term), hidden state (long-term)",
+    "Memory gate (short-term), update gate (long-term)"
+  ],
+  answer: 0
+}
+, {
+  question: "You're given the task of predicting the next few notes in a song based on preceding musical symbols. Which neural network architecture would be best suited?",
+  options: [
+    "Convolutional Neural Network (CNN)",
+    "Recurrent Neural Network (RNN)",
+    "Multi-layer Perceptron (MLP)",
+    "Support Vector Machine (SVM)"
+  ],
+  answer: 1
+} ,
+{
+    question: "Which of the following best describes the purpose of representation learning?",
+    options: [
+      "To compress a model into fewer neurons for faster inference",
+      "To generate random weights for training",
+      "To learn useful internal data structures that improve downstream tasks like classification",
+      "To separate supervised and unsupervised models at runtime"
+    ],
+    answer: 2
+  },
+  {
+    question: "What property makes an autoencoder 'lossy'?",
+    options: [
+      "It never updates its weights during training",
+      "The decoder cannot perfectly reconstruct the input due to compression",
+      "It uses the same values for input and output neurons",
+      "It removes all redundant features permanently"
+    ],
+    answer: 1
+  },
+  {
+    question: "What is the key difference between a standard autoencoder and a variational autoencoder (VAE)?",
+    options: [
+      "VAEs are supervised; standard AEs are not",
+      "VAEs use dropout instead of bottlenecks",
+      "VAEs map inputs to a distribution using learned mean and variance",
+      "Standard autoencoders never require loss functions"
+    ],
+    answer: 2
+  },
+  {
+    question: "Which loss function is commonly used in a variational autoencoder to ensure the latent distribution remains close to normal?",
+    options: [
+      "Huber Loss",
+      "KL Divergence",
+      "Binary Cross-Entropy",
+      "Mean Squared Error"
+    ],
+    answer: 1
+  },
+  {
+    question: "What is the main purpose of a sparse autoencoder?",
+    options: [
+      "To increase the dimensionality of data",
+      "To eliminate all hidden layers",
+      "To force only a few hidden nodes to activate, encouraging compact representations",
+      "To replicate the input exactly"
+    ],
+    answer: 2
+  },
+  {
+    question: "What distinguishes a denoising autoencoder from a standard autoencoder?",
+    options: [
+      "It uses only categorical data",
+      "It reconstructs clean input from corrupted/noisy versions of the input",
+      "It removes hidden layers during training",
+      "It only learns a binary classification boundary"
+    ],
+    answer: 1
+  },
+  {
+    question: "In a sparse autoencoder, what does a K-sparse activation constraint enforce?",
+    options: [
+      "At least k neurons must be active at once",
+      "Only the top k hidden units (by activation) are kept per input",
+      "All neurons must be pruned below a threshold",
+      "The encoder only accepts k-dimensional input vectors"
+    ],
+    answer: 1
+  },
+  {
+    question: "What benefit does stacking multiple autoencoders provide?",
+    options: [
+      "It allows autoencoders to be trained without any data",
+      "It enables hierarchical feature learning across layers",
+      "It removes the need for reconstruction loss",
+      "It increases the final output size of the autoencoder"
+    ],
+    answer: 1
+  },
+  {
+    question: "What type of model maps input data to a probability distribution, allowing for interpolation between latent points?",
+    options: [
+      "Denoising autoencoder",
+      "Stacked autoencoder",
+      "Sparse autoencoder",
+      "Variational autoencoder"
+    ],
+    answer: 3
+  },
+  {
+    question: "Which of the following best describes the curse of dimensionality?",
+    options: [
+      "A model's accuracy increases too quickly with more features",
+      "As data dimensions increase, it becomes harder to learn meaningful patterns due to sparsity",
+      "Training time decreases as input dimensionality grows",
+      "High-dimensional data ensures better classification accuracy"
+    ],
+    answer: 1
+  },
+  {
+    question: "What is one reason that a representation learned by a neural network may outperform manually engineered features?",
+    options: [
+      "It ensures linear separability across all data types",
+      "It captures hierarchical, task-specific patterns from data automatically",
+      "It eliminates the need for optimisation algorithms",
+      "It prevents overfitting by ignoring the training labels"
+    ],
+    answer: 1
+  },
+  {
+    question: "Which of the following statements is TRUE about translation invariance in CNNs?",
+    options: [
+      "It means the output shifts identically with the input",
+      "It means the model produces the same output regardless of input translation",
+      "It is only present in fully connected networks",
+      "It refers to the convolution kernel changing with input"
+    ],
+    answer: 1
+  },
+  {
+    question: "Which of the following explains the difference between translation invariance and equivariance?",
+    options: [
+      "Equivariance means output does not shift; invariance means it does",
+      "Invariance means output shifts with input; equivariance means output stays the same",
+      "Equivariance means output shifts with input; invariance means output remains the same",
+      "Both terms describe random noise injections into filters"
+    ],
+    answer: 2
+  },
+  {
+    question: "Why is Grad-CAM used in the context of CNNs?",
+    options: [
+      "To remove redundant neurons during backpropagation",
+      "To visualise the most important spatial features contributing to the prediction",
+      "To detect adversarial attacks during training",
+      "To regularise convolutional weights during inference"
+    ],
+    answer: 1
+  },
+  {
+    question: "What loss function would be most appropriate for reconstructing binary input data in an autoencoder?",
+    options: [
+      "Mean Squared Error",
+      "KL Divergence",
+      "Binary Cross-Entropy",
+      "Categorical Cross-Entropy"
+    ],
+    answer: 2
+  },
+  {
+    question: "What is the primary purpose of the convolution operation in a CNN?",
+    options: [
+      "To increase the number of pixels in the image",
+      "To flatten the input for classification",
+      "To extract features from the input image using local receptive fields",
+      "To apply dropout for regularisation"
+    ],
+    answer: 2
+  },
+  {
+    question: "Which of the following best describes ReLU in a CNN?",
+    options: [
+      "A filter that detects edges",
+      "A pooling operation",
+      "A non-linear activation function that replaces negative values with zero",
+      "A technique to flatten the input image"
+    ],
+    answer: 2
+  },
+  {
+    question: "Why is parameter sharing beneficial in convolutional neural networks?",
+    options: [
+      "It increases the number of unique weights for each pixel",
+      "It reduces the number of parameters and allows the network to generalise across spatial locations",
+      "It ensures that filters are only applied to central pixels",
+      "It removes the need for backpropagation"
+    ],
+    answer: 1
+  },
+  {
+    question: "What does a pooling layer do in a CNN?",
+    options: [
+      "Adds more neurons to the network to increase accuracy",
+      "Increases spatial resolution of the feature map",
+      "Downsamples the feature map while retaining the most important features",
+      "Applies filters to raw pixel values"
+    ],
+    answer: 2
+  },
+  {
+    question: "Which of the following statements about stride is TRUE?",
+    options: [
+      "A smaller stride results in more downsampling",
+      "A larger stride produces smaller feature maps and reduces computation",
+      "Stride only applies to fully connected layers",
+      "Stride has no effect on feature extraction"
+    ],
+    answer: 1
+  },
+  {
+    question: "Which operation introduces translation invariance in CNNs?",
+    options: [
+      "ReLU activation",
+      "Convolution operation",
+      "Pooling layer",
+      "Batch normalisation"
+    ],
+    answer: 2
+  },
+  {
+    question: "What is the main function of the fully connected layer in a CNN?",
+    options: [
+      "To detect horizontal and vertical edges",
+      "To reduce dimensionality of input images",
+      "To perform final classification based on learned features",
+      "To apply dropout to earlier layers"
+    ],
+    answer: 2
+  },
+  {
+    question: "What is the purpose of zero padding in a convolutional layer?",
+    options: [
+      "To reduce the number of computations",
+      "To ensure output dimensions match input size when using stride 1",
+      "To apply non-linearity to feature maps",
+      "To remove redundant feature maps"
+    ],
+    answer: 1
+  },
+  {
+    question: "What is a key benefit of using small convolution filters (e.g. 3×3) as in VGG16?",
+    options: [
+      "They capture high-level global features early in the network",
+      "They reduce the number of layers required",
+      "They allow deep networks to learn complex patterns with fewer parameters per layer",
+      "They eliminate the need for pooling layers"
+    ],
+    answer: 2
+  },
+  {
+    question: "Which of the following architectures introduced the use of ReLU activation and dropout?",
+    options: [
+      "LeNet-5",
+      "AlexNet",
+      "CapsNet",
+      "VGG16"
+    ],
+    answer: 1
+  },
+  {
+    question: "What kind of convolution is commonly used to reduce the number of channels in a CNN?",
+    options: [
+      "3×3 convolution",
+      "1×1 convolution",
+      "Depthwise convolution",
+      "Average pooling"
+    ],
+    answer: 1
+  },
+  {
+    question: "What is the primary reason CNNs are preferred over fully connected networks for image data?",
+    options: [
+      "They require more training time",
+      "They can operate without activation functions",
+      "They exploit spatial structure and reduce parameters via local connectivity and weight sharing",
+      "They only work with grayscale images"
+    ],
+    answer: 2
+  },
+  {
+    question: "What does 'flattening' do in a CNN?",
+    options: [
+      "It reduces the learning rate",
+      "It converts 2D feature maps into a 1D vector for input into fully connected layers",
+      "It applies non-linear activation to the output",
+      "It removes noise from input images"
+    ],
+    answer: 1
+  },
+  {
+    question: "Which of the following is TRUE about LeNet-5?",
+    options: [
+      "It was one of the first CNNs and used tanh activation and average pooling",
+      "It introduced ReLU and dropout for the first time",
+      "It was trained entirely using unsupervised learning",
+      "It used residual connections to improve learning"
+    ],
+    answer: 0
+  },
+  {
+    question: "Which CNN architecture demonstrated that deeper networks with small filters can improve performance?",
+    options: [
+      "LeNet-5",
+      "YOLOv8",
+      "VGG16",
+      "ConvNeXt"
+    ],
+    answer: 2
+  },
+  {
+    question: "Why is equity market forecasting considered a challenging task for machine learning models?",
+    options: [
+      "Because it relies on only categorical data",
+      "Because equity markets are static and highly predictable",
+      "Because market data is non-stationary with a low signal-to-noise ratio",
+      "Because training data is always fully labeled"
+    ],
+    answer: 2
+  },
+  {
+    question: "What does the DAE loss function specifically penalise?",
+    options: [
+      "Overfitting on large datasets",
+      "Predictions with high magnitude error regardless of direction",
+      "Predictions that are in the wrong direction",
+      "Predictions that have low variance"
+    ],
+    answer: 2
+  },
+  {
+    question: "What makes the DBE loss function different from DAE?",
+    options: [
+      "It ignores prediction direction and focuses on absolute error",
+      "It penalises incorrect direction only when the error magnitude is large",
+      "It increases the number of training epochs",
+      "It is only used for classification problems"
+    ],
+    answer: 1
+  },
+  {
+    question: "Which of the following types of data are most commonly used in equity forecasting studies according to the slides?",
+    options: [
+      "Sentiment and macroeconomic data",
+      "Quarterly accounting reports",
+      "Technical indicators",
+      "Image-based chart patterns"
+    ],
+    answer: 2
+  },
+  {
+    question: "What is a key benefit of using tanh on the model’s prediction during trading?",
+    options: [
+      "It reduces all outputs to zero",
+      "It creates binary trading decisions with no scaling",
+      "It converts predictions into conviction scores used to size trading positions",
+      "It eliminates volatility from input data"
+    ],
+    answer: 2
+  },
+  {
+    question: "Why might traditional loss functions like MAE be suboptimal for equity return prediction?",
+    options: [
+      "They ignore magnitude errors completely",
+      "They treat incorrect direction the same as correct direction, leading to poor trading signals",
+      "They only work with categorical labels",
+      "They are designed only for unsupervised learning"
+    ],
+    answer: 1
+  },
+  {
+    question: "What is a primary reason for using a time series split (e.g. 5-year train, 1-year test) in financial model evaluation?",
+    options: [
+      "To ensure training and test sets are randomly shuffled",
+      "To prevent overfitting by introducing more noise",
+      "To simulate a realistic forecasting scenario without data leakage",
+      "To balance the number of upward and downward trends"
+    ],
+    answer: 2
+  },
+  {
+    question: "What type of architecture was used in the C2D_FUN model for equity forecasting?",
+    options: [
+      "Fully connected feedforward network",
+      "Transformer with self-attention layers",
+      "Dual-headed convolutional neural network with dropout and concatenation",
+      "Bidirectional RNN with attention"
+    ],
+    answer: 2
+  },
+  {
+    question: "Which of the following was NOT listed as a feature type used in the equity forecasting model?",
+    options: [
+      "Technical indicators",
+      "Macroeconomic data",
+      "Medical statistics",
+      "Sentiment scores"
+    ],
+    answer: 2
+  },
+  {
+    question: "What was one of the evaluation metrics used to compare model performance?",
+    options: [
+      "Cross-entropy loss",
+      "F1 score",
+      "Gross profitability",
+      "Image classification accuracy"
+    ],
+    answer: 2
+  },
+  {
+    question: "What is the purpose of applying dropout in the C2D_FUN CNN architecture?",
+    options: [
+      "To increase the number of parameters in the network",
+      "To prevent overfitting by randomly deactivating neurons during training",
+      "To speed up training by removing convolution operations",
+      "To smooth the loss surface during backpropagation"
+    ],
+    answer: 1
+  },
+  {
+    question: "Why is it important to penalise both direction and magnitude in a custom loss function like DBE?",
+    options: [
+      "Because large errors in the correct direction are worse than small errors in the wrong direction",
+      "Because financial models should not use absolute errors at all",
+      "Because trading strategies depend on confidence, not direction",
+      "Because it aligns better with profit-related outcomes in trading systems"
+    ],
+    answer: 3
+  },
+  {
+    question: "What is one advantage of using CNNs in time series forecasting for financial data?",
+    options: [
+      "CNNs cannot handle sequences, so they reduce dimensionality instead",
+      "CNNs can extract spatial and temporal patterns through local receptive fields",
+      "CNNs require no tuning and work out of the box for finance",
+      "CNNs are designed only for image classification"
+    ],
+    answer: 1
+  },
+  {
+    question: "Why is model confidence important in financial position sizing?",
+    options: [
+      "It allows you to ignore all small predictions",
+      "It ensures uniform trade sizes regardless of prediction quality",
+      "It enables scaling of trade size based on how strong the signal is",
+      "It prevents the model from trading on positive predictions"
+    ],
+    answer: 2
+  },
+  {
+    question: "What was one of the baseline strategies used to compare performance in the equity forecasting experiment?",
+    options: [
+      "XGBoost with bagging",
+      "Naive Bayes with PCA",
+      "Random and pseudo-random trading models",
+      "Transformer-based ensemble voting"
+    ],
+    answer: 2
+  },
+  {
+    question: "Why is it important to explore ML-based intrusion detection for IoT-enabled devices?",
+    options: [
+      "Traditional approaches are already optimal for IoT environments",
+      "IoT devices require lightweight, adaptive detection due to limited resources",
+      "IoT networks never face real cyber threats",
+      "Machine learning cannot function without centralised computing"
+    ],
+    answer: 1
+  },
+  {
+    question: "What is the purpose of cyber threat attribution in machine learning?",
+    options: [
+      "To convert real-time traffic into images",
+      "To identify and trace back the source or group responsible for attacks",
+      "To encrypt suspicious data automatically",
+      "To generate random test data for model training"
+    ],
+    answer: 1
+  },
+  {
+    question: "What makes the AWID dataset particularly valuable for intrusion detection research?",
+    options: [
+      "It contains synthetic network data generated from simulations",
+      "It consists of labelled stock market time series",
+      "It includes real 802.11 WiFi traces with simulated intrusions",
+      "It measures GPU efficiency during malware scanning"
+    ],
+    answer: 2
+  },
+  {
+    question: "What metric represents the rate at which an IDS incorrectly identifies normal traffic as an attack?",
+    options: [
+      "True Positive Rate",
+      "False Alarm Rate (Type I Error)",
+      "Detection Rate (Sensitivity)",
+      "Matthews Correlation Coefficient"
+    ],
+    answer: 1
+  },
+  {
+    question: "Which metric helps assess binary classification performance even with imbalanced datasets?",
+    options: [
+      "Accuracy",
+      "Recall",
+      "Matthews Correlation Coefficient (MCC)",
+      "Dropout Rate"
+    ],
+    answer: 2}
+    ,
+    {
+    question: "What is a benefit of using autoencoders in the context of intrusion detection?",
+    options: [
+      "They directly classify malware signatures",
+      "They perform encryption of incoming packets",
+      "They learn compressed representations of input data and help detect anomalies",
+      "They are only used to process image-based threats"
+    ],
+    answer: 2
+  },
+  {
+    question: "What does the Detection Rate (Sensitivity) measure in a confusion matrix?",
+    options: [
+      "The proportion of true negatives among all predictions",
+      "The number of incorrect labels assigned by the model",
+      "The percentage of actual attacks correctly detected",
+      "The rate of false positives compared to true positives"
+    ],
+    answer: 2
+  },
+  {
+    question: "How does the False Alarm Rate relate to Specificity in binary classification?",
+    options: [
+      "False Alarm Rate = Specificity × Precision",
+      "False Alarm Rate = 1 – Specificity",
+      "False Alarm Rate = TP / (TP + FN)",
+      "False Alarm Rate = Accuracy × Sensitivity"
+    ],
+    answer: 1
+  },
+  {
+    question: "Why is MCC (Matthews Correlation Coefficient) preferred in imbalanced classification tasks?",
+    options: [
+      "It simplifies the confusion matrix into one number",
+      "It ignores false negatives to focus on true positives",
+      "It provides a balanced metric even when class distribution is skewed",
+      "It only considers the majority class in scoring"
+    ],
+    answer: 2
+  },
+  {
+    question: "Which of the following best describes how threat attribution aids cybersecurity?",
+    options: [
+      "It boosts packet transmission speed",
+      "It helps visualise how convolution layers operate",
+      "It enables policy response and strategic deterrence by identifying attacker behaviour",
+      "It enhances signal-to-noise ratio in image data"
+    ],
+    answer: 2
+  },
+  {
+    question: "Why is class imbalance a significant issue in intrusion detection datasets?",
+    options: [
+      "Attack traffic typically dominates the dataset, skewing results",
+      "Most datasets only contain encrypted data",
+      "Benign traffic is far more common than malicious traffic, making it harder to detect rare attacks",
+      "There are usually more features than samples"
+    ],
+    answer: 2
+  },
+  {
+    question: "Which of the following best describes a short-term ML-driven cybersecurity action?",
+    options: [
+      "Re-training the model from scratch",
+      "Adjusting future hardware configurations",
+      "Blocking suspicious IP addresses or isolating infected hosts",
+      "Deploying a new encryption protocol"
+    ],
+    answer: 2
+  },
+  {
+    question: "In the context of cybersecurity, why might autoencoders be used during feature engineering?",
+    options: [
+      "To filter out all high-variance features",
+      "To learn compressed, noise-resistant representations of network activity",
+      "To inject noise into benign traffic",
+      "To generate synthetic attacks"
+    ],
+    answer: 1
+  },
+  {
+    question: "Which of the following combinations accurately defines Detection Rate?",
+    options: [
+      "TN / (TN + FP)",
+      "FP / (FP + TP)",
+      "TP / (TP + FN)",
+      "TP / (TP + TN)"
+    ],
+    answer: 2
+  },
+  {
+    question: "What is the long-term benefit of using ML for cybersecurity analytics?",
+    options: [
+      "Hardcoding static firewall rules",
+      "Manual log inspection at regular intervals",
+      "Discovering behavioural trends to inform strategic policy decisions",
+      "Eliminating the need for network monitoring"
+    ],
+    answer: 2
+  }
+  ];
+
+  // Shuffle questions
+  function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
+
+  shuffle(questions);
+
+  let currentQuestion = 0;
+  let score = 0;
+
+  const questionEl = document.getElementById('question');
+  const optionsEl = document.getElementById('options');
+  const submitBtn = document.getElementById('submit-btn');
+  const nextBtn = document.getElementById('next-btn');
+  const scoreEl = document.getElementById('score');
+
+  function loadQuestion() {
+    const q = questions[currentQuestion];
+    questionEl.innerHTML = `Q${currentQuestion + 1}. ${q.question}`;
+    optionsEl.innerHTML = '';
+
+    q.options.forEach((opt, idx) => {
+    const inputType = Array.isArray(q.answers) ? 'checkbox' : 'radio';
+
+    // Create the label directly (no extra div)
+    const label = document.createElement('label');
+    label.className = 'option';
+    label.style.display = 'block';
+    label.style.cursor = 'pointer';
+
+    label.innerHTML = `
+      <input type="${inputType}" name="option" value="${idx}" style="margin-right: 10px;" />
+      ${opt}
+    `;
+
+    optionsEl.appendChild(label);
+  });
+
+  submitBtn.style.display = 'inline-block';
+  nextBtn.style.display = 'none';
+}
+  function updateProgress() {
+  const progress = ((currentQuestion) / questions.length) * 100;
+  const attempted = currentQuestion + 1; // questions attempted so far
+  const percent = attempted > 0 ? Math.round((score / attempted) * 100) : 0;
+
+  document.getElementById('progress-bar').style.width = `${progress}%`;
+  document.getElementById('live-score').textContent = `Score: ${percent}%`;
+}
+
+
+  function evaluateAnswer() {
+    const q = questions[currentQuestion];
+    const selected = Array.from(optionsEl.querySelectorAll('input:checked')).map(i => parseInt(i.value));
+    const isMulti = Array.isArray(q.answers);
+    const correctSet = isMulti ? new Set(q.answers) : new Set([q.answer]);
+    const selectedSet = new Set(selected);
+
+    let correct = false;
+    if (isMulti) {
+      correct = selected.length === correctSet.size && selected.every(v => correctSet.has(v));
+    } else {
+      correct = selected.length === 1 && selected[0] === q.answer;
+    }
+
+    // Highlight answers
+    optionsEl.querySelectorAll('.option').forEach((optDiv, i) => {
+      if (correctSet.has(i)) {
+        optDiv.classList.add('correct');
+      } else if (selectedSet.has(i)) {
+        optDiv.classList.add('incorrect');
+      }
+    });
+
+    if (correct) score++;
+    submitBtn.style.display = 'none';
+    nextBtn.style.display = 'inline-block';
+    updateProgress();
+
+  }
+
+  submitBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    evaluateAnswer();
+  });
+
+  nextBtn.addEventListener('click', () => {
+    currentQuestion++;
+    if (currentQuestion < questions.length) {
+      loadQuestion();
+    } else {
+      showFinalScore();
+    }
+  });
+
+  function showFinalScore() {
+    questionEl.textContent = "Quiz Complete 🎉";
+    optionsEl.innerHTML = '';
+    submitBtn.style.display = 'none';
+    nextBtn.style.display = 'none';
+    scoreEl.textContent = `You scored ${score} out of ${questions.length}`;
+  }
+
+  loadQuestion();
+  updateProgress();
+
+</script>
+
+</body>
+</html>
