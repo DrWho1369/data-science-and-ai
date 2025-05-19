@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Learn SQL from Scratch</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 20px 20px 20px 240px;
+      background-color: #f4f6f8;
+      color: #333;
+    }
+    h1, h2, h3 {
+      color: #2c3e50;
+    }
+    .section {
+      background-color: #ffffff;
+      padding: 20px;
+      margin-bottom: 40px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+    pre {
+      background: #f0f0f0;
+      padding: 10px;
+      border-left: 4px solid #3498db;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+    code {
+      font-family: Consolas, monospace;
+    }
+    a {
+      color: #3498db;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .quiz-question {
+      margin-bottom: 20px;
+    }
+    .quiz-result {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 10px;
+      margin-right: 10px;
+    }
+    button:hover {
+      background-color: #2980b9;
+    }
+    input[type="radio"] {
+      margin-right: 10px;
+    }
+    label {
+      display: block;
+      margin: 5px 0;
+    }
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-family: monospace;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+    #sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 180px;
+      height: 100%;
+      background-color: #2c3e50;
+      color: #e0e6ed;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    #sidebar h3 {
+      color: #f0f4f8;
+      margin-top: 0;
+    }
+    #sidebar a {
+      display: block;
+      color: #e0e6ed;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+    #sidebar a:hover {
+      color: #42b3f4;
+      text-decoration: underline;
+    }
+    #sidebar summary {
+      cursor: pointer;
+      margin-bottom: 10px;
+      color: #f0f4f8;
+    }
+    #sidebar hr {
+      border-color: #3d556e;
+      margin: 15px 0;
+    }
+    #sidebar details[open] summary {
+      margin-bottom: 0;
+    }
+
+    @media (max-width: 600px) {
+      #sidebar { display: none; }
+      pre code {
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="sidebar">
+  <details>
+    <summary><h3 style="display:inline;">📘 Learning</h3></summary>
+    <a href="#learn-select">SELECT</a>
+    <a href="#learn-where">WHERE</a>
+    <a href="#learn-orderby">ORDER BY</a>
+    <a href="#learn-groupby">GROUP BY</a>
+    <a href="#learn-joins">JOINS</a>
+    <a href="#learn-modifyingdata">MODIFYING DATA</a>
+    <a href="#learn-subqueries">SUBQUERIES</a>
+    <a href="#learn-create">CREATE</a>
+    <a href="#learn-advanced">ADVANCED</a>
+    <a href="#cheatsheet">CHEATSHEET</a>
+    <a href="#miniquiz">MINI QUIZ</a>
+  </details>
+
+  <details>
+    <summary><h3 style="display:inline;">🧪 Playgrounds</h3></summary>
+    <a href="#practice-select">SELECT</a>
+    <a href="#practice-orderby">ORDER BY</a>
+    <a href="#practice-groupby">GROUP BY</a>
+    <a href="#practice-joins">JOINS</a>
+    <a href="#practice-aggregates">AGGREGATES</a>
+    <a href="#practice-subquery">SUBQUERIES</a>
+    <a href="#practice-modify">INSERT/UPDATE/DELETE</a>
+    <a href="#practice-sandbox">SANDBOX</a>
+  </details>
+
+  <hr style="border-color: rgba(255,255,255,0.2); margin-top: 10px;">
+  <button onclick="resetDatabase()" style="width:100%;">🔄 Reset DB</button>
+</div>
+
+  <h1>Learn SQL from Scratch</h1>
+  <p>Welcome! This page is your one-stop guide to learning SQL — the language used to talk to databases. No prior experience needed. You'll learn step-by-step, with examples, explanations, and practice.</p>
+
+<div class="section" id="learn-select">
+  <h2>1. SELECT – Retrieving Data</h2>
+  <p>The <code>SELECT</code> statement is used to retrieve data from one or more tables in a database. It’s the foundation of querying in SQL and is almost always the first statement you learn.</p>
+
+  <h3>🔹 Basic Syntax</h3>
+  <pre><code>SELECT column1, column2 FROM table_name;</code></pre>
+  <p>This tells SQL: “Go to the specified table, and return the values in the listed columns.”</p>
+
+  <h3>🔹 Example: Select Specific Columns</h3>
+  <pre><code>SELECT name, age FROM users;</code></pre>
+  <p>This returns the <code>name</code> and <code>age</code> columns from the <code>users</code> table.</p>
+
+  <h3>🔹 Select All Columns</h3>
+  <p>Use <code>*</code> to select all columns in the table:</p>
+  <pre><code>SELECT * FROM users;</code></pre>
+  <p><strong>Tip:</strong> While <code>*</code> is convenient, it’s better practice to list specific columns in production queries for clarity and performance.</p>
+
+  <h3>🔹 Renaming Columns with AS (Aliases)</h3>
+  <p>You can rename columns in the output using <code>AS</code>, which is especially helpful for readability or calculations:</p>
+  <pre><code>SELECT name AS full_name, age AS years_old FROM users;</code></pre>
+  <p>This does not rename the actual table columns—only how they appear in the result set.</p>
+
+  <h3>🔹 Using Expressions in SELECT</h3>
+  <p>You can calculate or transform data in the <code>SELECT</code> clause:</p>
+  <pre><code>SELECT name, age * 12 AS age_in_months FROM users;</code></pre>
+  <p>This query returns each user’s name and their age expressed in months.</p>
+
+  <h3>🔹 SELECT with DISTINCT</h3>
+  <p>Remove duplicate rows from results using <code>DISTINCT</code>:</p>
+  <pre><code>SELECT DISTINCT city FROM users;</code></pre>
+  <p>This returns each city only once, even if multiple users are from the same city.</p>
+
+  <h3>🧠 Tips</h3>
+  <ul>
+    <li><strong>SQL is not case-sensitive</strong>, but using uppercase for keywords improves readability.</li>
+    <li>You can mix column names and expressions in a single <code>SELECT</code>.</li>
+    <li>Use aliases to clarify complex queries or calculated values.</li>
+  </ul>
+</div>
+
+ <div class="section" id="learn-where">
+  <h2>2. WHERE – Filtering Rows</h2>
+  <p>The <code>WHERE</code> clause allows you to filter rows based on a condition. It’s one of the most powerful parts of SQL because it lets you return only the data you’re interested in.</p>
+
+  <h3>🔹 Basic WHERE Example</h3>
+  <p>Get all products where the price is over 100:</p>
+  <pre><code>SELECT * FROM products WHERE price &gt; 100;</code></pre>
+
+  <h3>🔹 Comparison Operators</h3>
+  <p>Common comparison operators used with <code>WHERE</code> include:</p>
+  <ul>
+    <li><code>=</code> (equals)</li>
+    <li><code>!=</code> or <code>&lt;&gt;</code> (not equal)</li>
+    <li><code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code> (greater/less than)</li>
+  </ul>
+  <pre><code>SELECT * FROM users WHERE age &gt;= 18;</code></pre>
+
+  <h3>🔹 Logical Operators</h3>
+  <p>You can combine multiple conditions using:</p>
+  <ul>
+    <li><code>AND</code> – all conditions must be true</li>
+    <li><code>OR</code> – at least one condition must be true</li>
+    <li><code>NOT</code> – negates a condition</li>
+  </ul>
+  <pre><code>
+SELECT * FROM users 
+WHERE age &gt; 18 AND city = 'London';
+  </code></pre>
+
+  <h3>🔹 Special Conditions</h3>
+  <ul>
+    <li><code>BETWEEN x AND y</code> – range of values (inclusive)</li>
+    <li><code>IN (...) </code> – match any value in a list</li>
+    <li><code>LIKE</code> – pattern matching (wildcards: % and _)</li>
+    <li><code>IS NULL</code> – test for missing (null) values</li>
+  </ul>
+  <pre><code>
+-- Age between 18 and 30, living in London
+SELECT * FROM users 
+WHERE age BETWEEN 18 AND 30 
+  AND city = 'London';
+
+-- Users in multiple cities
+SELECT * FROM users 
+WHERE city IN ('London', 'Paris', 'Berlin');
+
+-- Names starting with A
+SELECT * FROM users 
+WHERE name LIKE 'A%';
+
+-- Find users who don’t have an email
+SELECT * FROM users 
+WHERE email IS NULL;
+  </code></pre>
+
+  <h3>✅ Best Practices</h3>
+  <ul>
+    <li>Always double-check conditions to avoid unintended matches.</li>
+    <li>Use quotes around string values (e.g., <code>'London'</code>).</li>
+    <li>Use parentheses when combining <code>AND</code> and <code>OR</code> to control logic.</li>
+  </ul>
+</div>
+
+
+<div class="section" id="learn-orderby">
+  <h2>3. ORDER BY – Sorting Results</h2>
+  <p>The <code>ORDER BY</code> clause is used to sort the rows returned by a query. You can sort by one column or by multiple columns in combination. The default sort order is ascending (<code>ASC</code>), but you can explicitly specify descending (<code>DESC</code>) if needed.</p>
+
+  <h3>🔹 Basic Sorting</h3>
+  <p>Sort employees by salary in descending order (highest-paid first):</p>
+  <pre><code>SELECT * FROM employees ORDER BY salary DESC;</code></pre>
+
+  <h3>🔹 Default: ASC (Ascending)</h3>
+  <p>If you don’t specify a direction, the default is <code>ASC</code>. This sorts alphabetically (A to Z) or numerically (smallest to largest).</p>
+  <pre><code>SELECT * FROM users ORDER BY name;</code></pre>
+
+  <h3>🔹 DESC (Descending)</h3>
+  <p>This sorts values from highest to lowest or Z to A.</p>
+  <pre><code>SELECT * FROM users ORDER BY created_at DESC;</code></pre>
+
+  <h3>🔹 Sorting by Multiple Columns</h3>
+  <p>You can sort by more than one column. The second sort is applied only when values in the first column are equal.</p>
+  <pre><code>SELECT * FROM products 
+ORDER BY category ASC, price DESC;</code></pre>
+  <p>This will list products by category alphabetically, and within each category, it sorts by price from highest to lowest.</p>
+
+  <h3>🧠 Tip</h3>
+  <ul>
+    <li>You can use <code>ORDER BY column_index</code>, but it’s better to use column names for readability.</li>
+    <li>If you're using <code>LIMIT</code> (e.g. to get the top 5), always combine it with <code>ORDER BY</code> to define what “top” means.</li>
+  </ul>
+  <pre><code>-- Get top 3 highest paid employees
+SELECT * FROM employees 
+ORDER BY salary DESC 
+LIMIT 3;</code></pre>
+</div>
+
+
+<div class="section" id="learn-groupby">
+  <h2>4. GROUP BY and Aggregates</h2>
+  <p>The <code>GROUP BY</code> clause is used to organize rows into groups based on the values in one or more columns. This is useful when combined with <strong>aggregate functions</strong> to perform calculations for each group.</p>
+
+  <h3>🔹 Common Aggregate Functions</h3>
+  <ul>
+    <li><code>COUNT()</code> – counts the number of rows</li>
+    <li><code>AVG()</code> – calculates the average of numeric values</li>
+    <li><code>SUM()</code> – adds up values</li>
+    <li><code>MIN()</code> / <code>MAX()</code> – finds the lowest/highest value</li>
+  </ul>
+
+  <h3>🔹 Basic Example</h3>
+  <p>Calculate the average salary per department:</p>
+  <pre><code>SELECT department, AVG(salary)
+FROM employees
+GROUP BY department;</code></pre>
+  <p>This query returns one row per department, showing the department name and the average salary of its employees.</p>
+
+  <h3>🔹 COUNT Example</h3>
+  <p>Count the number of employees in each department:</p>
+  <pre><code>SELECT department, COUNT(*) 
+FROM employees 
+GROUP BY department;</code></pre>
+
+  <h3>🔹 Using HAVING</h3>
+  <p><code>HAVING</code> filters groups after aggregation (similar to <code>WHERE</code>, but for groups):</p>
+  <pre><code>SELECT department, COUNT(*) 
+FROM employees 
+GROUP BY department 
+HAVING COUNT(*) &gt; 5;</code></pre>
+  <p>This query only shows departments that have more than 5 employees.</p>
+
+  <h3>🔹 GROUP BY Multiple Columns</h3>
+  <p>You can group by more than one column for detailed aggregation:</p>
+  <pre><code>SELECT department, job_title, AVG(salary)
+FROM employees
+GROUP BY department, job_title;</code></pre>
+  <p>This will return the average salary for each combination of department and job title.</p>
+
+  <h3>🧠 Tips</h3>
+  <ul>
+    <li>Every column in the SELECT clause that is not aggregated must appear in the <code>GROUP BY</code>.</li>
+    <li>Use <code>HAVING</code> when you need to filter based on the result of an aggregate function.</li>
+    <li><code>NULL</code> values are grouped together as a single group.</li>
+  </ul>
+</div>
+
+
+ <div class="section" id="learn-joins">
+  <h2>🧩 SQL JOINs - Combining Tables</h2>
+  <p>SQL JOINs let you combine rows from two or more tables based on a related column. This is powerful because it allows you to pull together meaningful information spread across different tables.</p>
+
+  <h3>🔹 1. INNER JOIN</h3>
+  <p>Returns only the rows where there is a match in both tables.</p>
+  <pre><code>
+SELECT employees.name, departments.name
+FROM employees
+INNER JOIN departments ON employees.department_id = departments.id;
+  </code></pre>
+  <p><strong>Diagram:</strong></p>
+  <pre>
+A         B
++----+    +----+
+| id |    | id |
+| 1  |    | 1  | ← matched
+| 2  |    | 3  |
+  </pre>
+
+  <h3>🔹 2. LEFT JOIN (or LEFT OUTER JOIN)</h3>
+  <p>Returns all rows from the left table, and the matched rows from the right table. Unmatched rows show <code>NULL</code>.</p>
+  <pre><code>
+SELECT users.name, orders.id
+FROM users
+LEFT JOIN orders ON users.id = orders.user_id;
+  </code></pre>
+  <p><strong>Use Case:</strong> Find users who have or have not placed an order.</p>
+
+  <h3>🔹 3. RIGHT JOIN (or RIGHT OUTER JOIN)</h3>
+  <p>Returns all rows from the right table, and the matched rows from the left table. Often used less than LEFT JOIN.</p>
+  <pre><code>
+SELECT orders.id, users.name
+FROM orders
+RIGHT JOIN users ON orders.user_id = users.id;
+  </code></pre>
+
+  <h3>🔹 4. FULL OUTER JOIN</h3>
+  <p>Returns all rows when there is a match in either left or right table. Rows without a match will have <code>NULL</code> in place.</p>
+  <pre><code>
+SELECT a.id, b.value
+FROM table_a a
+FULL OUTER JOIN table_b b ON a.id = b.id;
+  </code></pre>
+  <p><strong>Note:</strong> Not supported in all databases (e.g. MySQL). Use <code>UNION</code> of LEFT and RIGHT JOIN as workaround.</p>
+
+  <h3>🔹 5. CROSS JOIN</h3>
+  <p>Returns the Cartesian product — every row from the first table combined with every row from the second table.</p>
+  <pre><code>
+SELECT color, size
+FROM colors
+CROSS JOIN sizes;
+  </code></pre>
+  <p><strong>Use Case:</strong> Creating combinations like size/color variants.</p>
+
+  <h3>🔎 Summary Table</h3>
+  <table border="1" cellpadding="6" cellspacing="0">
+    <thead>
+      <tr>
+        <th>JOIN Type</th>
+        <th>Returns</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>INNER JOIN</td><td>Only matching rows from both tables</td></tr>
+      <tr><td>LEFT JOIN</td><td>All from left + matching from right</td></tr>
+      <tr><td>RIGHT JOIN</td><td>All from right + matching from left</td></tr>
+      <tr><td>FULL OUTER JOIN</td><td>All rows from both tables</td></tr>
+      <tr><td>CROSS JOIN</td><td>Every combination of both tables</td></tr>
+    </tbody>
+  </table>
+</div>
+
+
+<div class="section" id="learn-modifyingdata">
+  <h2>6. Modifying Data: INSERT, UPDATE, DELETE</h2>
+
+  <h3>🔹 INSERT – Add New Records</h3>
+  <p>The <code>INSERT</code> statement is used to add new rows of data to a table. You specify the columns you're inserting into and the corresponding values.</p>
+  <pre><code>INSERT INTO users (name, age) VALUES ('Alice', 30);</code></pre>
+  <p>This adds a new user named Alice, aged 30, to the <code>users</code> table. If your table has auto-incrementing IDs, you don’t need to insert them manually.</p>
+  <p>You can also insert multiple rows at once:</p>
+  <pre><code>
+INSERT INTO users (name, age)
+VALUES 
+  ('Bob', 25),
+  ('Clara', 28),
+  ('David', 35);
+  </code></pre>
+
+  <h3>🔹 UPDATE – Modify Existing Records</h3>
+  <p>The <code>UPDATE</code> statement allows you to change existing values in one or more rows.</p>
+  <pre><code>UPDATE users SET age = 31 WHERE name = 'Alice';</code></pre>
+  <p>This updates Alice's age to 31. <strong>Be careful:</strong> If you omit the <code>WHERE</code> clause, <em>every row</em> in the table will be updated.</p>
+  <p>Update multiple columns at once:</p>
+  <pre><code>UPDATE users 
+SET name = 'Alicia', age = 32 
+WHERE name = 'Alice';</code></pre>
+
+  <h3>🔹 DELETE – Remove Records</h3>
+  <p>The <code>DELETE</code> statement removes rows from a table.</p>
+  <pre><code>DELETE FROM users WHERE age &lt; 20;</code></pre>
+  <p>This removes all users under the age of 20. Again, if you omit the <code>WHERE</code> clause, <strong>every row</strong> in the table will be deleted.</p>
+  <p>If you're unsure, test your filter first with a <code>SELECT</code>:</p>
+  <pre><code>SELECT * FROM users WHERE age &lt; 20;</code></pre>
+
+  <h3>✅ Pro Tips:</h3>
+  <ul>
+    <li>Use transactions (<code>BEGIN</code> / <code>ROLLBACK</code> / <code>COMMIT</code>) to make bulk changes safer.</li>
+    <li>Always double-check your <code>WHERE</code> clause in <code>UPDATE</code> or <code>DELETE</code> statements.</li>
+    <li>Use <code>RETURNING *</code> (in PostgreSQL) to see what was inserted or updated.</li>
+  </ul>
+</div>
+
+
+<div class="section" id="learn-subqueries">
+  <h2>7. Subqueries and Nested SELECTs</h2>
+  <p>Subqueries are SELECT statements that are embedded within another SQL query. They're used to perform intermediate calculations or filtering based on results from another table or query.</p>
+
+  <h3>🔹 Basic Subquery</h3>
+  <p>This example finds the user with the highest ID:</p>
+  <pre><code>SELECT name 
+FROM users 
+WHERE id = (SELECT MAX(id) FROM users);</code></pre>
+  <p>Here, the inner query <code>(SELECT MAX(id) FROM users)</code> runs first and returns a single value. The outer query then uses that value in the <code>WHERE</code> condition.</p>
+
+  <h3>🔹 Subquery with IN</h3>
+  <p>Use <code>IN</code> when the subquery returns a list of values:</p>
+  <pre><code>SELECT name 
+FROM users 
+WHERE id IN (SELECT user_id FROM purchases);</code></pre>
+  <p>This retrieves users who have made a purchase, as determined by matching <code>user_id</code> values in the <code>purchases</code> table.</p>
+
+  <h3>🔹 Subquery with EXISTS</h3>
+  <p><code>EXISTS</code> is more efficient for checking if a match exists, especially when you don’t care about the actual values returned:</p>
+  <pre><code>SELECT name 
+FROM users u 
+WHERE EXISTS (
+  SELECT 1 FROM purchases p WHERE p.user_id = u.id
+);</code></pre>
+  <p>This returns all users who have at least one row in the <code>purchases</code> table.</p>
+
+  <h3>🧠 When to Use Subqueries</h3>
+  <ul>
+    <li>To filter data based on an aggregate value (e.g. max, min)</li>
+    <li>To correlate rows between tables when a join isn’t suitable</li>
+    <li>To simplify complex multi-step logic inside a query</li>
+  </ul>
+
+  <h3>⚠️ Subquery Tips</h3>
+  <ul>
+    <li>Ensure subqueries return the correct number of rows (e.g. use <code>=</code> only when expecting one row).</li>
+    <li>Use <code>IN</code> or <code>EXISTS</code> for multiple-row subqueries.</li>
+    <li>Some subqueries can be replaced with JOINs for better performance.</li>
+  </ul>
+</div>
+
+  
+  <div class="section" id="learn-create">
+    <h2>10. Creating Tables and Schema Design</h2>
+    <p>Before inserting or querying data, you need to define your table's structure using <code>CREATE TABLE</code>.</p>
+    <pre><code>CREATE TABLE users (
+  id INT PRIMARY KEY,
+  name VARCHAR(100),
+  age INT,
+  email VARCHAR(255) UNIQUE
+);</code></pre>
+    <p>Good schema design involves:</p>
+    <ul>
+      <li>Choosing appropriate data types (e.g., INT, VARCHAR, DATE)</li>
+      <li>Using <code>PRIMARY KEY</code> to uniquely identify rows</li>
+      <li>Adding <code>UNIQUE</code>, <code>NOT NULL</code>, and <code>FOREIGN KEY</code> constraints where necessary</li>
+    </ul>
+    <p>Example of a table with a foreign key:</p>
+    <pre><code>CREATE TABLE orders (
+  order_id INT PRIMARY KEY,
+  user_id INT,
+  total DECIMAL(10, 2),
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);</code></pre>
+  </div>
+
+  <div class="section" id="learn-advanced">
+    <h2>11. Next Steps in SQL</h2>
+<p>Once you're confident with the basics, it's time to dive deeper into SQL with intermediate and advanced topics. These features allow you to handle more complex queries, optimize performance, and build more robust data systems.</p>
+
+<h3>1. Window Functions</h3>
+<p>Window functions allow you to perform calculations across a set of table rows that are somehow related to the current row, without collapsing the result into a group. Examples include:</p>
+<ul>
+  <li><code>ROW_NUMBER()</code> – assigns a unique number to each row within a partition.</li>
+  <li><code>RANK()</code> / <code>DENSE_RANK()</code> – rank rows based on a specified order, with or without gaps.</li>
+  <li><code>LAG()</code> / <code>LEAD()</code> – access previous or next row values.</li>
+</ul>
+<pre><code>SELECT name, salary,
+       RANK() OVER (ORDER BY salary DESC) AS salary_rank
+FROM employees;</code></pre>
+
+<h3>2. Common Table Expressions (CTEs)</h3>
+<p>CTEs are temporary result sets defined using the <code>WITH</code> clause. They make queries easier to read and can be used recursively.</p>
+<pre><code>WITH dept_avg AS (
+  SELECT department, AVG(salary) AS avg_salary
+  FROM employees
+  GROUP BY department
+)
+SELECT * FROM dept_avg WHERE avg_salary > 60000;</code></pre>
+
+<h3>3. Advanced Joins</h3>
+<ul>
+  <li><strong>SELF JOIN</strong>: A table joined to itself.</li>
+  <li><strong>CROSS JOIN</strong>: Cartesian product of two tables.</li>
+</ul>
+<pre><code>-- Self Join example:
+SELECT e1.name AS employee, e2.name AS manager
+FROM employees e1
+JOIN employees e2 ON e1.manager_id = e2.id;</code></pre>
+
+<h3>4. Views</h3>
+<p>A <strong>view</strong> is a virtual table created using a SELECT query. Views can simplify complex joins and encapsulate logic.</p>
+<pre><code>CREATE VIEW high_earners AS
+SELECT name, salary FROM employees WHERE salary > 100000;</code></pre>
+
+<h3>5. Transactions</h3>
+<p>Transactions ensure that a group of operations are executed atomically. If anything fails, the database can <code>ROLLBACK</code> to its previous state. Otherwise, changes are made permanent with <code>COMMIT</code>.</p>
+<pre><code>BEGIN;
+UPDATE accounts SET balance = balance - 100 WHERE id = 1;
+UPDATE accounts SET balance = balance + 100 WHERE id = 2;
+COMMIT;</code></pre>
+
+<h3>6. Stored Procedures and Triggers</h3>
+<p>Stored procedures are precompiled SQL code that can be executed repeatedly, and triggers are actions executed automatically when certain events occur (like inserting or updating data).</p>
+<p>Note: Availability and syntax vary by SQL engine (e.g., MySQL, PostgreSQL, SQL Server).</p>
+<pre><code>-- Stored procedure example (MySQL):
+DELIMITER //
+CREATE PROCEDURE GetHighEarners()
+BEGIN
+  SELECT * FROM employees WHERE salary > 100000;
+END //
+DELIMITER ;</code></pre>
+
+<p>Continue your learning by building projects with real-world schemas, exploring performance tuning, and mastering database normalization principles.</p>
+</div>
+
+
+  <div class="section" id="cheatsheet">
+    <h2>6. Downloadable Cheat Sheet</h2>
+    <p>Download the full printable cheat sheet: <a href="/downloads/SQL_Cheat_Sheet_Expanded.pdf" target="_blank">Download PDF</a></p>
+  </div>
+
+  <div class="section" id="miniquiz">
+    <h2>7. Mini Quiz</h2>
+    <div id="quiz">
+      <div class="quiz-question">
+        <p>1. What does SQL stand for?</p>
+        <input type="radio" name="q1" value="a"> Standard Query Logic<br>
+        <input type="radio" name="q1" value="b"> Structured Query Language<br>
+        <input type="radio" name="q1" value="c"> Simple Query Layout<br>
+      </div>
+      <div class="quiz-question">
+        <p>2. Which SQL clause is used to filter results?</p>
+        <input type="radio" name="q2" value="a"> ORDER BY<br>
+        <input type="radio" name="q2" value="b"> WHERE<br>
+        <input type="radio" name="q2" value="c"> SELECT<br>
+      </div>
+      <div class="quiz-question">
+        <p>3. What keyword is used to combine rows from two tables?</p>
+        <input type="radio" name="q3" value="a"> JOIN<br>
+        <input type="radio" name="q3" value="b"> COMBINE<br>
+        <input type="radio" name="q3" value="c"> UNIONIZE<br>
+      </div>
+      <button onclick="submitQuiz()">Submit Answers</button>
+      <p class="quiz-result" id="result"></p>
+    </div>
+  </div>
+
+  <script>
+    function submitQuiz() {
+      let score = 0;
+      const answers = {
+        q1: "b",
+        q2: "b",
+        q3: "a"
+      };
+      for (const [question, correct] of Object.entries(answers)) {
+        const selected = document.querySelector(`input[name="${question}"]:checked`);
+        if (selected && selected.value === correct) score++;
+      }
+      const result = document.getElementById("result");
+      result.textContent = `You scored ${score} out of 3.`;
+    }
+  </script>
+<div class="section" id="db-schema">
+  <details open>
+    <summary><h2>📊 Database Schema Reference</h2></summary>
+    <p>This database has 3 tables: <strong>users</strong>, <strong>products</strong>, and <strong>orders</strong>. You can query from them freely.</p>
+
+    <h3>🧑‍🤝‍🧑 users</h3>
+    <pre>
+| id | name   | email              | city      | join_date  |
+|----|--------|--------------------|-----------|------------|
+| 1  | Alice  | alice@example.com  | London    | 2022-01-01 |
+| 2  | Bob    | bob@example.com    | New York  | 2022-02-15 |
+| 3  | Clara  | clara@example.com  | Paris     | 2022-03-10 |
+| 4  | David  | david@example.com  | Berlin    | 2022-04-12 |
+| 5  | Ella   | ella@example.com   | Madrid    | 2022-05-20 |
+| 6  | Frank  | frank@example.com  | London    | 2022-06-05 |
+| 7  | Grace  | grace@example.com  | Tokyo     | 2022-06-22 |
+| 8  | Henry  | henry@example.com  | New York  | 2022-07-03 |
+    </pre>
+
+    <h3>📦 products</h3>
+    <pre>
+| id | name          | category     | price |
+|----|---------------|--------------|-------|
+| 1  | Laptop        | Electronics  | 999   |
+| 2  | Headphones    | Accessories  | 199   |
+| 3  | Coffee Mug    | Home Goods   | 15    |
+| 4  | Notebook      | Stationery   | 5     |
+| 5  | T-Shirt       | Clothing     | 25    |
+| 6  | Yoga Mat      | Fitness      | 45    |
+| 7  | Smartphone    | Electronics  | 699   |
+| 8  | Backpack      | Accessories  | 60    |
+| 9  | Water Bottle  | Fitness      | 20    |
+| 10 | Fiction Book  | Books        | 12    |
+    </pre>
+
+    <h3>🧾 orders</h3>
+    <pre>
+| id | user_id | product_id | quantity | order_date  |
+|----|---------|------------|----------|-------------|
+| 1  | 1       | 1          | 2        | 2022-03-20  |
+| 2  | 1       | 3          | 1        | 2022-04-05  |
+| 3  | 2       | 2          | 5        | 2022-03-25  |
+| 4  | 3       | 6          | 1        | 2022-05-01  |
+| 5  | 4       | 7          | 1        | 2022-06-11  |
+| 6  | 5       | 4          | 3        | 2022-07-15  |
+| 7  | 6       | 9          | 2        | 2022-07-18  |
+| 8  | 7       | 10         | 1        | 2022-07-20  |
+| 9  | 1       | 5          | 2        | 2022-08-01  |
+| 10 | 2       | 8          | 1        | 2022-08-02  |
+    </pre>
+  </details>
+</div>
+
+
+ <div style="margin-bottom: 20px;">
+    <button onclick="resetDatabase()">🔄 Reset Database</button>
+  </div>
+<div class="section" id="practice-select">
+  <h2>🧪 Practice: SELECT and WHERE</h2>
+  <p>Try some of the following:</p>
+  <ul>
+    <li>Get all users: <code>SELECT * FROM users;</code></li>
+    <li>Get users from London: <code>SELECT name FROM users WHERE city = 'London';</code></li>
+    <li>Get names and emails of users who joined after Feb 2022</li>
+  </ul>
+
+  <textarea id="sql-input-select" style="width:100%; height:120px;">
+SELECT * FROM users;
+  </textarea><br>
+  <button onclick="runQuery('sql-input-select', 'output-select')">Run Query</button>
+  <pre id="output-select" style="background:#f4f4f4; padding:10px; margin-top:10px;"></pre>
+</div>
+
+<!-- GROUP BY Block -->
+<div class="section" id="practice-groupby">
+  <h2>🧪 Practice: GROUP BY</h2>
+  <p>Try grouping by city or finding average product prices:</p>
+  <textarea id="sql-input-group" style="width:100%; height:120px;">
+SELECT city, COUNT(*) FROM users GROUP BY city;
+  </textarea><br>
+  <button onclick="runQuery('sql-input-group', 'output-group')">Run Query</button>
+  <pre id="output-group" style="background:#f4f4f4; padding:10px; margin-top:10px;"></pre>
+</div>
+
+<div class="section" id="practice-orderby">
+  <h2>🧪 Practice: ORDER BY</h2>
+  <p>Try sorting data by one or more columns:</p>
+  <ul>
+    <li>Order users by join date:</li>
+    <li><code>SELECT * FROM users ORDER BY join_date DESC;</code></li>
+    <li>List products from cheapest to most expensive</li>
+  </ul>
+  <textarea id="sql-input-order" style="width:100%; height:120px;">
+SELECT * FROM products ORDER BY price ASC;
+  </textarea><br>
+  <button onclick="runQuery('sql-input-order', 'output-order')">Run Query</button>
+  <pre id="output-order" style="background:#f4f4f4; padding:10px; margin-top:10px;"></pre>
+</div>
+
+
+<div class="section" id="practice-joins">
+  <h2>🧪 Practice: JOINs</h2>
+  <p>Use JOINs to combine rows across tables. Try:</p>
+  <ul>
+    <li>List users and their order quantities:</li>
+    <li><code>SELECT u.name, o.quantity FROM users u JOIN orders o ON u.id = o.user_id;</code></li>
+    <li>Get product names and order dates</li>
+  </ul>
+  <textarea id="sql-input-join" style="width:100%; height:120px;">
+SELECT u.name, o.order_date, p.name 
+FROM users u
+JOIN orders o ON u.id = o.user_id
+JOIN products p ON o.product_id = p.id;
+  </textarea><br>
+  <button onclick="runQuery('sql-input-join', 'output-join')">Run Query</button>
+  <pre id="output-join" style="background:#f4f4f4; padding:10px; margin-top:10px;"></pre>
+</div>
+
+<div class="section" id="practice-aggregates">
+  <h2>🧪 Practice: Aggregate Functions</h2>
+  <p>Use functions like <code>COUNT</code>, <code>SUM</code>, <code>AVG</code>, etc.:</p>
+  <ul>
+    <li>Total quantity of items ordered:</li>
+    <li><code>SELECT SUM(quantity) FROM orders;</code></li>
+    <li>Average price of products by category</li>
+  </ul>
+  <textarea id="sql-input-agg" style="width:100%; height:120px;">
+SELECT category, AVG(price) FROM products GROUP BY category;
+  </textarea><br>
+  <button onclick="runQuery('sql-input-agg', 'output-agg')">Run Query</button>
+  <pre id="output-agg" style="background:#f4f4f4; padding:10px; margin-top:10px;"></pre>
+</div>
+
+
+<div class="section" id="practice-subquery">
+  <h2>🧪 Practice: Subqueries</h2>
+  <p>Try using SELECTs inside other queries:</p>
+  <ul>
+    <li>User with the most recent join date:</li>
+    <li><code>SELECT * FROM users WHERE join_date = (SELECT MAX(join_date) FROM users);</code></li>
+    <li>Products ordered by user ID 1</li>
+  </ul>
+  <textarea id="sql-input-sub" style="width:100%; height:120px;">
+SELECT * FROM products 
+WHERE id IN (
+  SELECT product_id FROM orders WHERE user_id = 1
+);
+  </textarea><br>
+  <button onclick="runQuery('sql-input-sub', 'output-sub')">Run Query</button>
+  <pre id="output-sub" style="background:#f4f4f4; padding:10px; margin-top:10px;"></pre>
+</div>
+
+
+<div class="section" id="practice-modify">
+  <h2>🧪 Practice: INSERT, UPDATE, DELETE</h2>
+  <p>Modify the data! Try inserting, updating, or deleting from the tables:</p>
+  <ul>
+    <li><code>INSERT INTO users (id, name, email, city, join_date) VALUES (4, 'Dan', 'dan@example.com', 'Berlin', '2022-04-10');</code></li>
+    <li><code>UPDATE users SET city = 'Rome' WHERE name = 'Alice';</code></li>
+    <li><code>DELETE FROM users WHERE city = 'Paris';</code></li>
+  </ul>
+  <textarea id="sql-input-modify" style="width:100%; height:120px;">
+-- Try modifying data here
+SELECT * FROM users;
+  </textarea><br>
+  <button onclick="runQuery('sql-input-modify', 'output-modify')">Run Query</button>
+  <pre id="output-modify" style="background:#f4f4f4; padding:10px; margin-top:10px;"></pre>
+</div>
+
+<div class="section" id="practice-sandbox">
+  <h2>🎯 SQL Sandbox: Challenge Yourself!</h2>
+  <p>Try solving these:</p>
+  <ul>
+    <li>🧠 Which users have placed more than 1 order?</li>
+    <li>💰 Total revenue from all orders</li>
+    <li>📦 List all products that have never been ordered</li>
+  </ul>
+  <textarea id="sql-input-sandbox" style="width:100%; height:140px;">
+-- Write any query using the full database:
+-- users, products, orders
+SELECT * FROM users;
+  </textarea><br>
+  <button onclick="runQuery('sql-input-sandbox', 'output-sandbox')">Run Query</button>
+  <pre id="output-sandbox" style="background:#f4f4f4; padding:10px; margin-top:10px;"></pre>
+</div>
+
+
+<!-- Load SQL.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2/sql-wasm.js"></script>
+<script>
+  let db;
+
+  const schemaSQL = `
+    -- USERS
+    CREATE TABLE users (
+      id INTEGER PRIMARY KEY,
+      name TEXT,
+      email TEXT,
+      city TEXT,
+      join_date TEXT
+    );
+
+    INSERT INTO users (id, name, email, city, join_date) VALUES
+      (1, 'Alice', 'alice@example.com', 'London', '2022-01-01'),
+      (2, 'Bob', 'bob@example.com', 'New York', '2022-02-15'),
+      (3, 'Clara', 'clara@example.com', 'Paris', '2022-03-10'),
+      (4, 'David', 'david@example.com', 'Berlin', '2022-04-12'),
+      (5, 'Ella', 'ella@example.com', 'Madrid', '2022-05-20'),
+      (6, 'Frank', 'frank@example.com', 'London', '2022-06-05'),
+      (7, 'Grace', 'grace@example.com', 'Tokyo', '2022-06-22'),
+      (8, 'Henry', 'henry@example.com', 'New York', '2022-07-03');
+
+    -- PRODUCTS
+    CREATE TABLE products (
+      id INTEGER PRIMARY KEY,
+      name TEXT,
+      category TEXT,
+      price INTEGER
+    );
+
+    INSERT INTO products (id, name, category, price) VALUES
+      (1, 'Laptop', 'Electronics', 999),
+      (2, 'Headphones', 'Accessories', 199),
+      (3, 'Coffee Mug', 'Home Goods', 15),
+      (4, 'Notebook', 'Stationery', 5),
+      (5, 'T-Shirt', 'Clothing', 25),
+      (6, 'Yoga Mat', 'Fitness', 45),
+      (7, 'Smartphone', 'Electronics', 699),
+      (8, 'Backpack', 'Accessories', 60),
+      (9, 'Water Bottle', 'Fitness', 20),
+      (10, 'Fiction Book', 'Books', 12);
+
+      -- ORDERS
+    CREATE TABLE orders (
+      id INTEGER PRIMARY KEY,
+      user_id INTEGER,
+      product_id INTEGER,
+      quantity INTEGER,
+      order_date TEXT,
+      FOREIGN KEY (user_id) REFERENCES users(id),
+      FOREIGN KEY (product_id) REFERENCES products(id)
+    );
+
+    INSERT INTO orders (id, user_id, product_id, quantity, order_date) VALUES
+      (1, 1, 1, 2, '2022-03-20'),
+      (2, 1, 3, 1, '2022-04-05'),
+      (3, 2, 2, 5, '2022-03-25'),
+      (4, 3, 6, 1, '2022-05-01'),
+      (5, 4, 7, 1, '2022-06-11'),
+      (6, 5, 4, 3, '2022-07-15'),
+      (7, 6, 9, 2, '2022-07-18'),
+      (8, 7, 10, 1, '2022-07-20'),
+      (9, 1, 5, 2, '2022-08-01'),
+      (10, 2, 8, 1, '2022-08-02');
+  `;
+
+  async function initDB() {
+      const SQL = await initSqlJs({ locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2/${file}` });
+      db = new SQL.Database();
+      db.run(schemaSQL);
+    }
+
+    function resetDatabase() {
+      initDB();
+      alert("🔄 Database has been reset to its original state.");
+    }
+
+    function runQuery(inputId, outputId) {
+      const input = document.getElementById(inputId).value;
+      const output = document.getElementById(outputId);
+      try {
+        const result = db.exec(input);
+        if (!result.length) {
+          output.textContent = "✅ Query executed, no results returned.";
+          return;
+        }
+        const [cols, rows] = [result[0].columns, result[0].values];
+        let table = cols.join(" | ") + "\n" + "-".repeat(50) + "\n";
+        rows.forEach(row => table += row.join(" | ") + "\n");
+        output.textContent = table;
+      } catch (err) {
+        output.textContent = "❌ Error: " + err.message;
+      }
+    }
+
+    initDB();
+
+</script>
+
+
+</body>
+</html>
